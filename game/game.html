@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Cacing: Makan & Hindari Musuh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --grid: 20;
+            /* ukuran sel */
+            --cols: 24;
+            /* lebar grid */
+            --rows: 18;
+            /* tinggi grid */
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        }
+
+        .bg-radial {
+            background:
+                radial-gradient(1000px 700px at 15% 20%, rgba(59, 130, 246, 0.25), transparent 55%),
+                /* biru */
+                radial-gradient(900px 600px at 85% 25%, rgba(16, 185, 129, 0.25), transparent 55%),
+                /* hijau */
+                radial-gradient(1200px 800px at 50% 85%, rgba(250, 204, 21, 0.25), transparent 60%),
+                /* kuning */
+                linear-gradient(180deg, #0b1020, #0a0f1a);
+        }
+
+        .glass {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .board {
+            width: calc(var(--cols) * var(--grid) * 1px);
+            height: calc(var(--rows) * var(--grid) * 1px);
+            position: relative;
+            overflow: hidden;
+            border-radius: 18px;
+            background: repeating-linear-gradient(to right, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px var(--grid)), repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px var(--grid)), linear-gradient(180deg, #0c1326, #0b0f1d);
+        }
+
+        .segment {
+            position: absolute;
+            width: calc(var(--grid) * 1px);
+            height: calc(var(--grid) * 1px);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .segment.head {
+            z-index: 3;
+            border-radius: 10px;
+            outline: 2px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .food {
+            position: absolute;
+            width: calc(var(--grid) * 1px);
+            height: calc(var(--grid) * 1px);
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 14px;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+            transform: scale(1);
+            transition: transform 150ms ease;
+        }
+
+        .food.bump {
+            transform: scale(1.2);
+        }
+
+        .enemy {
+            position: absolute;
+            width: calc(var(--grid) * 1px);
+            height: calc(var(--grid) * 1px);
+            border-radius: 50%;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+            outline: 2px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            opacity: 0.95;
+            pointer-events: none;
+            filter: blur(0.3px);
+            animation: pop 450ms ease-out forwards;
+        }
+
+        @keyframes pop {
+            0% {
+                transform: translate(0, 0) scale(0.8);
+                opacity: 1;
+            }
+
+            80% {
+                transform: translate(var(--tx), var(--ty)) scale(1.1);
+                opacity: 0.9;
+            }
+
+            100% {
+                transform: translate(calc(var(--tx) * 1.4), calc(var(--ty) * 1.4)) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        .dpad button {
+            touch-action: manipulation;
+            user-select: none;
+        }
+
+        @media (max-width: 900px) {
+            :root {
+                --cols: 18;
+                --rows: 24;
+                --grid: 16;
+            }
+
+            .board {
+                border-radius: 14px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            :root {
+                --cols: 14;
+                --rows: 20;
+                --grid: 18;
+            }
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.35);
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-radial text-white antialiased">
+    <div class="max-w-5xl mx-auto px-6 py-8">
+        <header class="flex items-start justify-between gap-4 mb-6">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+                    Game Cacing: Makan & Hindari Musuh
+                </h1>
+                <p class="text-white/80 mt-1">
+                    Makan poin untuk tumbuh. Dinding dan adu kepala = Game Over.
+                </p>
+            </div>
+            <div class="flex items-center gap-3">
+                <button id="btnPause"
+                    class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 active:scale-[.98] transition shadow-lg shadow-emerald-500/20 font-semibold">
+                    Jeda
+                </button>
+                <button id="btnRestart"
+                    class="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 active:scale-[.98] transition shadow-lg shadow-indigo-500/20 font-semibold">
+                    Replay
+                </button>
+                <a href="../index.html" class="hover:text-white transition">Log out</a>
+            </div>
+        </header>
+
+        <main class="grid md:grid-cols-[1fr,280px] gap-6 items-start">
+            <section class="glass rounded-2xl p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+                        <span class="text-sm text-white/80">Skor: <b id="score">0</b></span>
+                    </div>
+                    <div class="text-sm text-white/70">
+                        Kecepatan: <b id="speedLbl">Sedang</b>
+                    </div>
+                </div>
+                <div id="board" class="board rounded-2xl"></div>
+
+                <div class="dpad mt-4 grid grid-cols-3 gap-3 md:hidden">
+                    <div></div>
+                    <button data-dir="up"
+                        class="rounded-xl bg-white/10 hover:bg-white/15 py-3 backdrop-blur text-sm">Atas ⬆</button>
+                    <div></div>
+                    <button data-dir="left"
+                        class="rounded-xl bg-white/10 hover:bg-white/15 py-3 backdrop-blur text-sm">Kiri ⬅</button>
+                    <button id="btnMobilePause"
+                        class="rounded-xl bg-emerald-500 hover:bg-emerald-600 py-3 text-sm">Jeda</button>
+                    <button data-dir="right"
+                        class="rounded-xl bg-white/10 hover:bg-white/15 py-3 backdrop-blur text-sm">Kanan ➡</button>
+                    <div></div>
+                    <button data-dir="down"
+                        class="rounded-xl bg-white/10 hover:bg-white/15 py-3 backdrop-blur text-sm">Bawah ⬇</button>
+                    <div></div>
+                </div>
+            </section>
+
+            <aside class="glass rounded-2xl p-5">
+                <h2 class="text-lg font-semibold">Cara Main</h2>
+                <ul class="mt-2 space-y-1.5 text-white/80 text-sm">
+                    <li>• Panah atau W/A/S/D untuk bergerak</li>
+                    <li>• Makan poin 🌟 untuk menambah skor</li>
+                    <li>• Menabrak dinding: Game Over</li>
+                    <li>• Adu kepala dengan musuh: Game Over</li>
+                    <li>• Disentuh musuh di badan: lanjut bermain</li>
+                </ul>
+
+                <div class="mt-5">
+                    <h3 class="font-semibold">Tingkat</h3>
+                    <div class="mt-2 grid grid-cols-3 gap-2">
+                        <button data-speed="slow"
+                            class="speed-btn rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 text-sm">Santai</button>
+                        <button data-speed="medium"
+                            class="speed-btn rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 text-sm">Sedang</button>
+                        <button data-speed="fast"
+                            class="speed-btn rounded-xl px-3 py-2 bg-white/10 hover:bg-white/15 text-sm">Cepat</button>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h3 class="font-semibold">Status</h3>
+                    <div id="status" class="mt-2 text-sm text-white/80">Siap bermain</div>
+                </div>
+            </aside>
+        </main>
+
+        <footer class="mt-8 text-center text-white/60 text-sm">
+            Tip: Spasi untuk jeda/lanjut. Adu kepala tetap berbahaya!
+        </footer>
+    </div>
+
+    <script>
+        // Konfigurasi dasar
+        const grid = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--grid'));
+        let COLS = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols'));
+        let ROWS = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--rows'));
+
+        const board = document.getElementById('board');
+        const scoreEl = document.getElementById('score');
+        const statusEl = document.getElementById('status');
+        const speedLbl = document.getElementById('speedLbl');
+        const btnPause = document.getElementById('btnPause');
+        const btnRestart = document.getElementById('btnRestart');
+
+        // Gerakan diperlambat keseluruhan
+        const speeds = { slow: 300, medium: 220, fast: 160 };
+        let currentSpeed = 'medium';
+        let tickMs = speeds[currentSpeed];
+        let loopId = null;
+        let paused = false;
+        let gameOver = false;
+
+        // State permainan
+        let snake = [];
+        let dir = { x: 1, y: 0 };
+        let pendingDir = { x: 1, y: 0 };
+        let food = null;
+        let enemies = [];
+        let score = 0;
+
+        // Warna
+        const snakeColors = {
+            head: 'linear-gradient(135deg,#34d399,#10b981)',
+            body: 'linear-gradient(135deg,#22c55e,#16a34a)'
+        };
+        const enemyColors = [
+            'linear-gradient(135deg,#ef4444,#f97316)',
+            'linear-gradient(135deg,#f43f5e,#e11d48)',
+            'linear-gradient(135deg,#fb7185,#ef4444)'
+        ];
+
+        function randCell(avoid = []) {
+            let pos;
+            do {
+                pos = { x: Math.floor(Math.random() * COLS), y: Math.floor(Math.random() * ROWS) };
+            } while (avoid.some(a => a.x === pos.x && a.y === pos.y));
+            return pos;
+        }
+        function same(a, b) { return a.x === b.x && a.y === b.y; }
+
+        function place(el, pos) {
+            el.style.left = (pos.x * grid) + 'px';
+            el.style.top = (pos.y * grid) + 'px';
+        }
+
+        function init() {
+            board.innerHTML = '';
+            COLS = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--cols'));
+            ROWS = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--rows'));
+
+            score = 0;
+            scoreEl.textContent = score;
+            paused = false;
+            gameOver = false;
+            btnPause.textContent = 'Jeda';
+            statusEl.textContent = 'Mulai...';
+
+            // Cacing awal
+            const startX = Math.floor(COLS / 3);
+            const startY = Math.floor(ROWS / 2);
+            snake = [
+                { x: startX + 2, y: startY },
+                { x: startX + 1, y: startY },
+                { x: startX, y: startY }
+            ];
+            dir = { x: 1, y: 0 };
+            pendingDir = { x: 1, y: 0 };
+
+            // Musuh awal
+            enemies = [];
+            spawnEnemy();
+            spawnEnemy();
+
+            // Makanan
+            spawnFood();
+
+            // Render awal
+            drawAll();
+
+            setSpeed(currentSpeed);
+            startLoop();
+        }
+
+        function setSpeed(level) {
+            currentSpeed = level;
+            tickMs = speeds[currentSpeed];
+            speedLbl.textContent = level === 'slow' ? 'Santai' : level === 'medium' ? 'Sedang' : 'Cepat';
+            if (loopId) { startLoop(); }
+        }
+
+        function startLoop() {
+            if (loopId) cancelAnimationFrame(loopId);
+            let last = performance.now();
+            let acc = 0;
+            function frame(now) {
+                if (gameOver) { return; }
+                if (paused) {
+                    loopId = requestAnimationFrame(frame);
+                    return;
+                }
+                const delta = now - last; last = now; acc += delta;
+                while (acc >= tickMs) {
+                    update();
+                    acc -= tickMs;
+                }
+                loopId = requestAnimationFrame(frame);
+            }
+            loopId = requestAnimationFrame(frame);
+        }
+
+        // Spawner
+        function spawnFood() {
+            const occupied = [...snake, ...enemies.map(e => e.pos)];
+            food = randCell(occupied);
+            renderFood();
+        }
+
+        function spawnEnemy() {
+            const occupied = [...snake];
+            let pos = randCell(occupied);
+            // Musuh diperlambat: bergerak tiap beberapa langkah tick
+            const enemy = {
+                pos,
+                dir: [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }][Math.floor(Math.random() * 4)],
+                step: 0,
+                pace: 3  // makin besar = makin lambat
+            };
+            enemies.push(enemy);
+            renderEnemy(enemy);
+        }
+
+        // Render
+        function drawAll() {
+            board.querySelectorAll('.segment,.food,.enemy,.particle').forEach(e => e.remove());
+            snake.forEach((p, i) => renderSegment(p, i === 0));
+            renderFood();
+            enemies.forEach(renderEnemy);
+        }
+
+        function renderSegment(pos, isHead) {
+            const el = document.createElement('div');
+            el.className = 'segment' + (isHead ? ' head' : '');
+            el.style.background = isHead ? snakeColors.head : snakeColors.body;
+            place(el, pos);
+            board.appendChild(el);
+        }
+
+        function renderFood() {
+            const el = document.createElement('div');
+            el.className = 'food';
+            el.innerHTML = '🌟';
+            place(el, food);
+            board.appendChild(el);
+            requestAnimationFrame(() => { el.classList.add('bump'); setTimeout(() => el.classList.remove('bump'), 180); });
+        }
+
+        function renderEnemy(enemy) {
+            const el = document.createElement('div');
+            el.className = 'enemy';
+            el.style.background = enemyColors[Math.floor(Math.random() * enemyColors.length)];
+            place(el, enemy.pos);
+            board.appendChild(el);
+        }
+
+        function addParticles(center) {
+            const colors = ['#34d399', '#10b981', '#22c55e', '#a7f3d0', '#6ee7b7'];
+            for (let i = 0; i < 6; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.background = colors[i % colors.length];
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 10 + Math.random() * 16;
+                p.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+                p.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+                p.style.left = (center.x * grid + grid / 2 - 3) + 'px';
+                p.style.top = (center.y * grid + grid / 2 - 3) + 'px';
+                board.appendChild(p);
+                setTimeout(() => p.remove(), 500);
+            }
+        }
+
+        // Logika
+        function update() {
+            dir = pendingDir;
+
+            const head = { ...snake[0] };
+            head.x += dir.x;
+            head.y += dir.y;
+
+            // Dinding = game over
+            if (head.x < 0 || head.y < 0 || head.x >= COLS || head.y >= ROWS) {
+                return endGame('Menabrak dinding');
+            }
+            // Tabrak badan sendiri = game over (tetap logis)
+            if (snake.some((s, i) => i > 0 && same(s, head))) {
+                return endGame('Menabrak badan sendiri');
+            }
+            // Adu kepala (kepala cacing bertemu posisi kepala musuh saat ini) = game over
+            if (enemies.some(e => same(e.pos, head))) {
+                return endGame('Kepala bertabrakan dengan musuh');
+            }
+
+            // Gerakkan musuh lebih lambat dan tidak memicu game over saat menyentuh badan
+            moveEnemies(head);
+
+            // Makan
+            let grew = false;
+            if (same(head, food)) {
+                score += 10;
+                scoreEl.textContent = score;
+                addParticles(food);
+                grew = true;
+                spawnFood();
+                // Kadang spawn musuh baru
+                if (enemies.length < 5 && Math.random() < 0.25) {
+                    spawnEnemy();
+                }
+            }
+
+            // Update tubuh cacing
+            snake.unshift(head);
+            if (!grew) snake.pop();
+
+            // Render ulang cepat
+            board.querySelectorAll('.segment,.food,.enemy').forEach(e => e.remove());
+            snake.forEach((p, i) => renderSegment(p, i === 0));
+            renderFood();
+            enemies.forEach(renderEnemy);
+
+            statusEl.textContent = 'Berjalan...';
+        }
+
+        function moveEnemies(headPos) {
+            enemies.forEach(e => {
+                e.step = (e.step + 1) % e.pace;
+                if (e.step !== 0) return; // hanya bergerak saat step 0
+
+                // 50% kejar kepala, 50% acak
+                const chase = Math.random() < 0.5;
+                if (chase) {
+                    const dx = headPos.x - e.pos.x;
+                    const dy = headPos.y - e.pos.y;
+                    if (Math.abs(dx) > Math.abs(dy)) {
+                        e.dir = { x: Math.sign(dx), y: 0 };
+                    } else if (Math.abs(dy) !== 0) {
+                        e.dir = { x: 0, y: Math.sign(dy) };
+                    }
+                } else {
+                    const choices = [{ x: 1, y: 0 }, { x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }];
+                    e.dir = choices[Math.floor(Math.random() * choices.length)];
+                }
+
+                const next = { x: e.pos.x + e.dir.x, y: e.pos.y + e.dir.y };
+
+                // jika akan menabrak dinding, putar balik
+                if (next.x < 0 || next.y < 0 || next.x >= COLS || next.y >= ROWS) {
+                    e.dir = { x: -e.dir.x, y: -e.dir.y };
+                } else {
+                    e.pos = next;
+                }
+
+                // Catatan: Menyentuh badan cacing TIDAK game over lagi (sesuai permintaan)
+                // Namun jika setelah bergerak kepala musuh berada tepat di kepala cacing (adu kepala setelah musuh bergerak),
+                // kita tetap akhiri permainan.
+                if (same(e.pos, snake[0])) {
+                    endGame('Kepala bertabrakan dengan musuh');
+                }
+            });
+        }
+
+        function endGame(reason) {
+            if (gameOver) return;
+            gameOver = true;
+            statusEl.textContent = 'Game Over: ' + reason;
+            board.classList.add('ring-4', 'ring-red-500/60');
+            board.style.animation = 'glow 900ms ease-in-out 2';
+            showOverlay(reason);
+        }
+
+        function showOverlay(reason) {
+            const overlay = document.createElement('div');
+            overlay.className = 'absolute inset-0 grid place-items-center';
+            const card = document.createElement('div');
+            card.className = 'glass rounded-2xl p-6 text-center mx-6';
+            card.innerHTML = `
+        <div class="text-2xl font-extrabold mb-1">Game Over</div>
+        <div class="text-white/80 mb-4">${reason}</div>
+        <div class="text-sm text-white/70 mb-5">Skor kamu: <b>${score}</b></div>
+        <div class="flex gap-3 justify-center">
+          <button id="ovrRestart" class="px-4 py-2 rounded-xl bg-indigo-500 hover:bg-indigo-600 font-semibold">Main Lagi</button>
+          <button id="ovrClose" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15">Tutup</button>
+        </div>
+      `;
+            board.appendChild(overlay);
+            overlay.appendChild(card);
+
+            document.getElementById('ovrRestart').onclick = () => { overlay.remove(); init(); };
+            document.getElementById('ovrClose').onclick = () => overlay.remove();
+        }
+
+        function setDirection(nx, ny) {
+            const invalid = (nx === -dir.x && ny === -dir.y);
+            if (invalid) return;
+            pendingDir = { x: nx, y: ny };
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === ' ') { togglePause(); return; }
+            if (['ArrowUp', 'w', 'W'].includes(e.key)) setDirection(0, -1);
+            else if (['ArrowDown', 's', 'S'].includes(e.key)) setDirection(0, 1);
+            else if (['ArrowLeft', 'a', 'A'].includes(e.key)) setDirection(-1, 0);
+            else if (['ArrowRight', 'd', 'D'].includes(e.key)) setDirection(1, 0);
+        });
+
+        document.querySelectorAll('.dpad [data-dir]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const d = btn.getAttribute('data-dir');
+                if (d === 'up') setDirection(0, -1);
+                if (d === 'down') setDirection(0, 1);
+                if (d === 'left') setDirection(-1, 0);
+                if (d === 'right') setDirection(1, 0);
+            });
+        });
+        document.getElementById('btnMobilePause').addEventListener('click', () => togglePause());
+
+        function togglePause() {
+            if (gameOver) return;
+            paused = !paused;
+            btnPause.textContent = paused ? 'Lanjut' : 'Jeda';
+            statusEl.textContent = paused ? 'Dijeda' : 'Berjalan...';
+        }
+        btnPause.addEventListener('click', togglePause);
+        btnRestart.addEventListener('click', () => init());
+
+        init();
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'96fc192b95354e24',t:'MTc1NTI5NjYyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>

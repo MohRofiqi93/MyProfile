@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Desain & IT Programmer Roadmap</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4ad3f9b6b2.js" crossorigin="anonymous"></script>
+    <style>
+        :root {
+            --bg: #0b1020;
+            --card: #121936;
+            --accent: #6ee7ff;
+            --accent-2: #a78bfa;
+            --text: #e6ecff;
+            --muted: #9fb0d6;
+            --glow: 0 0 40px rgba(110, 231, 255, .25), 0 0 80px rgba(167, 139, 250, .15);
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            background: radial-gradient(1200px 800px at 10% 10%, #0f1633 0%, #0b1020 40%, #0b1020 100%);
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+
+        /* Soft gradient orbs for depth */
+        .orb {
+            position: absolute;
+            border-radius: 9999px;
+            filter: blur(60px);
+            opacity: .55;
+            pointer-events: none;
+        }
+
+        .orb-1 {
+            width: 520px;
+            height: 520px;
+            top: -120px;
+            right: -120px;
+            background: radial-gradient(circle at 30% 30%, #7c3aed, transparent 60%);
+        }
+
+        .orb-2 {
+            width: 440px;
+            height: 440px;
+            bottom: -120px;
+            left: -80px;
+            background: radial-gradient(circle at 70% 40%, #06b6d4, transparent 60%);
+        }
+
+        .orb-3 {
+            width: 380px;
+            height: 380px;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at 50% 50%, #22d3ee, transparent 60%);
+            opacity: .25;
+        }
+
+        /* Floating animation */
+        @keyframes floaty {
+
+            0%,
+            100% {
+                transform: translateY(0)
+            }
+
+            50% {
+                transform: translateY(-6px)
+            }
+        }
+
+        .floaty {
+            animation: floaty 6s ease-in-out infinite;
+        }
+
+        /* Subtle card hover */
+        .lift {
+            transition: transform .3s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+        }
+
+        .lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(110, 231, 255, .15), 0 6px 20px rgba(167, 139, 250, .12);
+        }
+
+        /* Tabs underline */
+        .tab-active {
+            position: relative;
+        }
+
+        .tab-active::after {
+            content: "";
+            position: absolute;
+            left: 12px;
+            right: 12px;
+            bottom: -10px;
+            height: 3px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            box-shadow: var(--glow);
+        }
+
+        /* Timeline */
+        .timeline-dot {
+            box-shadow: 0 0 0 6px rgba(99, 102, 241, .15), 0 0 0 12px rgba(110, 231, 255, .08);
+        }
+
+        /* Progress ring */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .glow {
+            box-shadow: var(--glow);
+        }
+
+        /* Section transitions */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn .4s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* Buttons micro-interaction */
+        .press {
+            transition: transform .08s ease;
+        }
+
+        .press:active {
+            transform: translateY(1px) scale(.995);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen relative overflow-x-hidden">
+    <!-- Ambient Orbs -->
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+
+    <!-- NAV -->
+    <header class="w-full sticky top-0 z-30 backdrop-blur-md bg-[#0b1020cc] border-b border-white/10">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-400 to-violet-500 grid place-items-center glow">
+                    <i class="fa-solid fa-sparkles text-[#0b1020]"></i>
+                </div>
+                <span class="font-extrabold tracking-tight text-lg">Roadmap Kreatif</span>
+            </div>
+            <nav class="hidden sm:flex items-center gap-6 text-sm text-white/80">
+                <a href="../index.html" class="hover:text-white transition">Beranda</a>
+                <a href="#" class="hover:text-white transition">Fitur</a>
+                <a href="#contact" class="hover:text-white transition">Kontak</a>
+
+            </nav>
+            <button id="toRoadmapTop"
+                class="press bg-white text-[#0b1020] font-semibold px-4 py-2 rounded-full hover:bg-slate-100 transition shadow">
+                Mulai
+            </button>
+        </div>
+    </header>
+
+    <!-- PAGE 1: Landing -->
+    <main id="home" class="page active">
+        <section class="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-24 pb-16">
+            <div class="grid md:grid-cols-2 gap-10 items-center">
+                <div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">
+                        Bangun Karier Impian di
+                        <span
+                            class="bg-gradient-to-r from-cyan-300 via-sky-400 to-violet-400 bg-clip-text text-transparent">Desain
+                            & IT</span>
+                    </h1>
+                    <p class="text-white/70 mt-4 leading-relaxed">
+                        Mulai perjalananmu dengan roadmap yang jelas, materi inti, dan langkah-langkah praktis. Semua
+                        dirancang sederhana dan fokus pada hasil.
+                    </p>
+
+                    <div class="mt-8 flex flex-wrap items-center gap-4">
+                        <!-- Tombol yang kamu kirim, sekarang berfungsi pindah halaman -->
+                        <button id="startBtn"
+                            class="press bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transform hover:scale-105 transition duration-300 shadow-lg">
+                            <i class="fas fa-rocket mr-2"></i>Mulai Eksplorasi
+                        </button>
+
+                        <button id="scrollWhy"
+                            class="press border border-white/20 text-white/90 px-5 py-3 rounded-full hover:bg-white/10 transition">
+                            Mengapa Roadmap?
+                        </button>
+                    </div>
+
+                    <div class="mt-10 grid grid-cols-3 gap-4 text-sm">
+                        <div class="lift rounded-2xl p-4 bg-white/5 border border-white/10">
+                            <div class="text-white font-semibold">Langkah Jelas</div>
+                            <div class="text-white/60">Tahap demi tahap</div>
+                        </div>
+                        <div class="lift rounded-2xl p-4 bg-white/5 border border-white/10">
+                            <div class="text-white font-semibold">Materi Inti</div>
+                            <div class="text-white/60">Fokus yang penting</div>
+                        </div>
+                        <div class="lift rounded-2xl p-4 bg-white/5 border border-white/10">
+                            <div class="text-white font-semibold">Aksi Nyata</div>
+                            <div class="text-white/60">Mini project nyata</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="lift rounded-3xl p-6 bg-white/5 border border-white/10">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold">Preview Roadmap</h3>
+                            <span class="text-xs text-white/60">Live</span>
+                        </div>
+                        <div class="mt-4 grid sm:grid-cols-2 gap-4">
+                            <div
+                                class="rounded-2xl p-4 bg-gradient-to-br from-indigo-500/20 to-cyan-400/10 border border-white/10">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-9 h-9 rounded-xl bg-indigo-500/30 grid place-items-center"><i
+                                            class="fa-solid fa-pen-ruler"></i></span>
+                                    <div>
+                                        <div class="font-semibold">Desain</div>
+                                        <div class="text-white/60 text-xs">UI/UX • Branding</div>
+                                    </div>
+                                </div>
+                                <ul class="mt-3 space-y-2 text-sm text-white/80">
+                                    <li>• Prinsip Visual</li>
+                                    <li>• Wireframe → Mockup</li>
+                                    <li>• Sistem Desain</li>
+                                </ul>
+                            </div>
+                            <div
+                                class="rounded-2xl p-4 bg-gradient-to-br from-cyan-400/20 to-violet-400/10 border border-white/10">
+                                <div class="flex items-center gap-3">
+                                    <span class="w-9 h-9 rounded-xl bg-cyan-400/30 grid place-items-center"><i
+                                            class="fa-solid fa-code"></i></span>
+                                    <div>
+                                        <div class="font-semibold">Programming</div>
+                                        <div class="text-white/60 text-xs">Web • Backend</div>
+                                    </div>
+                                </div>
+                                <ul class="mt-3 space-y-2 text-sm text-white/80">
+                                    <li>• Dasar Web</li>
+                                    <li>• Framework</li>
+                                    <li>• Praktik Baik</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-5 text-xs text-white/60">Klik “Mulai Eksplorasi” untuk masuk ke halaman roadmap.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="why" class="mt-20 grid md:grid-cols-3 gap-6">
+                <div class="lift rounded-2xl p-6 bg-white/5 border border-white/10">
+                    <div class="text-2xl">🎯</div>
+                    <h4 class="mt-3 font-semibold">Fokus pada yang penting</h4>
+                    <p class="text-white/70 mt-2">Tidak semua harus dipelajari. Ikuti jalur inti agar cepat maju.</p>
+                </div>
+                <div class="lift rounded-2xl p-6 bg-white/5 border border-white/10">
+                    <div class="text-2xl">🧭</div>
+                    <h4 class="mt-3 font-semibold">Arah yang jelas</h4>
+                    <p class="text-white/70 mt-2">Tahap demi tahap, dari pemula hingga siap kerja.</p>
+                </div>
+                <div class="lift rounded-2xl p-6 bg-white/5 border border-white/10">
+                    <div class="text-2xl">🚀</div>
+                    <h4 class="mt-3 font-semibold">Belajar sambil praktik</h4>
+                    <p class="text-white/70 mt-2">Setiap tahap punya mini project agar skill menempel.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- PAGE 2: Roadmap -->
+    <section id="roadmap" class="page">
+        <div class="max-w-6xl mx-auto px-6 pt-10 sm:pt-16 pb-20">
+            <div class="flex items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold">Desain & IT Programmer Roadmap</h2>
+                    <p class="text-white/70 mt-2">Pilih jalur, ikuti langkah, dan pantau progresmu.</p>
+                </div>
+                <button id="backHome"
+                    class="press border border-white/20 text-white/90 px-4 py-2 rounded-full hover:bg-white/10 transition">
+                    ← Kembali
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="mt-8 flex items-center gap-2 bg-white/5 p-1 rounded-full border border-white/10 w-fit">
+                <button data-tab="design"
+                    class="press tab-btn px-5 py-2 rounded-full font-semibold bg-white text-[#0b1020]">Desain</button>
+                <button data-tab="dev"
+                    class="press tab-btn px-5 py-2 rounded-full text-white/90 hover:bg-white/10">Programming</button>
+            </div>
+
+            <!-- Progress and CTA -->
+            <div class="mt-8 grid md:grid-cols-[auto,1fr] gap-6 items-center">
+                <div class="relative w-32 h-32">
+                    <svg class="w-32 h-32 progress-ring" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="52" stroke="rgba(255,255,255,.15)" stroke-width="10" fill="none" />
+                        <circle id="progressTrack" cx="60" cy="60" r="52" stroke="url(#grad)" stroke-width="10"
+                            stroke-linecap="round" fill="none" stroke-dasharray="326.56" stroke-dashoffset="326.56" />
+                        <defs>
+                            <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#22d3ee" />
+                                <stop offset="100%" stop-color="#a78bfa" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="absolute inset-0 grid place-items-center">
+                        <div class="text-center">
+                            <div id="progressPercent" class="text-2xl font-extrabold">0%</div>
+                            <div class="text-xs text-white/60 -mt-1">Selesai</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lift rounded-2xl p-5 bg-white/5 border border-white/10">
+                    <div class="flex flex-wrap items-center gap-4 justify-between">
+                        <div class="text-white/80 text-sm">Centang modul yang sudah kamu kuasai untuk memperbarui
+                            progres.</div>
+                        <button id="resetProgress"
+                            class="press bg-gradient-to-r from-cyan-400 to-violet-500 text-[#0b1020] font-semibold px-5 py-2 rounded-full glow">
+                            Reset Progres
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENT: DESIGN -->
+            <div id="tab-design" class="mt-10 space-y-8">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Card -->
+                    <label class="lift rounded-2xl p-5 bg-white/5 border border-white/10 block cursor-pointer">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" class="mt-1 accent-cyan-400 module-check" data-group="design">
+                            <div>
+                                <div class="font-semibold">Dasar Desain</div>
+                                <div class="text-white/70 text-sm mt-1">Teori warna, tipografi, hierarki visual, layout.
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="lift rounded-2xl p-5 bg-white/5 border border-white/10 block cursor-pointer">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" class="mt-1 accent-cyan-400 module-check" data-group="design">
+                            <div>
+                                <div class="font-semibold">UI/UX Fundamentals</div>
+                                <div class="text-white/70 text-sm mt-1">Riset cepat, persona, flow, wireframe →
+                                    prototipe.</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="lift rounded-2xl p-5 bg-white/5 border border-white/10 block cursor-pointer">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" class="mt-1 accent-cyan-400 module-check" data-group="design">
+                            <div>
+                                <div class="font-semibold">Sistem Desain</div>
+                                <div class="text-white/70 text-sm mt-1">Komponen, grid, token, konsistensi skala.</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Timeline -->
+                <div class="lift rounded-2xl p-6 bg-white/5 border border-white/10">
+                    <div class="font-semibold mb-5">Timeline Belajar Desain</div>
+                    <div class="relative pl-6">
+                        <div
+                            class="absolute left-2 top-0 bottom-0 w-px bg-gradient-to-b from-cyan-400/60 to-violet-400/60">
+                        </div>
+
+                        <div class="relative mb-8">
+                            <div class="w-3 h-3 bg-cyan-400 rounded-full absolute -left-[7px] top-1 timeline-dot"></div>
+                            <div class="text-sm text-white/60">Minggu 1-2</div>
+                            <div class="font-semibold">Fundamental Visual</div>
+                            <div class="text-white/70 text-sm">Pelajari warna, tipografi, dan komposisi.</div>
+                        </div>
+                        <div class="relative mb-8">
+                            <div class="w-3 h-3 bg-violet-400 rounded-full absolute -left-[7px] top-1 timeline-dot">
+                            </div>
+                            <div class="text-sm text-white/60">Minggu 3-4</div>
+                            <div class="font-semibold">Wireframe → UI</div>
+                            <div class="text-white/70 text-sm">Buat wireframe lalu tingkatkan ke mockup hi-fi.</div>
+                        </div>
+                        <div class="relative">
+                            <div class="w-3 h-3 bg-sky-400 rounded-full absolute -left-[7px] top-1 timeline-dot"></div>
+                            <div class="text-sm text-white/60">Minggu 5-6</div>
+                            <div class="font-semibold">Sistem Desain</div>
+                            <div class="text-white/70 text-sm">Bangun library komponen dan dokumentasi singkat.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENT: DEV -->
+            <div id="tab-dev" class="mt-10 space-y-8 hidden">
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Card -->
+                    <label class="lift rounded-2xl p-5 bg-white/5 border border-white/10 block cursor-pointer">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" class="mt-1 accent-violet-400 module-check" data-group="dev">
+                            <div>
+                                <div class="font-semibold">Dasar Web</div>
+                                <div class="text-white/70 text-sm mt-1">HTML semantik, styling, interaktivitas dasar.
+                                </div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="lift rounded-2xl p-5 bg-white/5 border border-white/10 block cursor-pointer">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" class="mt-1 accent-violet-400 module-check" data-group="dev">
+                            <div>
+                                <div class="font-semibold">Frontend Framework</div>
+                                <div class="text-white/70 text-sm mt-1">Komponen, state, routing dasar.</div>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="lift rounded-2xl p-5 bg-white/5 border border-white/10 block cursor-pointer">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" class="mt-1 accent-violet-400 module-check" data-group="dev">
+                            <div>
+                                <div class="font-semibold">Backend Dasar</div>
+                                <div class="text-white/70 text-sm mt-1">API dasar, database, auth konsep.</div>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Timeline -->
+                <div class="lift rounded-2xl p-6 bg-white/5 border border-white/10">
+                    <div class="font-semibold mb-5">Timeline Belajar Programming</div>
+                    <div class="relative pl-6">
+                        <div
+                            class="absolute left-2 top-0 bottom-0 w-px bg-gradient-to-b from-sky-400/60 to-violet-400/60">
+                        </div>
+
+                        <div class="relative mb-8">
+                            <div class="w-3 h-3 bg-sky-400 rounded-full absolute -left-[7px] top-1 timeline-dot"></div>
+                            <div class="text-sm text-white/60">Minggu 1-2</div>
+                            <div class="font-semibold">Web Dasar</div>
+                            <div class="text-white/70 text-sm">Struktur halaman, style, dan interaksi.</div>
+                        </div>
+                        <div class="relative mb-8">
+                            <div class="w-3 h-3 bg-violet-400 rounded-full absolute -left-[7px] top-1 timeline-dot">
+                            </div>
+                            <div class="text-sm text-white/60">Minggu 3-4</div>
+                            <div class="font-semibold">Framework</div>
+                            <div class="text-white/70 text-sm">Bangun komponen reusable dan routing.</div>
+                        </div>
+                        <div class="relative">
+                            <div class="w-3 h-3 bg-cyan-400 rounded-full absolute -left-[7px] top-1 timeline-dot"></div>
+                            <div class="text-sm text-white/60">Minggu 5-6</div>
+                            <div class="font-semibold">Backend & API</div>
+                            <div class="text-white/70 text-sm">Konsumsi API dan konsep database.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Helpful resources -->
+            <div class="mt-10 grid md:grid-cols-3 gap-6">
+                <a href="#"
+                    class="lift rounded-2xl p-5 bg-gradient-to-br from-white/5 to-white/10 border border-white/10 block">
+                    <div class="flex items-center gap-3">
+                        <span class="w-9 h-9 rounded-xl bg-white/10 grid place-items-center"><i
+                                class="fa-solid fa-book-open"></i></span>
+                        <div class="font-semibold">Panduan Cepat</div>
+                    </div>
+                    <p class="text-white/70 text-sm mt-2">Checklist singkat untuk memulai tiap jalur.</p>
+                </a>
+                <a href="#"
+                    class="lift rounded-2xl p-5 bg-gradient-to-br from-white/5 to-white/10 border border-white/10 block">
+                    <div class="flex items-center gap-3">
+                        <span class="w-9 h-9 rounded-xl bg-white/10 grid place-items-center"><i
+                                class="fa-solid fa-layer-group"></i></span>
+                        <div class="font-semibold">Mini Project</div>
+                    </div>
+                    <p class="text-white/70 text-sm mt-2">Latihan kecil berorientasi hasil.</p>
+                </a>
+                <a href="#"
+                    class="lift rounded-2xl p-5 bg-gradient-to-br from-white/5 to-white/10 border border-white/10 block">
+                    <div class="flex items-center gap-3">
+                        <span class="w-9 h-9 rounded-xl bg-white/10 grid place-items-center"><i
+                                class="fa-solid fa-chart-line"></i></span>
+                        <div class="font-semibold">Tips Karier</div>
+                    </div>
+                    <p class="text-white/70 text-sm mt-2">Portofolio, networking, dan wawancara.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10">
+        <div class="max-w-6xl mx-auto px-6 py-8 text-center text-white/60 text-sm">
+            © 2025 Roadmap Kreatif • Dibuat dengan semangat belajar Dibuat dengan ❤️ oleh <span
+                class="text-blue-400 font-semibold">Moh
+                Rofiqi</span></p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple page routing between "home" and "roadmap"
+        const home = document.getElementById('home');
+        const roadmap = document.getElementById('roadmap');
+        const startBtn = document.getElementById('startBtn');
+        const toRoadmapTop = document.getElementById('toRoadmapTop');
+        const backHome = document.getElementById('backHome');
+        function show(page) {
+            if (page === 'roadmap') {
+                home.classList.remove('active'); home.classList.add('hidden');
+                roadmap.classList.remove('hidden'); roadmap.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                roadmap.classList.remove('active'); roadmap.classList.add('hidden');
+                home.classList.remove('hidden'); home.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        startBtn.addEventListener('click', () => show('roadmap'));
+        toRoadmapTop.addEventListener('click', () => show('roadmap'));
+        backHome.addEventListener('click', () => show('home'));
+
+        // Smooth scroll "Mengapa Roadmap?"
+        document.getElementById('scrollWhy').addEventListener('click', () => {
+            document.getElementById('why').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Tabs logic
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabDesign = document.getElementById('tab-design');
+        const tabDev = document.getElementById('tab-dev');
+
+        tabButtons.forEach(btn => btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-tab');
+            tabButtons.forEach(b => {
+                b.classList.remove('bg-white', 'text-[#0b1020]', 'font-semibold', 'tab-active');
+                b.classList.add('text-white/90');
+            });
+            btn.classList.add('bg-white', 'text-[#0b1020]', 'font-semibold', 'tab-active');
+            if (target === 'design') { tabDesign.classList.remove('hidden'); tabDev.classList.add('hidden'); }
+            else { tabDev.classList.remove('hidden'); tabDesign.classList.add('hidden'); }
+            updateProgress(); // recalc for visible group
+        }));
+
+        // Progress tracking
+        const checks = document.querySelectorAll('.module-check');
+        const track = document.getElementById('progressTrack');
+        const percentEl = document.getElementById('progressPercent');
+        const resetBtn = document.getElementById('resetProgress');
+        const CIRCUM = 2 * Math.PI * 52;
+
+        function visibleGroup() {
+            return !tabDesign.classList.contains('hidden') ? 'design' : 'dev';
+        }
+
+        function updateProgress() {
+            const group = visibleGroup();
+            const all = Array.from(checks).filter(c => c.dataset.group === group);
+            const done = all.filter(c => c.checked);
+            const ratio = all.length ? done.length / all.length : 0;
+            const percent = Math.round(ratio * 100);
+            percentEl.textContent = percent + '%';
+            const offset = CIRCUM * (1 - ratio);
+            track.style.strokeDasharray = CIRCUM;
+            track.style.strokeDashoffset = offset;
+        }
+
+        checks.forEach(c => c.addEventListener('change', updateProgress));
+        resetBtn.addEventListener('click', () => {
+            checks.forEach(c => { if (c.dataset.group === visibleGroup()) c.checked = false; });
+            updateProgress();
+        });
+
+        // Initial progress animation
+        let start = null;
+        const targetOffset = CIRCUM;
+        function animateInitial(ts) {
+            if (!start) start = ts;
+            const p = Math.min(1, (ts - start) / 800);
+            const eased = p < .5 ? 2 * p * p : -1 + (4 - 2 * p) * p; // easeInOut
+            track.style.strokeDasharray = CIRCUM;
+            track.style.strokeDashoffset = targetOffset - eased * 16; // subtle entrance
+            if (p < 1) requestAnimationFrame(animateInitial);
+        }
+        requestAnimationFrame(animateInitial);
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'96f9133f93a16035',t:'MTc1NTI2NDkyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
