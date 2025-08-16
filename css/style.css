@@ -225,6 +225,140 @@ body {
     }
 }
 
+
+/* <!-- Social Media --> */
+
+/* General Styling */
+* {
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+}
+
+h4 {
+    font-size: 1.25rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Social Media Icon Styling */
+.social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #333;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: white;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Hover Effect for Social Icons (3D rotation effect) */
+.social-icon:hover {
+    transform: rotateY(360deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.social-icon i {
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effect for Icon Inside the Circle */
+.social-icon:hover i {
+    transform: scale(1.2);
+}
+
+/* Instagram */
+.instagram {
+    background: linear-gradient(135deg, #ff3a44, #9b0064);
+}
+
+.instagram:hover {
+    background: linear-gradient(135deg, #ff0068, #ff3a44);
+}
+
+/* Facebook */
+.facebook {
+    background: linear-gradient(135deg, #3b5998, #192f5d);
+}
+
+.facebook:hover {
+    background: linear-gradient(135deg, #8b9dc3, #3b5998);
+}
+
+/* TikTok */
+.tiktok {
+    background: linear-gradient(135deg, #010101, #69c9d0);
+}
+
+.tiktok:hover {
+    background: linear-gradient(135deg, #010101, #ff3b2a);
+}
+
+/* YouTube */
+.youtube {
+    background: linear-gradient(135deg, #ff0000, #c4302b);
+}
+
+.youtube:hover {
+    background: linear-gradient(135deg, #ff0000, #ff4f40);
+}
+
+/* Lynk */
+.lynk {
+    background: linear-gradient(135deg, #2980b9, #6dd5fa);
+}
+
+.lynk:hover {
+    background: linear-gradient(135deg, #2980b9, #00c6ff);
+}
+
+/* S-ID */
+.s-id {
+    background: linear-gradient(135deg, #0b5ed7, #d2b8fe);
+}
+
+.s-id:hover {
+    background: linear-gradient(135deg, #0b5ed7, #ff62b4);
+}
+
+/* Image Styling for Lynk and S-ID */
+.social-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.social-icon-img:hover {
+    transform: scale(1.2);
+}
+
+/* Responsiveness for small screens */
+@media (max-width: 768px) {
+    .social-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+
+
+
 /* ====================================== */
 
 
