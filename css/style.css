@@ -1,6 +1,12 @@
-/* General Styling */
+/* =================================================================
+   1. GLOBAL STYLES & RESET
+   - Aturan dasar untuk semua elemen, font, dan latar belakang.
+   ================================================================= */
 * {
     scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -8,45 +14,10 @@ body {
     background-color: #f8f8f8;
 }
 
-/* Fade In Animation */
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Hero Section Styling */
-.hero-bg {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-/* .typing-animation {
-    border-right: 2px solid #667eea;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-} */
-
-.small-text {
-    font-size: 0.2rem;
-    /* Sangat kecil */
-    position: absolute;
-    bottom: -10px;
-    /* Menempatkan teks lebih dekat ke bawah */
-    right: -10px;
-    /* Menempatkan teks lebih dekat ke kanan */
-    color: #999;
-    /* Warna abu-abu agar lebih terlihat kecil */
-    transform: translate(50%, 50%);
-    /* Sedikit pergeseran agar lebih rapi */
-}
-
-
-
-
+/* =================================================================
+   2. ANIMATIONS (KEYFRAMES)
+   - Semua definisi @keyframes ada di sini agar mudah ditemukan.
+   ================================================================= */
 @keyframes typing {
     from {
         width: 0;
@@ -67,43 +38,6 @@ body {
     50% {
         border-color: #667eea;
     }
-}
-
-/* Mobile Menu */
-.mobile-menu {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-}
-
-.mobile-menu.open {
-    transform: translateX(0);
-}
-
-/* Hamburger Menu */
-.hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: white;
-    margin: 5px 0;
-    transition: 0.3s;
-}
-
-.hamburger.active span:nth-child(1) {
-    transform: rotate(-45deg) translate(-5px, 6px);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: rotate(45deg) translate(-5px, -6px);
-}
-
-/* Floating Animation */
-.floating-animation {
-    animation: float 3s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -118,265 +52,18 @@ body {
     }
 }
 
-/* Gradient Text */
-.gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
+@keyframes pulse {
 
-/* General Styling */
-* {
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-}
-
-
-/* animasi di visi dan misi */
-/* Global Styles */
-* {
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-}
-
-/* 3D Icon Animation */
-.icon-container {
-    display: inline-block;
-    perspective: 1000px;
-    transition: transform 0.5s ease;
-}
-
-.icon-3d {
-    transition: transform 0.3s ease;
-}
-
-.icon-container:hover .icon-3d {
-    transform: rotate(360deg);
-    transition: transform 0.3s ease;
-}
-
-/* Typing Animation for Text
-.typing-animation {
-    border-right: 2px solid #667eea;
-    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
-} */
-
-@keyframes typing {
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes blink-caret {
-
-    from,
-    to {
-        border-color: transparent;
+    0%,
+    100% {
+        transform: scale(1);
     }
 
     50% {
-        border-color: #667eea;
+        transform: scale(1.05);
     }
 }
 
-/* Fade In for Sections */
-.fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Gradient Text */
-.gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .md\:text-left {
-        text-align: center;
-    }
-}
-
-
-/* <!-- Social Media --> */
-
-/* General Styling */
-* {
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-}
-
-h4 {
-    font-size: 1.25rem;
-    color: #333;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Social Media Icon Styling */
-.social-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    background-color: #333;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    color: white;
-    transition: all 0.3s ease;
-    transform-style: preserve-3d;
-    transform: rotateY(0deg);
-    cursor: pointer;
-    text-decoration: none;
-}
-
-/* Hover Effect for Social Icons (3D rotation effect) */
-.social-icon:hover {
-    transform: rotateY(360deg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-}
-
-.social-icon i {
-    transition: transform 0.3s ease;
-}
-
-/* Hover Effect for Icon Inside the Circle */
-.social-icon:hover i {
-    transform: scale(1.2);
-}
-
-/* Instagram */
-.instagram {
-    background: linear-gradient(135deg, #ff3a44, #9b0064);
-}
-
-.instagram:hover {
-    background: linear-gradient(135deg, #ff0068, #ff3a44);
-}
-
-/* Facebook */
-.facebook {
-    background: linear-gradient(135deg, #3b5998, #192f5d);
-}
-
-.facebook:hover {
-    background: linear-gradient(135deg, #8b9dc3, #3b5998);
-}
-
-/* TikTok */
-.tiktok {
-    background: linear-gradient(135deg, #010101, #69c9d0);
-}
-
-.tiktok:hover {
-    background: linear-gradient(135deg, #010101, #ff3b2a);
-}
-
-/* YouTube */
-.youtube {
-    background: linear-gradient(135deg, #ff0000, #c4302b);
-}
-
-.youtube:hover {
-    background: linear-gradient(135deg, #ff0000, #ff4f40);
-}
-
-/* Lynk */
-.lynk {
-    background: linear-gradient(135deg, #2980b9, #6dd5fa);
-}
-
-.lynk:hover {
-    background: linear-gradient(135deg, #2980b9, #00c6ff);
-}
-
-/* S-ID */
-.s-id {
-    background: linear-gradient(135deg, #0b5ed7, #d2b8fe);
-}
-
-.s-id:hover {
-    background: linear-gradient(135deg, #0b5ed7, #ff62b4);
-}
-
-/* Image Styling for Lynk and S-ID */
-.social-icon-img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-.social-icon-img:hover {
-    transform: scale(1.2);
-}
-
-/* Responsiveness for small screens */
-@media (max-width: 768px) {
-    .social-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-    }
-}
-
-
-
-
-/* ====================================== */
-
-
-/* Stat Box 3D Effect */
-.stat-box {
-    display: inline-block;
-    perspective: 1000px;
-    /* Add perspective for 3D effect */
-    transition: transform 1s ease;
-}
-
-/* Animated Number */
-.stat-number {
-    transform: scale(0);
-    animation: scaleUp 1s ease-in-out forwards, rotate3dEffect 2s ease-in-out infinite;
-}
-
-/* Animation for Scaling Number */
 @keyframes scaleUp {
     from {
         transform: scale(0);
@@ -387,7 +74,6 @@ h4 {
     }
 }
 
-/* 3D Rotation Animation */
 @keyframes rotate3dEffect {
     0% {
         transform: rotateY(0deg);
@@ -410,15 +96,6 @@ h4 {
     }
 }
 
-/* Line Animation for the number indicator */
-.stat-box .w-12 {
-    width: 0;
-    height: 0.3rem;
-    background-color: #3b82f6;
-    animation: lineExpand 2s ease-out 0.5s forwards;
-}
-
-/* Line expand animation */
 @keyframes lineExpand {
     from {
         width: 0;
@@ -426,48 +103,19 @@ h4 {
 
     to {
         width: 3rem;
-        /* Expand to full width */
     }
 }
 
-/* 3D Hover Effect on Cards */
-.stat-box:hover {
-    transform: rotateY(10deg);
-    /* 3D effect when hovering */
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-out;
-}
+/* =================================================================
+   3. UTILITY & COMPONENT STYLES
+   - Gaya untuk komponen spesifik seperti menu, kartu, ikon, dll.
+   ================================================================= */
 
-/* Adding a shadow effect */
-.stat-number {
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-/* Gradient Text */
-.gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* =================================================
-====================================================== */
-/* BAGIAN ATAS */
-
-* {
-    scroll-behavior: smooth;
-}
-
+/* --- Animasi Masuk (Scroll) --- */
 .fade-in {
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.8s ease;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+    transition: all 0.8s ease-out;
 }
 
 .slide-in-left {
@@ -476,20 +124,10 @@ h4 {
     transition: all 0.8s ease;
 }
 
-.slide-in-left.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-
 .slide-in-right {
     opacity: 0;
     transform: translateX(50px);
     transition: all 0.8s ease;
-}
-
-.slide-in-right.visible {
-    opacity: 1;
-    transform: translateX(0);
 }
 
 .scale-in {
@@ -498,24 +136,15 @@ h4 {
     transition: all 0.8s ease;
 }
 
+.fade-in.visible,
+.slide-in-left.visible,
+.slide-in-right.visible,
 .scale-in.visible {
     opacity: 1;
-    transform: scale(1);
+    transform: none;
 }
 
-.hero-bg {
-    background: linear-gradient(135deg, #0682ca 0%, #9bb601 100%);
-}
-
-.card-hover {
-    transition: all 0.3s ease;
-}
-
-.card-hover:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
+/* --- Mobile Menu (Hamburger) --- */
 .mobile-menu {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
@@ -529,7 +158,8 @@ h4 {
     display: block;
     width: 25px;
     height: 3px;
-    background: white;
+    background: #333;
+    /* Warna disesuaikan agar terlihat di header putih */
     margin: 5px 0;
     transition: 0.3s;
 }
@@ -546,38 +176,7 @@ h4 {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-.floating-animation {
-    animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
-}
-
-.pulse-animation {
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
-}
-
+/* --- Teks & Efek Lainnya --- */
 .gradient-text {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
@@ -585,188 +184,302 @@ h4 {
     background-clip: text;
 }
 
-/* .typing-animation {
-    border-right: 2px solid #667eea;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-} */
-/* ============================================================= */
-/* LEBIH RESPONSIVE DI SEMUA WEB DAN SEMUA DEVICE */
-
-/* Membuat grid responsif */
-.grid {
-    grid-template-columns: repeat(1, 1fr);
-    /* 1 kolom di perangkat kecil */
+.floating-animation {
+    animation: float 3s ease-in-out infinite;
 }
 
-/* .grid.md\:grid-cols-2 {
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 kolom pada perangkat lebih besar */
-/* } */
-
-*/ .grid.md\:grid-cols-3 {
-    grid-template-columns: repeat(3, 1fr);
-    /* 3 kolom pada perangkat lebih besar */
+.pulse-animation {
+    animation: pulse 2s infinite;
 }
 
-
-/* NGETIK BERGANTIAN */
-.typing-text:nth-child(1) {
-    animation: typing 4s steps(50, end) 0s forwards, blink 0.75s step-end infinite;
+.card-hover {
+    transition: all 0.3s ease;
 }
 
-.typing-text:nth-child(2) {
-    animation: typing 6s steps(60, end) 4.5s forwards, blink 0.75s step-end infinite;
+.card-hover:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-
-
-/* ===================================== */
-@keyframes typing {
-    from {
-        width: 0
-    }
-
-    to {
-        width: 100%
-    }
+/* --- Social Media Icons --- */
+.social-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    color: white;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    text-decoration: none;
 }
 
-@keyframes blink-caret {
-
-    from,
-    to {
-        border-color: transparent
-    }
-
-    50% {
-        border-color: #667eea;
-    }
+.social-icon:hover {
+    transform: rotateY(360deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
+.social-icon i,
+.social-icon-img {
+    transition: transform 0.3s ease;
+}
 
+.social-icon:hover i,
+.social-icon:hover .social-icon-img {
+    transform: scale(1.2);
+}
 
-/* ANIMASI DI ID BAGROUND "ID=HOME" */
-/* Style untuk Hero Section */
+.instagram {
+    background: linear-gradient(135deg, #ff3a44, #9b0064);
+}
+
+.facebook {
+    background: linear-gradient(135deg, #3b5998, #192f5d);
+}
+
+.tiktok {
+    background: linear-gradient(135deg, #010101, #69c9d0);
+}
+
+.youtube {
+    background: linear-gradient(135deg, #ff0000, #c4302b);
+}
+
+.lynk {
+    background: linear-gradient(135deg, #2980b9, #6dd5fa);
+}
+
+.s-id {
+    background: linear-gradient(135deg, #0b5ed7, #d2b8fe);
+}
+
+.social-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+/* --- Stat Counter --- */
+.stat-box {
+    display: inline-block;
+    perspective: 1000px;
+    transition: transform 1s ease;
+}
+
+.stat-number {
+    transform: scale(0);
+    animation: scaleUp 1s ease-in-out forwards, rotate3dEffect 2s ease-in-out infinite;
+}
+
+.stat-box .w-12 {
+    width: 0;
+    height: 0.3rem;
+    animation: lineExpand 2s ease-out 0.5s forwards;
+}
+
+/* =================================================================
+   4. BAGIAN BARU UNTUK SLIDER 3D (VERSI DIPERBAIKI)
+   ================================================================= */
+
+/* --- Swiper 3D Hero Section --- */
 #home {
-    min-height: 100vh;
+    perspective: 1200px;
+    /* Tambahkan gradien gelap sebagai latar belakang cadangan */
+    background: linear-gradient(to bottom, #333, #000);
+}
+
+.swiper {
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    border-radius: 18px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+
+    /* Efek transisi untuk slide yang tidak aktif */
+    transition: transform 0.5s, opacity 0.5s, filter 0.5s;
+    opacity: 0.5;
+    /* Slide samping akan sedikit transparan */
+    filter: blur(2px);
+    /* Slide samping akan sedikit blur */
+}
+
+/* Gaya untuk slide yang aktif (di tengah) */
+.swiper-slide-active {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1.1);
+    /* Sedikit lebih besar saat di tengah */
+}
+
+/* Lapisan gradien gelap di atas gambar agar teks lebih terbaca */
+.swiper-slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
+    z-index: 1;
+}
+
+.slide-content {
+    position: relative;
+    z-index: 2;
+
+    /* Tambahkan transisi untuk efek teks */
+    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    transform: translateY(20px);
+    /* Teks sedikit bergeser ke bawah saat tidak aktif */
+    opacity: 0;
+    /* Teks tidak terlihat saat tidak aktif */
+}
+
+.swiper-slide-active .slide-content {
+    transform: translateY(0);
+    /* Teks kembali ke posisi normal saat aktif */
+    opacity: 1;
+    /* Teks muncul */
+    animation: zoomInText 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+    /* Efek zoom masuk */
+}
+
+/* Animasi Kunci untuk Efek "Film Marvel" */
+@keyframes zoomInText {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Gaya untuk tombol navigasi dan paginasi slider */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #ffffff;
+    --swiper-navigation-size: 30px;
+}
+
+.swiper-pagination-bullet-active {
+    background: #ffffff;
+}
+
+/* =================================================================
+   5. EFEK LOGO 3D - LEBIH KEREN & INTERAKTIF (FINAL)
+   ================================================================= */
+
+.logo-container-3d {
+    width: 130px;
+    /* Sedikit lebih lebar untuk efek yang lebih baik */
+    height: auto;
+    perspective: 1000px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url('Image\image1.jpg') no-repeat center center/cover;
+    /* Menambahkan transisi pada container untuk gerakan mouse */
+    transition: transform 0.4s ease-out;
 }
 
-/* Efek transparansi gambar untuk slide */
-.hero-bg {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+
+    /* Bayangan ke dalam (inset) untuk ilusi kedalaman */
+    box-shadow:
+        inset 0 0 15px rgba(255, 255, 255, 0.4),
+        /* Sorotan cahaya di dalam */
+        0 8px 25px rgba(0, 0, 0, 0.4);
+    /* Bayangan luar yang lebih lembut */
+
+    border: 2px solid rgba(255, 255, 255, 0.2);
+
+    /* Transisi yang lebih responsif */
+    transition: all 0.4s ease-out;
+    transform-style: preserve-3d;
+
+    /* Awalnya logo sedikit miring untuk efek 3D */
+    transform: rotateY(-10deg) rotateX(5deg);
 }
 
-/* Style untuk teks yang ada di atas gambar */
-.hero-content {
-    color: rgb(255, 255, 255);
-    position: relative;
-    z-index: 10;
-    text-align: center;
+/* Efek saat kursor mouse menyentuh logo */
+.logo-container-3d:hover .logo-image {
+    /* Logo akan menghadap lurus ke depan saat disentuh */
+    transform: rotateY(0deg) rotateX(0deg) scale(1.1);
+    /* Sedikit membesar */
+
+    /* Efek glow yang lebih dramatis */
+    box-shadow:
+        inset 0 0 10px rgba(255, 255, 255, 0.6),
+        0 0 30px rgba(0, 150, 255, 0.8),
+        /* Cahaya biru utama */
+        0 0 50px rgba(0, 150, 255, 0.5);
+    /* Cahaya biru menyebar */
 }
 
-.hero-content h1 {
-    font-size: 5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
+
+
+/* =================================================================
+   MENU DROPDOWN HEADER ATAS
+   ================================================================= */
+
+.dropdown-menu {
+    /* Sembunyikan menu secara default */
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.hero-content p {
-    font-size: 1.5rem;
-    opacity: 0.9;
+/* Tampilkan menu saat kelas 'show' ditambahkan */
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.hero-content .button-container {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.hero-content .button-container a button {
-    padding: 12px 30px;
-    border-radius: 50px;
-    background-color: #0066ff;
+/* Warna-warni saat disentuh */
+.dropdown-item:hover {
     color: white;
-    border: none;
-    font-size: 1.1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
-.hero-content .button-container a button:hover {
-    background-color: #00cc1b;
+.dropdown-item:hover:nth-child(1) {
+    background-color: #ef4444;
 }
 
-/* Style untuk slider */
-.carousel-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
+/* Merah */
+.dropdown-item:hover:nth-child(2) {
+    background-color: #f97316;
 }
 
-.carousel-slide {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    height: 100%;
+/* Oranye */
+.dropdown-item:hover:nth-child(3) {
+    background-color: #eab308;
 }
 
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+/* Kuning */
+.dropdown-item:hover:nth-child(4) {
+    background-color: #22c55e;
 }
 
-.carousel-prev,
-.carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 24px;
+/* Hijau */
+.dropdown-item:hover:nth-child(5) {
+    background-color: #0ea5e9;
 }
 
-.carousel-prev {
-    left: 10px;
-}
-
-.carousel-next {
-    right: 10px;
-}
-
-/* Dots for navigation */
-.carousel-dots {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-}
-
-.carousel-dots span {
-    display: inline-block;
-    margin: 0 5px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-}
-
-.active {
-    background-color: white;
-}
+/* Biru */
