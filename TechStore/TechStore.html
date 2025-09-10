@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - E-commerce Modern</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f1f8e9 50%, #ffffff 100%);
+            min-height: 100vh;
+        }
+
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+
+        .card-3d:hover {
+            transform: rotateY(8deg) rotateX(8deg) translateZ(30px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(59, 130, 246, 0.3), 0 0 0 1px rgba(34, 197, 94, 0.2);
+        }
+
+        .product-image {
+            transition: all 0.4s ease;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+        }
+
+        .product-image:hover {
+            transform: scale(1.1) rotateZ(2deg);
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(34, 197, 94, 0.2) 100%);
+        }
+
+        .floating-cart {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-8px) rotate(1deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(0deg);
+            }
+
+            75% {
+                transform: translateY(-8px) rotate(-1deg);
+            }
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 25%, #22c55e 75%, #16a34a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gradient-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 64, 175, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .checkout-step {
+            opacity: 0.4;
+            transition: all 0.4s ease;
+            transform: scale(0.9);
+        }
+
+        .checkout-step.active {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-success:hover {
+            background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 197, 94, 0.6);
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .category-card:hover {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+            border-color: rgba(34, 197, 94, 0.4);
+            transform: translateY(-10px) rotateY(5deg);
+        }
+
+        .best-seller-badge {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .discount-badge {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-5px);
+            }
+
+            60% {
+                transform: translateY(-3px);
+            }
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            background: rgba(255, 255, 255, 1);
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .hero-animation {
+            animation: heroFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="fade-in">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 slide-in-left">
+                    <a href="https://www.mrofiqi.id/" class="hero-animation">
+                        <h1 class="text-2xl font-bold">🛍️ TechStore</h1>
+                    </a>
+                </div>
+
+
+                <div class="flex-1 max-w-md mx-8">
+                    <div class="relative">
+                        <input type="text" id="searchInput" placeholder="Cari produk..."
+                            class="input-field w-full px-4 py-3 rounded-full text-gray-800 focus:outline-none">
+                        <i class="fas fa-search absolute right-4 top-4 text-blue-500"></i>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4 slide-in-right">
+                    <button id="cartBtn"
+                        class="glass-effect relative p-3 hover:bg-white hover:bg-opacity-30 rounded-full transition-all duration-300 transform hover:scale-110">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount"
+                            class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-24 relative overflow-hidden">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-6xl font-bold mb-8 hero-animation">Belanja Teknologi Terdepan</h2>
+            <p class="text-2xl mb-10 opacity-90 slide-in-left">Dapatkan produk teknologi terbaik dengan harga terjangkau
+            </p>
+            <button
+                class="glass-effect text-white px-10 py-4 rounded-full font-semibold hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105 slide-in-right">
+                <i class="fas fa-rocket mr-2"></i>Mulai Belanja
+            </button>
+        </div>
+        <div class="absolute top-0 left-0 w-full h-full">
+            <div class="absolute top-10 left-10 w-20 h-20 bg-white bg-opacity-10 rounded-full animate-pulse"></div>
+            <div class="absolute top-32 right-20 w-16 h-16 bg-green-400 bg-opacity-20 rounded-full animate-bounce">
+            </div>
+            <div class="absolute bottom-20 left-1/4 w-12 h-12 bg-blue-400 bg-opacity-20 rounded-full animate-ping">
+            </div>
+            <div class="absolute bottom-32 right-1/3 w-24 h-24 bg-white bg-opacity-10 rounded-full animate-pulse"></div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center mb-16 text-blue-800 fade-in">✨ Kategori Produk</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="category-card card-3d p-8 rounded-2xl shadow-xl text-center cursor-pointer"
+                    data-category="smartphone">
+                    <i
+                        class="fas fa-mobile-alt text-5xl text-blue-600 mb-6 transform hover:rotate-12 transition-transform duration-300"></i>
+                    <h4 class="font-bold text-lg text-blue-800">Smartphone</h4>
+                    <p class="text-sm text-gray-600 mt-2">Teknologi terdepan</p>
+                </div>
+                <div class="category-card card-3d p-8 rounded-2xl shadow-xl text-center cursor-pointer"
+                    data-category="laptop">
+                    <i
+                        class="fas fa-laptop text-5xl text-green-600 mb-6 transform hover:rotate-12 transition-transform duration-300"></i>
+                    <h4 class="font-bold text-lg text-green-800">Laptop</h4>
+                    <p class="text-sm text-gray-600 mt-2">Performa maksimal</p>
+                </div>
+                <div class="category-card card-3d p-8 rounded-2xl shadow-xl text-center cursor-pointer"
+                    data-category="headphone">
+                    <i
+                        class="fas fa-headphones text-5xl text-blue-500 mb-6 transform hover:rotate-12 transition-transform duration-300"></i>
+                    <h4 class="font-bold text-lg text-blue-800">Audio</h4>
+                    <p class="text-sm text-gray-600 mt-2">Suara berkualitas</p>
+                </div>
+                <div class="category-card card-3d p-8 rounded-2xl shadow-xl text-center cursor-pointer"
+                    data-category="gaming">
+                    <i
+                        class="fas fa-gamepad text-5xl text-green-500 mb-6 transform hover:rotate-12 transition-transform duration-300"></i>
+                    <h4 class="font-bold text-lg text-green-800">Gaming</h4>
+                    <p class="text-sm text-gray-600 mt-2">Pengalaman epic</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 via-white to-green-50 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <h3 class="text-4xl font-bold text-center mb-16 text-blue-800 fade-in">🏆 Best Sellers</h3>
+            <div id="bestSellers" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Best seller products will be loaded here -->
+            </div>
+        </div>
+        <div
+            class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-200 to-transparent rounded-full opacity-30 -translate-y-32 translate-x-32">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-green-200 to-transparent rounded-full opacity-30 translate-y-24 -translate-x-24">
+        </div>
+    </section>
+
+    <!-- All Products -->
+    <section class="py-20 bg-gradient-to-br from-green-50 via-white to-blue-50">
+        <div class="container mx-auto px-4">
+            <h3 class="text-4xl font-bold text-center mb-16 text-green-800 fade-in">🛒 Semua Produk</h3>
+            <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Products will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Cart Button -->
+    <div class="floating-cart">
+        <button id="floatingCartBtn"
+            class="glass-effect text-white p-5 rounded-full shadow-2xl hover:bg-white hover:bg-opacity-20 transition-all duration-300 transform hover:scale-110 relative">
+            <i class="fas fa-shopping-cart text-2xl text-blue-600"></i>
+            <span id="floatingCartCount"
+                class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold animate-pulse">0</span>
+        </button>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content rounded-2xl max-w-4xl w-full mx-4 max-h-screen overflow-y-auto shadow-2xl">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-3xl font-bold text-blue-800">✨ Detail Produk</h3>
+                    <button id="closeProductModal"
+                        class="glass-effect text-blue-600 hover:text-blue-800 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="productDetailContent">
+                    <!-- Product detail content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content rounded-2xl max-w-4xl w-full mx-4 max-h-screen overflow-y-auto shadow-2xl">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-3xl font-bold text-green-800">🛒 Keranjang Belanja</h3>
+                    <button id="closeCartModal"
+                        class="glass-effect text-green-600 hover:text-green-800 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="cartContent">
+                    <!-- Cart content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content rounded-2xl max-w-4xl w-full mx-4 max-h-screen overflow-y-auto shadow-2xl">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-3xl font-bold text-blue-800">💳 Checkout</h3>
+                    <button id="closeCheckoutModal"
+                        class="glass-effect text-blue-600 hover:text-blue-800 p-2 rounded-full transition-all duration-300 transform hover:scale-110">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <!-- Checkout Steps -->
+                <div class="flex justify-center mb-10">
+                    <div class="flex items-center space-x-6">
+                        <div class="checkout-step active flex items-center">
+                            <div
+                                class="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg">
+                                1</div>
+                            <span class="ml-3 font-semibold text-blue-800">Alamat</span>
+                        </div>
+                        <div class="w-12 h-1 bg-gradient-to-r from-blue-300 to-green-300 rounded-full"></div>
+                        <div class="checkout-step flex items-center">
+                            <div
+                                class="w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold">
+                                2</div>
+                            <span class="ml-3 font-semibold text-gray-500">Pembayaran</span>
+                        </div>
+                        <div class="w-12 h-1 bg-gray-300 rounded-full"></div>
+                        <div class="checkout-step flex items-center">
+                            <div
+                                class="w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold">
+                                3</div>
+                            <span class="ml-3 font-semibold text-gray-500">Konfirmasi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="checkoutContent">
+                    <!-- Checkout content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content rounded-2xl max-w-md w-full mx-4 p-10 text-center shadow-2xl">
+            <div class="text-green-500 text-8xl mb-6 animate-bounce">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="text-3xl font-bold mb-6 text-green-800">🎉 Pesanan Berhasil!</h3>
+            <p class="text-gray-600 mb-8 text-lg">Terima kasih telah berbelanja. Pesanan Anda sedang diproses.</p>
+            <div class="glass-effect p-6 rounded-xl mb-8 border border-green-200">
+                <p class="font-bold text-lg text-green-800">ID Pesanan: <span id="orderId" class="text-blue-600"></span>
+                </p>
+                <p class="text-sm text-gray-600 mt-3">Silakan simpan ID pesanan untuk tracking</p>
+            </div>
+            <button id="closeSuccessModal" class="btn-success text-white px-8 py-3 rounded-xl font-semibold">
+                <i class="fas fa-home mr-2"></i>Tutup
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "iPhone 15 Pro Max",
+                price: 18999000,
+                originalPrice: 20999000,
+                image: "📱",
+                category: "smartphone",
+                rating: 4.9,
+                reviews: 1250,
+                description: "iPhone terbaru dengan chip A17 Pro dan kamera 48MP yang revolusioner",
+                specs: ["Chip A17 Pro", "Kamera 48MP", "RAM 8GB", "Storage 256GB"],
+                isBestSeller: true,
+                stock: 25
+            },
+            {
+                id: 2,
+                name: "MacBook Pro M3",
+                price: 32999000,
+                originalPrice: 35999000,
+                image: "💻",
+                category: "laptop",
+                rating: 4.8,
+                reviews: 890,
+                description: "Laptop profesional dengan performa luar biasa untuk kreator konten",
+                specs: ["Chip M3", "RAM 16GB", "SSD 512GB", "Display 14 inch"],
+                isBestSeller: true,
+                stock: 15
+            },
+            {
+                id: 3,
+                name: "AirPods Pro 2",
+                price: 3999000,
+                originalPrice: 4499000,
+                image: "🎧",
+                category: "headphone",
+                rating: 4.7,
+                reviews: 2100,
+                description: "Earbuds premium dengan noise cancellation terbaik di kelasnya",
+                specs: ["Active Noise Cancellation", "Spatial Audio", "Battery 30 jam", "Wireless Charging"],
+                isBestSeller: true,
+                stock: 50
+            },
+            {
+                id: 4,
+                name: "PlayStation 5",
+                price: 7999000,
+                originalPrice: 8999000,
+                image: "🎮",
+                category: "gaming",
+                rating: 4.9,
+                reviews: 3500,
+                description: "Konsol gaming next-gen dengan grafis 4K dan loading super cepat",
+                specs: ["4K Gaming", "Ray Tracing", "SSD Ultra Cepat", "DualSense Controller"],
+                isBestSeller: true,
+                stock: 8
+            },
+            {
+                id: 5,
+                name: "Samsung Galaxy S24 Ultra",
+                price: 16999000,
+                originalPrice: 18999000,
+                image: "📱",
+                category: "smartphone",
+                rating: 4.6,
+                reviews: 980,
+                description: "Smartphone Android flagship dengan S Pen dan kamera 200MP",
+                specs: ["Snapdragon 8 Gen 3", "Kamera 200MP", "RAM 12GB", "S Pen"],
+                isBestSeller: false,
+                stock: 30
+            },
+            {
+                id: 6,
+                name: "Dell XPS 13",
+                price: 24999000,
+                originalPrice: 27999000,
+                image: "💻",
+                category: "laptop",
+                rating: 4.5,
+                reviews: 650,
+                description: "Laptop ultrabook premium dengan desain elegan dan performa tinggi",
+                specs: ["Intel Core i7", "RAM 16GB", "SSD 512GB", "Display 13.4 inch"],
+                isBestSeller: false,
+                stock: 20
+            },
+            {
+                id: 7,
+                name: "Sony WH-1000XM5",
+                price: 5499000,
+                originalPrice: 5999000,
+                image: "🎧",
+                category: "headphone",
+                rating: 4.8,
+                reviews: 1800,
+                description: "Headphone over-ear dengan noise cancellation industry-leading",
+                specs: ["30 jam battery", "Quick Charge", "Multipoint Connection", "Hi-Res Audio"],
+                isBestSeller: false,
+                stock: 35
+            },
+            {
+                id: 8,
+                name: "Nintendo Switch OLED",
+                price: 4999000,
+                originalPrice: 5499000,
+                image: "🎮",
+                category: "gaming",
+                rating: 4.7,
+                reviews: 2800,
+                description: "Konsol gaming hybrid dengan layar OLED yang memukau",
+                specs: ["OLED Display 7 inch", "Portable Gaming", "Joy-Con Controllers", "Dock Station"],
+                isBestSeller: false,
+                stock: 40
+            }
+        ];
+
+        // Shopping cart
+        let cart = [];
+        let currentStep = 1;
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function () {
+            loadProducts();
+            loadBestSellers();
+            setupEventListeners();
+            updateCartUI();
+        });
+
+        // Load all products
+        function loadProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => createProductCard(product)).join('');
+        }
+
+        // Load best sellers
+        function loadBestSellers() {
+            const bestSellers = products.filter(p => p.isBestSeller);
+            const grid = document.getElementById('bestSellers');
+            grid.innerHTML = bestSellers.map(product => createProductCard(product, true)).join('');
+        }
+
+        // Create product card HTML
+        function createProductCard(product, isBestSeller = false) {
+            const discount = Math.round((1 - product.price / product.originalPrice) * 100);
+            const bestSellerBadge = isBestSeller ? '<div class="best-seller-badge absolute top-3 left-3 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">🏆 Best Seller</div>' : '';
+
+            return `
+                <div class="product-card card-3d rounded-2xl shadow-xl overflow-hidden cursor-pointer fade-in" data-id="${product.id}">
+                    <div class="relative">
+                        ${bestSellerBadge}
+                        <div class="discount-badge absolute top-3 right-3 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">-${discount}%</div>
+                        <div class="product-image text-7xl text-center py-10">
+                            ${product.image}
+                        </div>
+                    </div>
+                    <div class="p-6 bg-gradient-to-br from-white to-blue-50">
+                        <h4 class="font-bold text-xl mb-3 text-blue-800">${product.name}</h4>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400 text-lg">
+                                ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                            </div>
+                            <span class="text-sm text-gray-600 ml-2 font-medium">(${product.reviews})</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <span class="text-2xl font-bold text-blue-600">Rp ${product.price.toLocaleString('id-ID')}</span>
+                                <span class="text-sm text-gray-500 line-through ml-2">Rp ${product.originalPrice.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button onclick="showProductDetail(${product.id})" class="flex-1 glass-effect text-blue-600 py-3 px-4 rounded-xl hover:bg-blue-50 transition-all duration-300 font-semibold transform hover:scale-105">
+                                <i class="fas fa-eye mr-2"></i>Detail
+                            </button>
+                            <button onclick="addToCart(${product.id})" class="flex-1 btn-primary text-white py-3 px-4 rounded-xl font-semibold">
+                                <i class="fas fa-cart-plus mr-2"></i>Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Show product detail
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const content = `
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">${product.image}</div>
+                        <div class="flex justify-center space-x-2">
+                            <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">${product.image}</div>
+                            <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">${product.image}</div>
+                            <div class="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center text-2xl">${product.image}</div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold mb-4">${product.name}</h3>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400 text-lg">
+                                ${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}
+                            </div>
+                            <span class="ml-2 text-gray-600">${product.rating} (${product.reviews} ulasan)</span>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-3xl font-bold text-purple-600">Rp ${product.price.toLocaleString('id-ID')}</span>
+                            <span class="text-lg text-gray-500 line-through ml-3">Rp ${product.originalPrice.toLocaleString('id-ID')}</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">${product.description}</p>
+                        <div class="mb-6">
+                            <h4 class="font-semibold mb-3">Spesifikasi:</h4>
+                            <ul class="space-y-2">
+                                ${product.specs.map(spec => `<li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>${spec}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="mb-6">
+                            <span class="text-sm text-gray-600">Stok tersisa: </span>
+                            <span class="font-semibold ${product.stock < 10 ? 'text-red-500' : 'text-green-500'}">${product.stock} unit</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="flex items-center border rounded-lg">
+                                <button onclick="decreaseQuantity()" class="px-3 py-2 hover:bg-gray-100">-</button>
+                                <input type="number" id="productQuantity" value="1" min="1" max="${product.stock}" class="w-16 text-center border-0 focus:outline-none">
+                                <button onclick="increaseQuantity()" class="px-3 py-2 hover:bg-gray-100">+</button>
+                            </div>
+                            <button onclick="addToCartWithQuantity(${product.id})" class="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 transition font-semibold">
+                                Tambah ke Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('productDetailContent').innerHTML = content;
+            document.getElementById('productModal').classList.add('active');
+        }
+
+        // Quantity controls
+        function increaseQuantity() {
+            const input = document.getElementById('productQuantity');
+            const max = parseInt(input.getAttribute('max'));
+            if (parseInt(input.value) < max) {
+                input.value = parseInt(input.value) + 1;
+            }
+        }
+
+        function decreaseQuantity() {
+            const input = document.getElementById('productQuantity');
+            if (parseInt(input.value) > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        // Add to cart functions
+        function addToCart(productId) {
+            addToCartWithQuantity(productId, 1);
+        }
+
+        function addToCartWithQuantity(productId, quantity = null) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const qty = quantity || parseInt(document.getElementById('productQuantity')?.value || 1);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += qty;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: qty
+                });
+            }
+
+            updateCartUI();
+            showNotification(`${product.name} ditambahkan ke keranjang!`);
+
+            // Close product modal if open
+            document.getElementById('productModal').classList.remove('active');
+        }
+
+        // Update cart UI
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+            document.getElementById('floatingCartCount').textContent = totalItems;
+        }
+
+        // Show cart
+        function showCart() {
+            if (cart.length === 0) {
+                document.getElementById('cartContent').innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🛒</div>
+                        <h3 class="text-xl font-semibold mb-2">Keranjang Kosong</h3>
+                        <p class="text-gray-600">Belum ada produk di keranjang Anda</p>
+                    </div>
+                `;
+            } else {
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const content = `
+                    <div class="space-y-4 mb-6">
+                        ${cart.map(item => `
+                            <div class="flex items-center space-x-4 p-4 border rounded-lg">
+                                <div class="text-3xl">${item.image}</div>
+                                <div class="flex-1">
+                                    <h4 class="font-semibold">${item.name}</h4>
+                                    <p class="text-purple-600 font-bold">Rp ${item.price.toLocaleString('id-ID')}</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="updateCartQuantity(${item.id}, ${item.quantity - 1})" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">-</button>
+                                    <span class="w-8 text-center">${item.quantity}</span>
+                                    <button onclick="updateCartQuantity(${item.id}, ${item.quantity + 1})" class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300">+</button>
+                                </div>
+                                <button onclick="removeFromCart(${item.id})" class="text-red-500 hover:text-red-700">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="border-t pt-4">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xl font-semibold">Total:</span>
+                            <span class="text-2xl font-bold text-purple-600">Rp ${total.toLocaleString('id-ID')}</span>
+                        </div>
+                        <button onclick="startCheckout()" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition font-semibold">
+                            Lanjut ke Checkout
+                        </button>
+                    </div>
+                `;
+                document.getElementById('cartContent').innerHTML = content;
+            }
+            document.getElementById('cartModal').classList.add('active');
+        }
+
+        // Update cart quantity
+        function updateCartQuantity(productId, newQuantity) {
+            if (newQuantity <= 0) {
+                removeFromCart(productId);
+                return;
+            }
+
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity = newQuantity;
+                updateCartUI();
+                showCart(); // Refresh cart display
+            }
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            showCart(); // Refresh cart display
+        }
+
+        // Start checkout process
+        function startCheckout() {
+            document.getElementById('cartModal').classList.remove('active');
+            currentStep = 1;
+            updateCheckoutStep();
+            showCheckoutStep1();
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        // Update checkout step indicator
+        function updateCheckoutStep() {
+            const steps = document.querySelectorAll('.checkout-step');
+            const connectors = document.querySelectorAll('.checkout-step + div');
+
+            steps.forEach((step, index) => {
+                const circle = step.querySelector('div');
+                const text = step.querySelector('span');
+
+                if (index + 1 <= currentStep) {
+                    step.classList.add('active');
+                    circle.className = 'w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg';
+                    text.className = 'ml-3 font-semibold text-blue-800';
+                } else {
+                    step.classList.remove('active');
+                    circle.className = 'w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold';
+                    text.className = 'ml-3 font-semibold text-gray-500';
+                }
+            });
+
+            // Update connectors
+            connectors.forEach((connector, index) => {
+                if (index + 1 < currentStep) {
+                    connector.className = 'w-12 h-1 bg-gradient-to-r from-blue-300 to-green-300 rounded-full';
+                } else {
+                    connector.className = 'w-12 h-1 bg-gray-300 rounded-full';
+                }
+            });
+        }
+
+        // Checkout Step 1: Address
+        function showCheckoutStep1() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const content = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">📍 Alamat Pengiriman</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold mb-3 text-blue-800">Nama Lengkap</label>
+                                <input type="text" id="customerName" class="input-field w-full p-4 rounded-xl" placeholder="Masukkan nama lengkap">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-3 text-blue-800">Nomor Telepon</label>
+                                <input type="tel" id="customerPhone" class="input-field w-full p-4 rounded-xl" placeholder="08xxxxxxxxxx">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold mb-3 text-blue-800">Alamat Lengkap</label>
+                                <textarea id="customerAddress" rows="3" class="input-field w-full p-4 rounded-xl" placeholder="Jalan, RT/RW, Kelurahan, Kecamatan"></textarea>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-bold mb-3 text-blue-800">Kota</label>
+                                    <select id="customerCity" class="input-field w-full p-4 rounded-xl">
+                                        <option value="">Pilih Kota</option>
+                                        <option value="jakarta">Jakarta</option>
+                                        <option value="bandung">Bandung</option>
+                                        <option value="surabaya">Surabaya</option>
+                                        <option value="medan">Medan</option>
+                                        <option value="semarang">Semarang</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold mb-3 text-blue-800">Kode Pos</label>
+                                    <input type="text" id="customerPostal" class="input-field w-full p-4 rounded-xl" placeholder="12345">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">📦 Ringkasan Pesanan</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            ${cart.map(item => `
+                                <div class="flex justify-between items-center py-2">
+                                    <span>${item.name} x${item.quantity}</span>
+                                    <span class="font-semibold">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
+                                </div>
+                            `).join('')}
+                            <hr class="my-3">
+                            <div class="flex justify-between items-center py-2">
+                                <span>Subtotal</span>
+                                <span class="font-semibold">Rp ${total.toLocaleString('id-ID')}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span>Ongkos Kirim</span>
+                                <span class="font-semibold" id="shippingCost">Rp 0</span>
+                            </div>
+                            <hr class="my-3">
+                            <div class="flex justify-between items-center py-2 text-lg font-bold">
+                                <span>Total</span>
+                                <span class="text-purple-600" id="finalTotal">Rp ${total.toLocaleString('id-ID')}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end mt-10">
+                    <button onclick="goToStep2()" class="btn-primary text-white px-10 py-4 rounded-xl font-bold text-lg">
+                        <i class="fas fa-arrow-right mr-2"></i>Lanjut ke Pembayaran
+                    </button>
+                </div>
+            `;
+            document.getElementById('checkoutContent').innerHTML = content;
+
+            // Add city change listener for shipping cost
+            document.getElementById('customerCity').addEventListener('change', calculateShipping);
+        }
+
+        // Calculate shipping cost
+        function calculateShipping() {
+            const city = document.getElementById('customerCity').value;
+            const shippingCosts = {
+                'jakarta': 15000,
+                'bandung': 20000,
+                'surabaya': 25000,
+                'medan': 30000,
+                'semarang': 22000
+            };
+
+            const cost = shippingCosts[city] || 0;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const finalTotal = total + cost;
+
+            document.getElementById('shippingCost').textContent = `Rp ${cost.toLocaleString('id-ID')}`;
+            document.getElementById('finalTotal').textContent = `Rp ${finalTotal.toLocaleString('id-ID')}`;
+        }
+
+        // Go to step 2
+        function goToStep2() {
+            // Validate step 1
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+            const city = document.getElementById('customerCity').value;
+            const postal = document.getElementById('customerPostal').value;
+
+            if (!name || !phone || !address || !city || !postal) {
+                showNotification('Mohon lengkapi semua data alamat!', 'error');
+                return;
+            }
+
+            currentStep = 2;
+            updateCheckoutStep();
+            showCheckoutStep2();
+        }
+
+        // Checkout Step 2: Payment
+        function showCheckoutStep2() {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const city = document.getElementById('customerCity').value;
+            const shippingCosts = {
+                'jakarta': 15000,
+                'bandung': 20000,
+                'surabaya': 25000,
+                'medan': 30000,
+                'semarang': 22000
+            };
+            const shippingCost = shippingCosts[city] || 0;
+            const finalTotal = total + shippingCost;
+
+            const content = `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">💳 Pilih Metode Pembayaran</h4>
+                        
+                        <!-- Bank Transfer -->
+                        <div class="mb-6">
+                            <h5 class="font-semibold mb-3">🏦 Transfer Bank</h5>
+                            <div class="space-y-2">
+                                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="bca" class="mr-3">
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Bank BCA</div>
+                                        <div class="text-sm text-gray-600">1234567890 - TechStore Official</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="mandiri" class="mr-3">
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Bank Mandiri</div>
+                                        <div class="text-sm text-gray-600">0987654321 - TechStore Official</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="bni" class="mr-3">
+                                    <div class="flex-1">
+                                        <div class="font-semibold">Bank BNI</div>
+                                        <div class="text-sm text-gray-600">5678901234 - TechStore Official</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- E-Wallet -->
+                        <div class="mb-6">
+                            <h5 class="font-semibold mb-3">📱 E-Wallet</h5>
+                            <div class="space-y-2">
+                                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="gopay" class="mr-3">
+                                    <div class="flex-1">
+                                        <div class="font-semibold">GoPay</div>
+                                        <div class="text-sm text-gray-600">081234567890</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="ovo" class="mr-3">
+                                    <div class="flex-1">
+                                        <div class="font-semibold">OVO</div>
+                                        <div class="text-sm text-gray-600">081234567890</div>
+                                    </div>
+                                </label>
+                                <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                    <input type="radio" name="payment" value="dana" class="mr-3">
+                                    <div class="flex-1">
+                                        <div class="font-semibold">DANA</div>
+                                        <div class="text-sm text-gray-600">081234567890</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- QRIS -->
+                        <div class="mb-6">
+                            <h5 class="font-semibold mb-3">📱 QRIS</h5>
+                            <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                                <input type="radio" name="payment" value="qris" class="mr-3">
+                                <div class="flex-1">
+                                    <div class="font-semibold">Scan QRIS</div>
+                                    <div class="text-sm text-gray-600">Semua bank dan e-wallet</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">📋 Detail Pembayaran</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="text-2xl font-bold text-purple-600 mb-4">Rp ${finalTotal.toLocaleString('id-ID')}</div>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Subtotal Produk</span>
+                                    <span>Rp ${total.toLocaleString('id-ID')}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Ongkos Kirim</span>
+                                    <span>Rp ${shippingCost.toLocaleString('id-ID')}</span>
+                                </div>
+                                <hr class="my-2">
+                                <div class="flex justify-between font-bold">
+                                    <span>Total Pembayaran</span>
+                                    <span>Rp ${finalTotal.toLocaleString('id-ID')}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                            <h5 class="font-semibold text-yellow-800 mb-2">⚠️ Penting!</h5>
+                            <ul class="text-sm text-yellow-700 space-y-1">
+                                <li>• Transfer sesuai nominal exact</li>
+                                <li>• Simpan bukti transfer</li>
+                                <li>• Konfirmasi pembayaran dalam 24 jam</li>
+                                <li>• Pesanan otomatis dibatalkan jika tidak ada konfirmasi</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between mt-8">
+                    <button onclick="goToStep1()" class="bg-gray-500 text-white px-8 py-3 rounded-lg hover:bg-gray-600 transition font-semibold">
+                        Kembali
+                    </button>
+                    <button onclick="goToStep3()" class="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition font-semibold">
+                        Konfirmasi Pesanan
+                    </button>
+                </div>
+            `;
+            document.getElementById('checkoutContent').innerHTML = content;
+        }
+
+        // Go to step 1
+        function goToStep1() {
+            currentStep = 1;
+            updateCheckoutStep();
+            showCheckoutStep1();
+        }
+
+        // Go to step 3
+        function goToStep3() {
+            const selectedPayment = document.querySelector('input[name="payment"]:checked');
+            if (!selectedPayment) {
+                showNotification('Mohon pilih metode pembayaran!', 'error');
+                return;
+            }
+
+            currentStep = 3;
+            updateCheckoutStep();
+            showCheckoutStep3();
+        }
+
+        // Checkout Step 3: Confirmation
+        function showCheckoutStep3() {
+            const selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const city = document.getElementById('customerCity').value;
+            const shippingCosts = {
+                'jakarta': 15000,
+                'bandung': 20000,
+                'surabaya': 25000,
+                'medan': 30000,
+                'semarang': 22000
+            };
+            const shippingCost = shippingCosts[city] || 0;
+            const finalTotal = total + shippingCost;
+
+            const paymentDetails = {
+                'bca': { name: 'Bank BCA', account: '1234567890 - TechStore Official' },
+                'mandiri': { name: 'Bank Mandiri', account: '0987654321 - TechStore Official' },
+                'bni': { name: 'Bank BNI', account: '5678901234 - TechStore Official' },
+                'gopay': { name: 'GoPay', account: '081234567890' },
+                'ovo': { name: 'OVO', account: '081234567890' },
+                'dana': { name: 'DANA', account: '081234567890' },
+                'qris': { name: 'QRIS', account: 'Scan QR Code' }
+            };
+
+            const payment = paymentDetails[selectedPayment];
+            const orderId = 'TS' + Date.now();
+
+            let paymentInstructions = '';
+            if (selectedPayment === 'qris') {
+                paymentInstructions = `
+                    <div class="text-center">
+                        <div class="text-6xl mb-4">📱</div>
+                        <p class="text-sm text-gray-600">Scan QR Code dengan aplikasi mobile banking atau e-wallet Anda</p>
+                    </div>
+                `;
+            } else {
+                paymentInstructions = `
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h5 class="font-semibold mb-2">Instruksi Transfer:</h5>
+                        <div class="space-y-2 text-sm">
+                            <div><strong>Nama Bank:</strong> ${payment.name}</div>
+                            <div><strong>Nomor Rekening:</strong> ${payment.account}</div>
+                            <div><strong>Jumlah Transfer:</strong> <span class="text-red-600 font-bold">Rp ${finalTotal.toLocaleString('id-ID')}</span></div>
+                            <div><strong>Keterangan:</strong> ${orderId}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const content = `
+                <div class="text-center mb-8">
+                    <div class="text-6xl mb-4">✅</div>
+                    <h3 class="text-2xl font-bold mb-2">Pesanan Berhasil Dibuat!</h3>
+                    <p class="text-gray-600">ID Pesanan: <strong>${orderId}</strong></p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">💳 Detail Pembayaran</h4>
+                        ${paymentInstructions}
+                        
+                        <div class="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                            <h5 class="font-semibold text-red-800 mb-2">📝 Cara Konfirmasi Pembayaran:</h5>
+                            <ol class="text-sm text-red-700 space-y-1 list-decimal list-inside">
+                                <li>Lakukan transfer sesuai nominal exact</li>
+                                <li>Screenshot/foto bukti transfer</li>
+                                <li>Kirim ke WhatsApp: <strong>0812-3456-7890</strong></li>
+                                <li>Sertakan ID Pesanan: <strong>${orderId}</strong></li>
+                                <li>Tunggu konfirmasi dari admin (maks 2 jam)</li>
+                            </ol>
+                        </div>
+
+                        <div class="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                            <h5 class="font-semibold text-green-800 mb-2">📞 Customer Service:</h5>
+                            <div class="text-sm text-green-700 space-y-1">
+                                <div><strong>WhatsApp:</strong> 0812-3456-7890</div>
+                                <div><strong>Email:</strong> cs@techstore.com</div>
+                                <div><strong>Jam Operasional:</strong> 08:00 - 22:00 WIB</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-semibold mb-4">📦 Ringkasan Pesanan</h4>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <div class="space-y-2 mb-4">
+                                ${cart.map(item => `
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-sm">${item.name} x${item.quantity}</span>
+                                        <span class="text-sm font-semibold">Rp ${(item.price * item.quantity).toLocaleString('id-ID')}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <hr class="my-3">
+                            <div class="space-y-1 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Subtotal</span>
+                                    <span>Rp ${total.toLocaleString('id-ID')}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Ongkos Kirim</span>
+                                    <span>Rp ${shippingCost.toLocaleString('id-ID')}</span>
+                                </div>
+                                <hr class="my-2">
+                                <div class="flex justify-between font-bold text-lg">
+                                    <span>Total</span>
+                                    <span class="text-purple-600">Rp ${finalTotal.toLocaleString('id-ID')}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-sm text-gray-600">
+                            <h5 class="font-semibold mb-2">📍 Alamat Pengiriman:</h5>
+                            <div>${document.getElementById('customerName').value}</div>
+                            <div>${document.getElementById('customerPhone').value}</div>
+                            <div>${document.getElementById('customerAddress').value}</div>
+                            <div>${document.getElementById('customerCity').value}, ${document.getElementById('customerPostal').value}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-center mt-8">
+                    <button onclick="completeOrder('${orderId}')" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition font-semibold">
+                        Selesai
+                    </button>
+                </div>
+            `;
+            document.getElementById('checkoutContent').innerHTML = content;
+        }
+
+        // Complete order
+        function completeOrder(orderId) {
+            // Clear cart
+            cart = [];
+            updateCartUI();
+
+            // Close checkout modal
+            document.getElementById('checkoutModal').classList.remove('active');
+
+            // Show success modal
+            document.getElementById('orderId').textContent = orderId;
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        // Search functionality
+        function setupEventListeners() {
+            // Search
+            document.getElementById('searchInput').addEventListener('input', function (e) {
+                const query = e.target.value.toLowerCase();
+                const filteredProducts = products.filter(product =>
+                    product.name.toLowerCase().includes(query) ||
+                    product.category.toLowerCase().includes(query)
+                );
+
+                const grid = document.getElementById('productsGrid');
+                grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+            });
+
+            // Category filters
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.addEventListener('click', function () {
+                    const category = this.dataset.category;
+                    const filteredProducts = products.filter(product => product.category === category);
+
+                    const grid = document.getElementById('productsGrid');
+                    grid.innerHTML = filteredProducts.map(product => createProductCard(product)).join('');
+
+                    // Scroll to products section
+                    grid.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Modal controls
+            document.getElementById('cartBtn').addEventListener('click', showCart);
+            document.getElementById('floatingCartBtn').addEventListener('click', showCart);
+
+            document.getElementById('closeProductModal').addEventListener('click', () => {
+                document.getElementById('productModal').classList.remove('active');
+            });
+
+            document.getElementById('closeCartModal').addEventListener('click', () => {
+                document.getElementById('cartModal').classList.remove('active');
+            });
+
+            document.getElementById('closeCheckoutModal').addEventListener('click', () => {
+                document.getElementById('checkoutModal').classList.remove('active');
+            });
+
+            document.getElementById('closeSuccessModal').addEventListener('click', () => {
+                document.getElementById('successModal').classList.remove('active');
+            });
+
+            // Close modals when clicking outside
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function (e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white font-semibold transform translate-x-full transition-transform duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'
+                }`;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+    </script>
+    <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'97cde705476da082',t:'MTc1NzQ5NjU4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
