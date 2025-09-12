@@ -1,13 +1,13 @@
 // ======== DATA PRODUK ========
 const products = [
-    { id: 1, name: "iPhone 15 Pro Max", price: 18999000, originalPrice: 20999000, image: "📱", category: "smartphone", rating: 4.9, reviews: 1250, description: "iPhone terbaru dengan chip A17 Pro dan kamera 48MP yang revolusioner", specs: ["Chip A17 Pro", "Kamera 48MP", "RAM 8GB", "Storage 256GB"], isBestSeller: true, stock: 25 },
-    { id: 2, name: "MacBook Pro M3", price: 32999000, originalPrice: 35999000, image: "💻", category: "laptop", rating: 4.8, reviews: 890, description: "Laptop profesional dengan performa luar biasa untuk kreator konten", specs: ["Chip M3", "RAM 16GB", "SSD 512GB", "Display 14 inch"], isBestSeller: true, stock: 15 },
-    { id: 3, name: "AirPods Pro 2", price: 3999000, originalPrice: 4499000, image: "🎧", category: "headphone", rating: 4.7, reviews: 2100, description: "Earbuds premium dengan noise cancellation terbaik di kelasnya", specs: ["Active Noise Cancellation", "Spatial Audio", "Battery 30 jam", "Wireless Charging"], isBestSeller: true, stock: 50 },
-    { id: 4, name: "PlayStation 5", price: 7999000, originalPrice: 8999000, image: "🎮", category: "gaming", rating: 4.9, reviews: 3500, description: "Konsol gaming next-gen dengan grafis 4K dan loading super cepat", specs: ["4K Gaming", "Ray Tracing", "SSD Ultra Cepat", "DualSense Controller"], isBestSeller: true, stock: 8 },
-    { id: 5, name: "Samsung Galaxy S24 Ultra", price: 16999000, originalPrice: 18999000, image: "📱", category: "smartphone", rating: 4.6, reviews: 980, description: "Smartphone Android flagship dengan S Pen dan kamera 200MP", specs: ["Snapdragon 8 Gen 3", "Kamera 200MP", "RAM 12GB", "S Pen"], isBestSeller: false, stock: 30 },
-    { id: 6, name: "Dell XPS 13", price: 24999000, originalPrice: 27999000, image: "💻", category: "laptop", rating: 4.5, reviews: 650, description: "Laptop ultrabook premium dengan desain elegan dan performa tinggi", specs: ["Intel Core i7", "RAM 16GB", "SSD 512GB", "Display 13.4 inch"], isBestSeller: false, stock: 20 },
-    { id: 7, name: "Sony WH-1000XM5", price: 5499000, originalPrice: 5999000, image: "🎧", category: "headphone", rating: 4.8, reviews: 1800, description: "Headphone over-ear dengan noise cancellation industry-leading", specs: ["30 jam battery", "Quick Charge", "Multipoint Connection", "Hi-Res Audio"], isBestSeller: false, stock: 35 },
-    { id: 8, name: "Nintendo Switch OLED", price: 4999000, originalPrice: 5499000, image: "🎮", category: "gaming", rating: 4.7, reviews: 2800, description: "Konsol gaming hybrid dengan layar OLED yang memukau", specs: ["OLED Display 7 inch", "Portable Gaming", "Joy-Con Controllers", "Dock Station"], isBestSeller: false, stock: 40 }
+  { id: 1, name: "iPhone 15 Pro Max", price: 18999000, originalPrice: 20999000, image: "📱", category: "smartphone", rating: 4.9, reviews: 1250, description: "iPhone terbaru dengan chip A17 Pro dan kamera 48MP yang revolusioner", specs: ["Chip A17 Pro", "Kamera 48MP", "RAM 8GB", "Storage 256GB"], isBestSeller: true, stock: 25 },
+  { id: 2, name: "MacBook Pro M3", price: 32999000, originalPrice: 35999000, image: "💻", category: "laptop", rating: 4.8, reviews: 890, description: "Laptop profesional dengan performa luar biasa untuk kreator konten", specs: ["Chip M3", "RAM 16GB", "SSD 512GB", "Display 14 inch"], isBestSeller: true, stock: 15 },
+  { id: 3, name: "AirPods Pro 2", price: 3999000, originalPrice: 4499000, image: "🎧", category: "headphone", rating: 4.7, reviews: 2100, description: "Earbuds premium dengan noise cancellation terbaik di kelasnya", specs: ["Active Noise Cancellation", "Spatial Audio", "Battery 30 jam", "Wireless Charging"], isBestSeller: true, stock: 50 },
+  { id: 4, name: "PlayStation 5", price: 7999000, originalPrice: 8999000, image: "🎮", category: "gaming", rating: 4.9, reviews: 3500, description: "Konsol gaming next-gen dengan grafis 4K dan loading super cepat", specs: ["4K Gaming", "Ray Tracing", "SSD Ultra Cepat", "DualSense Controller"], isBestSeller: true, stock: 8 },
+  { id: 5, name: "Samsung Galaxy S24 Ultra", price: 16999000, originalPrice: 18999000, image: "📱", category: "smartphone", rating: 4.6, reviews: 980, description: "Smartphone Android flagship dengan S Pen dan kamera 200MP", specs: ["Snapdragon 8 Gen 3", "Kamera 200MP", "RAM 12GB", "S Pen"], isBestSeller: false, stock: 30 },
+  { id: 6, name: "Dell XPS 13", price: 24999000, originalPrice: 27999000, image: "💻", category: "laptop", rating: 4.5, reviews: 650, description: "Laptop ultrabook premium dengan desain elegan dan performa tinggi", specs: ["Intel Core i7", "RAM 16GB", "SSD 512GB", "Display 13.4 inch"], isBestSeller: false, stock: 20 },
+  { id: 7, name: "Sony WH-1000XM5", price: 5499000, originalPrice: 5999000, image: "🎧", category: "headphone", rating: 4.8, reviews: 1800, description: "Headphone over-ear dengan noise cancellation industry-leading", specs: ["30 jam battery", "Quick Charge", "Multipoint Connection", "Hi-Res Audio"], isBestSeller: false, stock: 35 },
+  { id: 8, name: "Nintendo Switch OLED", price: 4999000, originalPrice: 5499000, image: "🎮", category: "gaming", rating: 4.7, reviews: 2800, description: "Konsol gaming hybrid dengan layar OLED yang memukau", specs: ["OLED Display 7 inch", "Portable Gaming", "Joy-Con Controllers", "Dock Station"], isBestSeller: false, stock: 40 }
 ];
 
 // ======== STATE ========
@@ -17,30 +17,30 @@ let lastOrderId = null;
 
 // Simpan data checkout agar tidak hilang saat step berubah
 let checkoutData = {
-    name: "", phone: "", address: "", city: "", postal: "",
-    shippingCost: 0, subtotal: 0, finalTotal: 0
+  name: "", phone: "", address: "", city: "", postal: "",
+  shippingCost: 0, subtotal: 0, finalTotal: 0
 };
 
 // ======== INIT ========
 document.addEventListener('DOMContentLoaded', () => {
-    loadProducts();
-    loadBestSellers();
-    setupEventListeners();
-    updateCartUI();
+  loadProducts();
+  loadBestSellers();
+  setupEventListeners();
+  updateCartUI();
 });
 
 // ======== RENDER ========
 function loadProducts() {
-    document.getElementById('productsGrid').innerHTML = products.map(p => createProductCard(p)).join('');
+  document.getElementById('productsGrid').innerHTML = products.map(p => createProductCard(p)).join('');
 }
 function loadBestSellers() {
-    const best = products.filter(p => p.isBestSeller);
-    document.getElementById('bestSellers').innerHTML = best.map(p => createProductCard(p, true)).join('');
+  const best = products.filter(p => p.isBestSeller);
+  document.getElementById('bestSellers').innerHTML = best.map(p => createProductCard(p, true)).join('');
 }
 function createProductCard(product, isBest = false) {
-    const discount = Math.round((1 - product.price / product.originalPrice) * 100);
-    const badge = isBest ? '<div class="best-seller-badge absolute top-3 left-3 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">🏆 Best Seller</div>' : '';
-    return `
+  const discount = Math.round((1 - product.price / product.originalPrice) * 100);
+  const badge = isBest ? '<div class="best-seller-badge absolute top-3 left-3 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">🏆 Best Seller</div>' : '';
+  return `
     <div class="product-card card-3d rounded-2xl shadow-xl overflow-hidden cursor-pointer fade-in" data-id="${product.id}">
       <div class="relative">
         ${badge}
@@ -69,8 +69,8 @@ function createProductCard(product, isBest = false) {
 
 // ======== DETAIL ========
 function showProductDetail(id) {
-    const p = products.find(x => x.id === id); if (!p) return;
-    const html = `
+  const p = products.find(x => x.id === id); if (!p) return;
+  const html = `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div class="text-center">
         <div class="text-8xl mb-4">${p.image}</div>
@@ -106,8 +106,8 @@ function showProductDetail(id) {
         </div>
       </div>
     </div>`;
-    document.getElementById('productDetailContent').innerHTML = html;
-    openModal('productModal');
+  document.getElementById('productDetailContent').innerHTML = html;
+  openModal('productModal');
 }
 function increaseQuantity() { const i = document.getElementById('productQuantity'); if (!i) return; const m = parseInt(i.getAttribute('max')); if (parseInt(i.value) < m) i.value = parseInt(i.value) + 1; }
 function decreaseQuantity() { const i = document.getElementById('productQuantity'); if (!i) return; if (parseInt(i.value) > 1) i.value = parseInt(i.value) - 1; }
@@ -115,23 +115,23 @@ function decreaseQuantity() { const i = document.getElementById('productQuantity
 // ======== CART ========
 function addToCart(id) { addToCartWithQuantity(id, 1); }
 function addToCartWithQuantity(id, quantity = null) {
-    const p = products.find(x => x.id === id); if (!p) return;
-    const qty = quantity || parseInt(document.getElementById('productQuantity')?.value || 1);
-    const ex = cart.find(i => i.id === id);
-    if (ex) ex.quantity += qty; else cart.push({ ...p, quantity: qty });
-    updateCartUI(); showNotification(p.name + ' ditambahkan ke keranjang!'); closeModal('productModal');
+  const p = products.find(x => x.id === id); if (!p) return;
+  const qty = quantity || parseInt(document.getElementById('productQuantity')?.value || 1);
+  const ex = cart.find(i => i.id === id);
+  if (ex) ex.quantity += qty; else cart.push({ ...p, quantity: qty });
+  updateCartUI(); showNotification(p.name + ' ditambahkan ke keranjang!'); closeModal('productModal');
 }
 function updateCartUI() {
-    const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
-    document.getElementById('cartCount').textContent = totalItems;
-    document.getElementById('floatingCartCount').textContent = totalItems;
+  const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
+  document.getElementById('cartCount').textContent = totalItems;
+  document.getElementById('floatingCartCount').textContent = totalItems;
 }
 function showCart() {
-    if (cart.length === 0) {
-        document.getElementById('cartContent').innerHTML = '<div class="text-center py-12"><div class="text-6xl mb-4">🛒</div><h3 class="text-xl font-semibold mb-2">Keranjang Kosong</h3><p class="text-gray-600">Belum ada produk di keranjang Anda</p></div>';
-    } else {
-        const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-        const content = `
+  if (cart.length === 0) {
+    document.getElementById('cartContent').innerHTML = '<div class="text-center py-12"><div class="text-6xl mb-4">🛒</div><h3 class="text-xl font-semibold mb-2">Keranjang Kosong</h3><p class="text-gray-600">Belum ada produk di keranjang Anda</p></div>';
+  } else {
+    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+    const content = `
       <div class="space-y-4 mb-6">
         ${cart.map(item => `
           <div class="flex items-center space-x-4 p-4 border rounded-lg">
@@ -152,9 +152,9 @@ function showCart() {
         <div class="flex justify-between items-center mb-4"><span class="text-xl font-semibold">Total:</span><span class="text-2xl font-bold text-purple-600">Rp ${total.toLocaleString('id-ID')}</span></div>
         <button onclick="startCheckout()" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition font-semibold">Lanjut ke Checkout</button>
       </div>`;
-        document.getElementById('cartContent').innerHTML = content;
-    }
-    openModal('cartModal');
+    document.getElementById('cartContent').innerHTML = content;
+  }
+  openModal('cartModal');
 }
 function updateCartQuantity(id, newQty) { if (newQty <= 0) { removeFromCart(id); return; } const it = cart.find(i => i.id === id); if (it) { it.quantity = newQty; updateCartUI(); showCart(); } }
 function removeFromCart(id) { cart = cart.filter(i => i.id !== id); updateCartUI(); showCart(); }
@@ -162,18 +162,18 @@ function removeFromCart(id) { cart = cart.filter(i => i.id !== id); updateCartUI
 // ======== CHECKOUT ========
 function startCheckout() { closeModal('cartModal'); currentStep = 1; updateCheckoutStep(); showCheckoutStep1(); openModal('checkoutModal'); }
 function updateCheckoutStep() {
-    const steps = document.querySelectorAll('.checkout-step'); const connectors = document.querySelectorAll('.checkout-step + div');
-    steps.forEach((s, idx) => {
-        const c = s.querySelector('div'); const t = s.querySelector('span');
-        if (idx + 1 <= currentStep) { s.classList.add('active'); c.className = 'w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg'; t.className = 'ml-3 font-semibold text-blue-800'; }
-        else { s.classList.remove('active'); c.className = 'w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold'; t.className = 'ml-3 font-semibold text-gray-500'; }
-    });
-    connectors.forEach((c, idx) => { c.className = (idx + 1 < currentStep) ? 'w-12 h-1 bg-gradient-to-r from-blue-300 to-green-300 rounded-full' : 'w-12 h-1 bg-gray-300 rounded-full'; });
+  const steps = document.querySelectorAll('.checkout-step'); const connectors = document.querySelectorAll('.checkout-step + div');
+  steps.forEach((s, idx) => {
+    const c = s.querySelector('div'); const t = s.querySelector('span');
+    if (idx + 1 <= currentStep) { s.classList.add('active'); c.className = 'w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full flex items-center justify-center font-bold shadow-lg'; t.className = 'ml-3 font-semibold text-blue-800'; }
+    else { s.classList.remove('active'); c.className = 'w-10 h-10 bg-gray-300 text-white rounded-full flex items-center justify-center font-bold'; t.className = 'ml-3 font-semibold text-gray-500'; }
+  });
+  connectors.forEach((c, idx) => { c.className = (idx + 1 < currentStep) ? 'w-12 h-1 bg-gradient-to-r from-blue-300 to-green-300 rounded-full' : 'w-12 h-1 bg-gray-300 rounded-full'; });
 }
 function showCheckoutStep1() {
-    const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-    checkoutData.subtotal = total; // simpan
-    const html = `
+  const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  checkoutData.subtotal = total; // simpan
+  const html = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div>
         <h4 class="text-xl font-semibold mb-4">📍 Alamat Pengiriman</h4>
@@ -206,44 +206,44 @@ function showCheckoutStep1() {
     <div class="flex justify-end mt-10">
       <button onclick="goToStep2()" class="btn-primary text-white px-10 py-4 rounded-xl font-bold text-lg"><i class="fas fa-arrow-right mr-2"></i>Lanjut ke Pembayaran</button>
     </div>`;
-    document.getElementById('checkoutContent').innerHTML = html;
-    document.getElementById('customerCity').addEventListener('change', calculateShipping);
+  document.getElementById('checkoutContent').innerHTML = html;
+  document.getElementById('customerCity').addEventListener('change', calculateShipping);
 }
 function calculateShipping() {
-    const city = document.getElementById('customerCity').value;
-    const shippingCosts = { jakarta: 15000, bandung: 20000, surabaya: 25000, medan: 30000, semarang: 22000 };
-    const cost = shippingCosts[city] || 0;
-    const total = checkoutData.subtotal || cart.reduce((s, i) => s + i.price * i.quantity, 0);
-    const final = total + cost;
-    checkoutData.city = city; checkoutData.shippingCost = cost; checkoutData.finalTotal = final;
-    if (document.getElementById('shippingCost')) document.getElementById('shippingCost').textContent = 'Rp ' + cost.toLocaleString('id-ID');
-    if (document.getElementById('finalTotal')) document.getElementById('finalTotal').textContent = 'Rp ' + final.toLocaleString('id-ID');
+  const city = document.getElementById('customerCity').value;
+  const shippingCosts = { jakarta: 15000, bandung: 20000, surabaya: 25000, medan: 30000, semarang: 22000 };
+  const cost = shippingCosts[city] || 0;
+  const total = checkoutData.subtotal || cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const final = total + cost;
+  checkoutData.city = city; checkoutData.shippingCost = cost; checkoutData.finalTotal = final;
+  if (document.getElementById('shippingCost')) document.getElementById('shippingCost').textContent = 'Rp ' + cost.toLocaleString('id-ID');
+  if (document.getElementById('finalTotal')) document.getElementById('finalTotal').textContent = 'Rp ' + final.toLocaleString('id-ID');
 }
 function goToStep2() {
-    // simpan data alamat (sebelum konten step 1 dihapus)
-    checkoutData.name = document.getElementById('customerName').value.trim();
-    checkoutData.phone = document.getElementById('customerPhone').value.trim();
-    checkoutData.address = document.getElementById('customerAddress').value.trim();
-    checkoutData.city = document.getElementById('customerCity').value;
-    checkoutData.postal = document.getElementById('customerPostal').value.trim();
+  // simpan data alamat (sebelum konten step 1 dihapus)
+  checkoutData.name = document.getElementById('customerName').value.trim();
+  checkoutData.phone = document.getElementById('customerPhone').value.trim();
+  checkoutData.address = document.getElementById('customerAddress').value.trim();
+  checkoutData.city = document.getElementById('customerCity').value;
+  checkoutData.postal = document.getElementById('customerPostal').value.trim();
 
-    if (!checkoutData.name || !checkoutData.phone || !checkoutData.address || !checkoutData.city || !checkoutData.postal) {
-        showNotification('Mohon lengkapi semua data alamat!', 'error'); return;
-    }
+  if (!checkoutData.name || !checkoutData.phone || !checkoutData.address || !checkoutData.city || !checkoutData.postal) {
+    showNotification('Mohon lengkapi semua data alamat!', 'error'); return;
+  }
 
-    const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
-    const shippingCosts = { jakarta: 15000, bandung: 20000, surabaya: 25000, medan: 30000, semarang: 22000 };
-    checkoutData.subtotal = subtotal;
-    checkoutData.shippingCost = shippingCosts[checkoutData.city] || 0;
-    checkoutData.finalTotal = subtotal + checkoutData.shippingCost;
+  const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
+  const shippingCosts = { jakarta: 15000, bandung: 20000, surabaya: 25000, medan: 30000, semarang: 22000 };
+  checkoutData.subtotal = subtotal;
+  checkoutData.shippingCost = shippingCosts[checkoutData.city] || 0;
+  checkoutData.finalTotal = subtotal + checkoutData.shippingCost;
 
-    currentStep = 2; updateCheckoutStep(); showCheckoutStep2();
+  currentStep = 2; updateCheckoutStep(); showCheckoutStep2();
 }
 function showCheckoutStep2() {
-    const total = checkoutData.subtotal;
-    const shippingCost = checkoutData.shippingCost;
-    const finalTotal = checkoutData.finalTotal;
-    const html = `
+  const total = checkoutData.subtotal;
+  const shippingCost = checkoutData.shippingCost;
+  const finalTotal = checkoutData.finalTotal;
+  const html = `
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div>
         <h4 class="text-xl font-semibold mb-4">💳 Pilih Metode Pembayaran</h4>
@@ -289,28 +289,28 @@ function showCheckoutStep2() {
       <button onclick="goToStep1()" class="bg-gray-500 text-white px-8 py-3 rounded-lg hover:bg-gray-600 transition font-semibold">Kembali</button>
       <button onclick="goToStep3()" class="bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition font-semibold">Konfirmasi Pesanan</button>
     </div>`;
-    document.getElementById('checkoutContent').innerHTML = html;
+  document.getElementById('checkoutContent').innerHTML = html;
 }
 function goToStep1() { currentStep = 1; updateCheckoutStep(); showCheckoutStep1(); }
 
 // === Step 3: buka modal Detail Pembayaran + auto WhatsApp ===
 function goToStep3() {
-    const sel = document.querySelector('input[name="payment"]:checked'); if (!sel) { showNotification('Mohon pilih metode pembayaran!', 'error'); return; }
-    currentStep = 3; updateCheckoutStep();
+  const sel = document.querySelector('input[name="payment"]:checked'); if (!sel) { showNotification('Mohon pilih metode pembayaran!', 'error'); return; }
+  currentStep = 3; updateCheckoutStep();
 
-    const paymentDetails = {
-        bca: { name: 'Bank BCA', account: '1234567890 - TechStore Official' },
-        mandiri: { name: 'Bank Mandiri', account: '0987654321 - TechStore Official' },
-        bni: { name: 'Bank BNI', account: '5678901234 - TechStore Official' },
-        gopay: { name: 'GoPay', account: '081234567890' },
-        ovo: { name: 'OVO', account: '081234567890' },
-        dana: { name: 'DANA', account: '081234567890' },
-        qris: { name: 'QRIS', account: 'Scan QR Code' }
-    };
-    const payment = paymentDetails[sel.value];
-    const orderId = 'TS' + Date.now(); lastOrderId = orderId;
+  const paymentDetails = {
+    bca: { name: 'Bank BCA', account: '1234567890 - TechStore Official' },
+    mandiri: { name: 'Bank Mandiri', account: '0987654321 - TechStore Official' },
+    bni: { name: 'Bank BNI', account: '5678901234 - TechStore Official' },
+    gopay: { name: 'GoPay', account: '081234567890' },
+    ovo: { name: 'OVO', account: '081234567890' },
+    dana: { name: 'DANA', account: '081234567890' },
+    qris: { name: 'QRIS', account: 'Scan QR Code' }
+  };
+  const payment = paymentDetails[sel.value];
+  const orderId = 'TS' + Date.now(); lastOrderId = orderId;
 
-    const customerBlock = `
+  const customerBlock = `
     <div class="text-sm text-gray-700">
       <div><strong>Nama:</strong> ${checkoutData.name}</div>
       <div><strong>Telepon:</strong> ${checkoutData.phone}</div>
@@ -318,11 +318,11 @@ function goToStep3() {
       <div><strong>Kota/Kodepos:</strong> ${checkoutData.city}, ${checkoutData.postal}</div>
     </div>`;
 
-    let payInstr = '';
-    if (sel.value === 'qris') {
-        payInstr = `<div class="text-center"><div class="text-6xl mb-3">📱</div><p class="text-sm text-gray-600">Scan QR Code dengan mobile banking atau e-wallet Anda</p></div>`;
-    } else {
-        payInstr = `
+  let payInstr = '';
+  if (sel.value === 'qris') {
+    payInstr = `<div class="text-center"><div class="text-6xl mb-3">📱</div><p class="text-sm text-gray-600">Scan QR Code dengan mobile banking atau e-wallet Anda</p></div>`;
+  } else {
+    payInstr = `
       <div class="bg-blue-50 p-4 rounded-lg">
         <h5 class="font-semibold mb-2">Instruksi Pembayaran:</h5>
         <div class="space-y-1 text-sm">
@@ -332,10 +332,10 @@ function goToStep3() {
           <div><strong>ID Pesanan (Berita):</strong> ${orderId}</div>
         </div>
       </div>`;
-    }
+  }
 
-    const itemsList = cart.map(i => `<div class="flex justify-between"><span>${i.name} x${i.quantity}</span><span>Rp ${(i.price * i.quantity).toLocaleString('id-ID')}</span></div>`).join('');
-    const detailHTML = `
+  const itemsList = cart.map(i => `<div class="flex justify-between"><span>${i.name} x${i.quantity}</span><span>Rp ${(i.price * i.quantity).toLocaleString('id-ID')}</span></div>`).join('');
+  const detailHTML = `
     <div class="space-y-3">
       <div class="text-sm text-gray-600">ID Pesanan: <strong>${orderId}</strong></div>
       ${payInstr}
@@ -352,72 +352,82 @@ function goToStep3() {
       </div>
       <p class="text-xs text-gray-500 mt-2">*WhatsApp akan terbuka otomatis. Jika tidak, klik tombol "Buka WhatsApp Sekarang".</p>
     </div>`;
-    document.getElementById('paymentDetailContent').innerHTML = detailHTML;
+  document.getElementById('paymentDetailContent').innerHTML = detailHTML;
 
-    // tampilkan modal detail + modal sukses
-    openModal('paymentDetailModal');
-    document.getElementById('orderId').textContent = orderId;
-    openModal('successModal');
+  // tampilkan modal detail + modal sukses
+  openModal('paymentDetailModal');
+  document.getElementById('orderId').textContent = orderId;
+  openModal('successModal');
 
-    // buka WA otomatis
-    openWhatsApp(orderId, 'Rp ' + checkoutData.finalTotal.toLocaleString('id-ID'));
+  // buka WA otomatis
+  openWhatsApp(orderId, 'Rp ' + checkoutData.finalTotal.toLocaleString('id-ID'));
 }
 
 // ======== HELPERS ========
 function setupEventListeners() {
-    // search
-    document.getElementById('searchInput').addEventListener('input', e => {
-        const q = e.target.value.toLowerCase();
-        const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
-        document.getElementById('productsGrid').innerHTML = filtered.map(p => createProductCard(p)).join('');
+  // search
+  document.getElementById('searchInput').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+    document.getElementById('productsGrid').innerHTML = filtered.map(p => createProductCard(p)).join('');
+  });
+  // categories
+  document.querySelectorAll('.category-card').forEach(card => {
+    card.addEventListener('click', function () {
+      const cat = this.dataset.category;
+      const filtered = products.filter(p => p.category === cat);
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = filtered.map(p => createProductCard(p)).join('');
+      grid.scrollIntoView({ behavior: 'smooth' });
     });
-    // categories
-    document.querySelectorAll('.category-card').forEach(card => {
-        card.addEventListener('click', function () {
-            const cat = this.dataset.category;
-            const filtered = products.filter(p => p.category === cat);
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = filtered.map(p => createProductCard(p)).join('');
-            grid.scrollIntoView({ behavior: 'smooth' });
-        });
-    });
-    // modals open
-    document.getElementById('cartBtn').addEventListener('click', showCart);
-    document.getElementById('floatingCartBtn').addEventListener('click', showCart);
-    // modals close
-    document.getElementById('closeProductModal').addEventListener('click', () => closeModal('productModal'));
-    document.getElementById('closeCartModal').addEventListener('click', () => closeModal('cartModal'));
-    document.getElementById('closeCheckoutModal').addEventListener('click', () => closeModal('checkoutModal'));
-    document.getElementById('closeSuccessModal').addEventListener('click', () => closeModal('successModal'));
-    document.getElementById('closePaymentDetailModal').addEventListener('click', () => closeModal('paymentDetailModal'));
-    document.getElementById('closePaymentDetailButton').addEventListener('click', () => closeModal('paymentDetailModal'));
-    // close overlay
-    document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', function (e) { if (e.target === this) this.classList.remove('active'); }));
-    // manual WA
-    document.getElementById('openWAButton').addEventListener('click', () => { if (lastOrderId) openWhatsApp(lastOrderId, 'Rp ' + checkoutData.finalTotal.toLocaleString('id-ID')); });
+  });
+  // modals open
+  document.getElementById('cartBtn').addEventListener('click', showCart);
+  document.getElementById('floatingCartBtn').addEventListener('click', showCart);
+  // modals close
+  document.getElementById('closeProductModal').addEventListener('click', () => closeModal('productModal'));
+  document.getElementById('closeCartModal').addEventListener('click', () => closeModal('cartModal'));
+  document.getElementById('closeCheckoutModal').addEventListener('click', () => closeModal('checkoutModal'));
+  document.getElementById('closeSuccessModal').addEventListener('click', () => closeModal('successModal'));
+  document.getElementById('closePaymentDetailModal').addEventListener('click', () => closeModal('paymentDetailModal'));
+  document.getElementById('closePaymentDetailButton').addEventListener('click', () => closeModal('paymentDetailModal'));
+  // close overlay
+  document.querySelectorAll('.modal').forEach(m => m.addEventListener('click', function (e) { if (e.target === this) this.classList.remove('active'); }));
+  // manual WA
+  document.getElementById('openWAButton').addEventListener('click', () => { if (lastOrderId) openWhatsApp(lastOrderId, 'Rp ' + checkoutData.finalTotal.toLocaleString('id-ID')); });
 }
 function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function showNotification(msg, type = 'success') {
-    const n = document.createElement('div');
-    n.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white font-semibold transform translate-x-full transition-transform duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
-    n.textContent = msg; document.body.appendChild(n);
-    setTimeout(() => n.classList.remove('translate-x-full'), 100);
-    setTimeout(() => { n.classList.add('translate-x-full'); setTimeout(() => document.body.removeChild(n), 300); }, 3000);
+  const n = document.createElement('div');
+  n.className = `fixed top-4 right-4 z-50 p-4 rounded-lg text-white font-semibold transform translate-x-full transition-transform duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`;
+  n.textContent = msg; document.body.appendChild(n);
+  setTimeout(() => n.classList.remove('translate-x-full'), 100);
+  setTimeout(() => { n.classList.add('translate-x-full'); setTimeout(() => document.body.removeChild(n), 300); }, 3000);
 }
 
 // ======== WHATSAPP ========
 function openWhatsApp(orderId, totalText) {
-    const waNumber = '6285257752793'; // GANTI dengan nomor admin Anda (tanpa +)
-    const items = cart.map(i => `${i.name} x${i.quantity}`).join(', ');
-    const message = encodeURIComponent(
-        `Halo Admin TechStore, saya ingin konfirmasi pesanan.\n` +
-        `ID: ${orderId}\n` +
-        `Nama: ${checkoutData.name}\nNo HP: ${checkoutData.phone}\nKota: ${checkoutData.city}\n` +
-        `Item: ${items}\nTotal: ${totalText}\nTerima kasih.`
-    );
-    window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
+  const waNumber = '6285257752793'; // GANTI dengan nomor admin Anda (tanpa +)
+  const items = cart.map(i => `${i.name} x${i.quantity}`).join(', ');
+  const message = encodeURIComponent(
+    `Halo Admin TechStore, saya ingin konfirmasi pesanan.\n` +
+    `ID: ${orderId}\n` +
+    `Nama: ${checkoutData.name}\nNo HP: ${checkoutData.phone}\nKota: ${checkoutData.city}\n` +
+    `Item: ${items}\nTotal: ${totalText}\nTerima kasih.`
+  );
+  window.open(`https://wa.me/${waNumber}?text=${message}`, '_blank');
 }
+
+// Tutup modal detail pembayaran dan redirect ke home
+document.getElementById("closePaymentDetailButton").addEventListener("click", function () {
+  window.location.href = "https://www.mrofiqi.id/TechStore/TechStore.html#";
+});
+
+// Kalau juga mau untuk tombol "X" di pojok modal:
+document.getElementById("closePaymentDetailModal").addEventListener("click", function () {
+  window.location.href = "https://www.mrofiqi.id/TechStore/TechStore.html#";
+});
 
 // Expose (untuk inline onclick pada HTML)
 window.showProductDetail = showProductDetail;
