@@ -3,15 +3,15 @@
    - Aturan dasar untuk semua elemen, font, dan latar belakang.
    ================================================================= */
 * {
-    scroll-behavior: smooth;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
 }
 
 /* =================================================================
@@ -19,91 +19,88 @@ body {
    - Semua definisi @keyframes ada di sini agar mudah ditemukan.
    ================================================================= */
 @keyframes typing {
-    from {
-        width: 0;
-    }
+  from {
+    width: 0;
+  }
 
-    to {
-        width: 100%;
-    }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
 
-    from,
-    to {
-        border-color: transparent;
-    }
-
-    50% {
-        border-color: #667eea;
-    }
+  50% {
+    border-color: #667eea;
+  }
 }
 
 @keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
 
-    0%,
-    100% {
-        transform: translateY(0px);
-    }
-
-    50% {
-        transform: translateY(-20px);
-    }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
 
-    0%,
-    100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.05);
-    }
+  50% {
+    transform: scale(1.05);
+  }
 }
 
 @keyframes scaleUp {
-    from {
-        transform: scale(0);
-    }
+  from {
+    transform: scale(0);
+  }
 
-    to {
-        transform: scale(1);
-    }
+  to {
+    transform: scale(1);
+  }
 }
 
 @keyframes rotate3dEffect {
-    0% {
-        transform: rotateY(0deg);
-    }
+  0% {
+    transform: rotateY(0deg);
+  }
 
-    25% {
-        transform: rotateY(10deg);
-    }
+  25% {
+    transform: rotateY(10deg);
+  }
 
-    50% {
-        transform: rotateY(20deg);
-    }
+  50% {
+    transform: rotateY(20deg);
+  }
 
-    75% {
-        transform: rotateY(10deg);
-    }
+  75% {
+    transform: rotateY(10deg);
+  }
 
-    100% {
-        transform: rotateY(0deg);
-    }
+  100% {
+    transform: rotateY(0deg);
+  }
 }
 
 @keyframes lineExpand {
-    from {
-        width: 0;
-    }
+  from {
+    width: 0;
+  }
 
-    to {
-        width: 3rem;
-    }
+  to {
+    width: 3rem;
+  }
 }
 
 /* =================================================================
@@ -113,171 +110,172 @@ body {
 
 /* --- Animasi Masuk (Scroll) --- */
 .fade-in {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
 }
 
 .slide-in-left {
-    opacity: 0;
-    transform: translateX(-50px);
-    transition: all 0.8s ease;
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s ease;
 }
 
 .slide-in-right {
-    opacity: 0;
-    transform: translateX(50px);
-    transition: all 0.8s ease;
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s ease;
 }
 
 .scale-in {
-    opacity: 0;
-    transform: scale(0.8);
-    transition: all 0.8s ease;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s ease;
 }
 
 .fade-in.visible,
 .slide-in-left.visible,
 .slide-in-right.visible,
 .scale-in.visible {
-    opacity: 1;
-    transform: none;
+  opacity: 1;
+  transform: none;
 }
 
 /* --- Mobile Menu (Hamburger) --- */
 .mobile-menu {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
 }
 
 .mobile-menu.open {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background: #333;
-    /* Warna disesuaikan agar terlihat di header putih */
-    margin: 5px 0;
-    transition: 0.3s;
+  display: block;
+  width: 25px;
+  height: 3px;
+  background: #333;
+  /* Warna disesuaikan agar terlihat di header putih */
+  margin: 5px 0;
+  transition: 0.3s;
 }
 
 .hamburger.active span:nth-child(1) {
-    transform: rotate(-45deg) translate(-5px, 6px);
+  transform: rotate(-45deg) translate(-5px, 6px);
 }
 
 .hamburger.active span:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
 
 .hamburger.active span:nth-child(3) {
-    transform: rotate(45deg) translate(-5px, -6px);
+  transform: rotate(45deg) translate(-5px, -6px);
 }
 
 /* --- Teks & Efek Lainnya --- */
 .gradient-text {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .floating-animation {
-    animation: float 3s ease-in-out infinite;
+  animation: float 3s ease-in-out infinite;
 }
 
 .pulse-animation {
-    animation: pulse 2s infinite;
+  animation: pulse 2s infinite;
 }
 
 .card-hover {
-    transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .card-hover:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 /* --- Social Media Icons --- */
 .social-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    font-size: 1.5rem;
-    color: white;
-    transition: all 0.3s ease;
-    transform-style: preserve-3d;
-    cursor: pointer;
-    text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  color: white;
+  transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .social-icon:hover {
-    transform: rotateY(360deg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: rotateY(360deg);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
 }
 
 .social-icon i,
 .social-icon-img {
-    transition: transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .social-icon:hover i,
 .social-icon:hover .social-icon-img {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .instagram {
-    background: linear-gradient(135deg, #ff3a44, #9b0064);
+  background: linear-gradient(135deg, #ff3a44, #9b0064);
 }
 
 .facebook {
-    background: linear-gradient(135deg, #3b5998, #192f5d);
+  background: linear-gradient(135deg, #3b5998, #192f5d);
 }
 
 .tiktok {
-    background: linear-gradient(135deg, #010101, #69c9d0);
+  background: linear-gradient(135deg, #010101, #69c9d0);
 }
 
 .youtube {
-    background: linear-gradient(135deg, #ff0000, #c4302b);
+  background: linear-gradient(135deg, #ff0000, #c4302b);
 }
 
 .lynk {
-    background: linear-gradient(135deg, #2980b9, #6dd5fa);
+  background: linear-gradient(135deg, #2980b9, #6dd5fa);
 }
 
 .s-id {
-    background: linear-gradient(135deg, #0b5ed7, #d2b8fe);
+  background: linear-gradient(135deg, #0b5ed7, #d2b8fe);
 }
 
 .social-icon-img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
 }
 
 /* --- Stat Counter --- */
 .stat-box {
-    display: inline-block;
-    perspective: 1000px;
-    transition: transform 1s ease;
+  display: inline-block;
+  perspective: 1000px;
+  transition: transform 1s ease;
 }
 
 .stat-number {
-    transform: scale(0);
-    animation: scaleUp 1s ease-in-out forwards, rotate3dEffect 2s ease-in-out infinite;
+  transform: scale(0);
+  animation: scaleUp 1s ease-in-out forwards,
+    rotate3dEffect 2s ease-in-out infinite;
 }
 
 .stat-box .w-12 {
-    width: 0;
-    height: 0.3rem;
-    animation: lineExpand 2s ease-out 0.5s forwards;
+  width: 0;
+  height: 0.3rem;
+  animation: lineExpand 2s ease-out 0.5s forwards;
 }
 
 /* =================================================================
@@ -286,96 +284,100 @@ body {
 
 /* --- Swiper 3D Hero Section --- */
 #home {
-    perspective: 1200px;
-    /* Tambahkan gradien gelap sebagai latar belakang cadangan */
-    background: linear-gradient(to bottom, #333, #000);
+  perspective: 1200px;
+  /* Tambahkan gradien gelap sebagai latar belakang cadangan */
+  background: linear-gradient(to bottom, #333, #000);
 }
 
 .swiper {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .swiper-slide {
-    background-position: center;
-    background-size: cover;
-    border-radius: 18px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-    position: relative;
-    overflow: hidden;
-    color: #fff;
-    display: flex;
-    align-items: flex-end;
-    padding: 40px;
+  background-position: center;
+  background-size: cover;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px;
 
-    /* Efek transisi untuk slide yang tidak aktif */
-    transition: transform 0.5s, opacity 0.5s, filter 0.5s;
-    opacity: 0.5;
-    /* Slide samping akan sedikit transparan */
-    filter: blur(2px);
-    /* Slide samping akan sedikit blur */
+  /* Efek transisi untuk slide yang tidak aktif */
+  transition: transform 0.5s, opacity 0.5s, filter 0.5s;
+  opacity: 0.5;
+  /* Slide samping akan sedikit transparan */
+  filter: blur(2px);
+  /* Slide samping akan sedikit blur */
 }
 
 /* Gaya untuk slide yang aktif (di tengah) */
 .swiper-slide-active {
-    opacity: 1;
-    filter: blur(0);
-    transform: scale(1.1);
-    /* Sedikit lebih besar saat di tengah */
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1.1);
+  /* Sedikit lebih besar saat di tengah */
 }
 
 /* Lapisan gradien gelap di atas gambar agar teks lebih terbaca */
 .swiper-slide::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
-    z-index: 1;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 50%
+  );
+  z-index: 1;
 }
 
 .slide-content {
-    position: relative;
-    z-index: 2;
+  position: relative;
+  z-index: 2;
 
-    /* Tambahkan transisi untuk efek teks */
-    transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-    transform: translateY(20px);
-    /* Teks sedikit bergeser ke bawah saat tidak aktif */
-    opacity: 0;
-    /* Teks tidak terlihat saat tidak aktif */
+  /* Tambahkan transisi untuk efek teks */
+  transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+  transform: translateY(20px);
+  /* Teks sedikit bergeser ke bawah saat tidak aktif */
+  opacity: 0;
+  /* Teks tidak terlihat saat tidak aktif */
 }
 
 .swiper-slide-active .slide-content {
-    transform: translateY(0);
-    /* Teks kembali ke posisi normal saat aktif */
-    opacity: 1;
-    /* Teks muncul */
-    animation: zoomInText 1s cubic-bezier(0.25, 0.1, 0.25, 1);
-    /* Efek zoom masuk */
+  transform: translateY(0);
+  /* Teks kembali ke posisi normal saat aktif */
+  opacity: 1;
+  /* Teks muncul */
+  animation: zoomInText 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* Efek zoom masuk */
 }
 
 /* Animasi Kunci untuk Efek "Film Marvel" */
 @keyframes zoomInText {
-    from {
-        opacity: 0;
-        transform: scale(0.9) translateY(20px);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 /* Gaya untuk tombol navigasi dan paginasi slider */
 .swiper-button-next,
 .swiper-button-prev {
-    color: #ffffff;
-    --swiper-navigation-size: 30px;
+  color: #ffffff;
+  --swiper-navigation-size: 30px;
 }
 
 .swiper-pagination-bullet-active {
-    background: #ffffff;
+  background: #ffffff;
 }
 
 /* =================================================================
@@ -383,103 +385,97 @@ body {
    ================================================================= */
 
 .logo-container-3d {
-    width: 130px;
-    /* Sedikit lebih lebar untuk efek yang lebih baik */
-    height: auto;
-    perspective: 1000px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* Menambahkan transisi pada container untuk gerakan mouse */
-    transition: transform 0.4s ease-out;
+  width: 130px;
+  /* Sedikit lebih lebar untuk efek yang lebih baik */
+  height: auto;
+  perspective: 1000px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Menambahkan transisi pada container untuk gerakan mouse */
+  transition: transform 0.4s ease-out;
 }
 
 .logo-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
 
-    /* Bayangan ke dalam (inset) untuk ilusi kedalaman */
-    box-shadow:
-        inset 0 0 15px rgba(255, 255, 255, 0.4),
-        /* Sorotan cahaya di dalam */
-        0 8px 25px rgba(0, 0, 0, 0.4);
-    /* Bayangan luar yang lebih lembut */
+  /* Bayangan ke dalam (inset) untuk ilusi kedalaman */
+  box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.4),
+    /* Sorotan cahaya di dalam */ 0 8px 25px rgba(0, 0, 0, 0.4);
+  /* Bayangan luar yang lebih lembut */
 
-    border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
 
-    /* Transisi yang lebih responsif */
-    transition: all 0.4s ease-out;
-    transform-style: preserve-3d;
+  /* Transisi yang lebih responsif */
+  transition: all 0.4s ease-out;
+  transform-style: preserve-3d;
 
-    /* Awalnya logo sedikit miring untuk efek 3D */
-    transform: rotateY(-10deg) rotateX(5deg);
+  /* Awalnya logo sedikit miring untuk efek 3D */
+  transform: rotateY(-10deg) rotateX(5deg);
 }
 
 /* Efek saat kursor mouse menyentuh logo */
 .logo-container-3d:hover .logo-image {
-    /* Logo akan menghadap lurus ke depan saat disentuh */
-    transform: rotateY(0deg) rotateX(0deg) scale(1.1);
-    /* Sedikit membesar */
+  /* Logo akan menghadap lurus ke depan saat disentuh */
+  transform: rotateY(0deg) rotateX(0deg) scale(1.1);
+  /* Sedikit membesar */
 
-    /* Efek glow yang lebih dramatis */
-    box-shadow:
-        inset 0 0 10px rgba(255, 255, 255, 0.6),
-        0 0 30px rgba(0, 150, 255, 0.8),
-        /* Cahaya biru utama */
-        0 0 50px rgba(0, 150, 255, 0.5);
-    /* Cahaya biru menyebar */
+  /* Efek glow yang lebih dramatis */
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.6),
+    0 0 30px rgba(0, 150, 255, 0.8),
+    /* Cahaya biru utama */ 0 0 50px rgba(0, 150, 255, 0.5);
+  /* Cahaya biru menyebar */
 }
-
-
 
 /* =================================================================
    MENU DROPDOWN HEADER ATAS
    ================================================================= */
 
 .dropdown-menu {
-    /* Sembunyikan menu secara default */
-    display: none;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  /* Sembunyikan menu secara default */
+  display: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Tampilkan menu saat kelas 'show' ditambahkan */
 .dropdown-menu.show {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Warna-warni saat disentuh */
 .dropdown-item:hover {
-    color: white;
+  color: white;
 }
 
 .dropdown-item:hover:nth-child(1) {
-    background-color: #ef4444;
+  background-color: #ef4444;
 }
 
 /* Merah */
 .dropdown-item:hover:nth-child(2) {
-    background-color: #f97316;
+  background-color: #f97316;
 }
 
 /* Oranye */
 .dropdown-item:hover:nth-child(3) {
-    background-color: #eab308;
+  background-color: #eab308;
 }
 
 /* Kuning */
 .dropdown-item:hover:nth-child(4) {
-    background-color: #22c55e;
+  background-color: #22c55e;
 }
 
 /* Hijau */
 .dropdown-item:hover:nth-child(5) {
-    background-color: #0ea5e9;
+  background-color: #0ea5e9;
 }
 
 /* Biru */
