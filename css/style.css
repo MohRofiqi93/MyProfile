@@ -22,7 +22,6 @@ body {
   from {
     width: 0;
   }
-
   to {
     width: 100%;
   }
@@ -33,7 +32,6 @@ body {
   to {
     border-color: transparent;
   }
-
   50% {
     border-color: #667eea;
   }
@@ -44,7 +42,6 @@ body {
   100% {
     transform: translateY(0px);
   }
-
   50% {
     transform: translateY(-20px);
   }
@@ -55,7 +52,6 @@ body {
   100% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.05);
   }
@@ -65,7 +61,6 @@ body {
   from {
     transform: scale(0);
   }
-
   to {
     transform: scale(1);
   }
@@ -75,19 +70,15 @@ body {
   0% {
     transform: rotateY(0deg);
   }
-
   25% {
     transform: rotateY(10deg);
   }
-
   50% {
     transform: rotateY(20deg);
   }
-
   75% {
     transform: rotateY(10deg);
   }
-
   100% {
     transform: rotateY(0deg);
   }
@@ -97,9 +88,20 @@ body {
   from {
     width: 0;
   }
-
   to {
     width: 3rem;
+  }
+}
+
+/* Animasi Kunci untuk Efek "Film Marvel" (dari bagian slider) */
+@keyframes zoomInText {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
   }
 }
 
@@ -279,7 +281,7 @@ body {
 }
 
 /* =================================================================
-   4. BAGIAN BARU UNTUK SLIDER 3D (VERSI DIPERBAIKI)
+   4. BAGIAN SLIDER 3D (VERSI DIPERBAIKI)
    ================================================================= */
 
 /* --- Swiper 3D Hero Section --- */
@@ -356,19 +358,6 @@ body {
   /* Efek zoom masuk */
 }
 
-/* Animasi Kunci untuk Efek "Film Marvel" */
-@keyframes zoomInText {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
 /* Gaya untuk tombol navigasi dan paginasi slider */
 .swiper-button-next,
 .swiper-button-prev {
@@ -381,7 +370,7 @@ body {
 }
 
 /* =================================================================
-   5. EFEK LOGO 3D - LEBIH KEREN & INTERAKTIF (FINAL)
+   5. EFEK LOGO 3D - INTERAKTIF
    ================================================================= */
 
 .logo-container-3d {
@@ -431,7 +420,7 @@ body {
 }
 
 /* =================================================================
-   MENU DROPDOWN HEADER ATAS
+   6. MENU DROPDOWN HEADER ATAS
    ================================================================= */
 
 .dropdown-menu {
@@ -456,26 +445,46 @@ body {
 
 .dropdown-item:hover:nth-child(1) {
   background-color: #ef4444;
+  /* Merah */
 }
 
-/* Merah */
 .dropdown-item:hover:nth-child(2) {
   background-color: #f97316;
+  /* Oranye */
 }
 
-/* Oranye */
 .dropdown-item:hover:nth-child(3) {
   background-color: #eab308;
+  /* Kuning */
 }
 
-/* Kuning */
 .dropdown-item:hover:nth-child(4) {
   background-color: #22c55e;
+  /* Hijau */
 }
 
-/* Hijau */
 .dropdown-item:hover:nth-child(5) {
   background-color: #0ea5e9;
+  /* Biru */
 }
 
-/* Biru */
+.dropdown-item:hover:nth-child(6) {
+  background-color: #8b5cf6;
+  /* Ungu */
+}
+.dropdown-item:hover:nth-child(7) {
+  background-color: #ec4899;
+  /* Merah Muda */
+}
+.dropdown-item:hover:nth-child(8) {
+  background-color: #64748b;
+  /* Abu-abu */
+}
+.dropdown-item {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+/* =================================================================
+   7. AKHIR STYLE.CSS
+   ================================================================= */
+
+/* Akhir dari file style.css */
