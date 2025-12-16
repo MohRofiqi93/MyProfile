@@ -120,7 +120,7 @@
             KALENDER 2026
           </h1>
           <p id="year-text" class="text-xl sm:text-2xl text-indigo-700">
-            Do The Best and Be The Best Dengan Bismillah
+            Do The Best And Be The Best Dengan Bismillah
           </p>
         </header>
         <div
@@ -420,27 +420,36 @@
               dayCell.addEventListener("click", function (e) {
                 const tooltip = document.getElementById("hijri-tooltip");
                 let tooltipText = "";
+                let tooltipColor = "rgba(16, 185, 129, 0.95)";
 
-                if (isHijri) {
+                // Gabungkan semua keterangan jika ada bentrok
+                if (isHijri && isHoliday) {
+                  tooltipText =
+                    isHijri.text + " - Puasa Ayyamul Bidh\n" + isHoliday.text;
+                  // Prioritas warna: libur > cuti > hijri
+                  if (isHoliday.type === "libur") {
+                    tooltipColor = "rgba(220, 38, 38, 0.95)";
+                  } else if (isHoliday.type === "cuti") {
+                    tooltipColor = "rgba(217, 119, 6, 0.95)";
+                  }
+                } else if (isHijri) {
                   tooltipText = isHijri.text + " - Puasa Ayyamul Bidh";
+                  tooltipColor = "rgba(16, 185, 129, 0.95)";
                 } else if (isHoliday) {
                   tooltipText = isHoliday.text;
+                  if (isHoliday.type === "libur") {
+                    tooltipColor = "rgba(220, 38, 38, 0.95)";
+                  } else if (isHoliday.type === "cuti") {
+                    tooltipColor = "rgba(217, 119, 6, 0.95)";
+                  }
                 }
 
                 tooltip.textContent = tooltipText;
                 tooltip.style.display = "block";
                 tooltip.style.left = e.clientX + 10 + "px";
                 tooltip.style.top = e.clientY + 10 + "px";
-
-                if (isHoliday) {
-                  if (isHoliday.type === "libur") {
-                    tooltip.style.backgroundColor = "rgba(220, 38, 38, 0.95)";
-                  } else if (isHoliday.type === "cuti") {
-                    tooltip.style.backgroundColor = "rgba(217, 119, 6, 0.95)";
-                  }
-                } else {
-                  tooltip.style.backgroundColor = "rgba(16, 185, 129, 0.95)";
-                }
+                tooltip.style.backgroundColor = tooltipColor;
+                tooltip.style.whiteSpace = "pre-line";
 
                 // Sembunyikan tooltip setelah 3 detik
                 setTimeout(() => {
@@ -572,7 +581,7 @@
           if (b) {
             var d = b.createElement("script");
             d.innerHTML =
-              "window.__CF$cv$params={r:'9aecec53d4bc40e0',t:'MTc2NTg3NDkyMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+              "window.__CF$cv$params={r:'9aed150b9407fdaa',t:'MTc2NTg3NjU4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
             b.getElementsByTagName("head")[0].appendChild(d);
           }
         }
