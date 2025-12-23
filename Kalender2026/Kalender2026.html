@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kalender 2026</title>
+    <title>KALENDER 2026 M / 1447/8 H</title>
     <script src="/_sdk/element_sdk.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -117,10 +117,10 @@
             id="calendar-title"
             class="text-4xl sm:text-5xl lg:text-6xl font-bold text-indigo-900 mb-2"
           >
-            KALENDER 2026
+            KALENDER 2026 M / 1447/8 H
           </h1>
           <p id="year-text" class="text-xl sm:text-2xl text-indigo-700">
-            Do The Best And Be The Best Dengan Bismillah
+            Do The Best and Be The Best Dengan Bismillah
           </p>
         </header>
         <div
@@ -232,12 +232,12 @@
           2: { type: "hijri", text: "Sha'ban 1447 H" },
           3: { type: "hijri", text: "Sha'ban 1447 H" },
         },
-        2: {
+        /* 2: {
           // Maret
           2: { type: "hijri", text: "Ramadan 1447 H" },
           3: { type: "hijri", text: "Ramadan 1447 H" },
           4: { type: "hijri", text: "Ramadan 1447 H" },
-        },
+        }, */
         3: {
           // April
           1: { type: "hijri", text: "Syawal 1447 H" },
@@ -337,10 +337,14 @@
         for (let month = 0; month < 12; month++) {
           const monthCard = document.createElement("div");
           monthCard.className = "month-card rounded-lg p-1";
+          monthCard.style.minHeight = "380px";
 
           const cardInner = document.createElement("div");
           cardInner.className = "card-inner p-4 rounded-lg";
           cardInner.style.backgroundColor = cardColor;
+          cardInner.style.height = "100%";
+          cardInner.style.display = "flex";
+          cardInner.style.flexDirection = "column";
 
           const monthHeader = document.createElement("div");
           monthHeader.className = "text-center mb-3 pb-2 border-b-2";
@@ -368,7 +372,8 @@
           });
 
           const daysGrid = document.createElement("div");
-          daysGrid.className = "grid grid-cols-7 gap-1";
+          daysGrid.className = "grid grid-cols-7 gap-1 mb-3";
+          daysGrid.style.minHeight = "200px";
 
           const firstDay = getFirstDayOfMonth(month, 2026);
           const daysInMonth = getDaysInMonth(month, 2026);
@@ -376,6 +381,7 @@
           for (let i = 0; i < firstDay; i++) {
             const emptyCell = document.createElement("div");
             emptyCell.className = "text-center py-2";
+            emptyCell.style.height = "32px";
             daysGrid.appendChild(emptyCell);
           }
 
@@ -384,6 +390,7 @@
             dayCell.className =
               "day-cell text-center py-2 rounded cursor-pointer";
             dayCell.style.position = "relative";
+            dayCell.style.height = "32px";
             dayCell.textContent = day;
             dayCell.style.fontFamily = `${customFont}, system-ui, sans-serif`;
             dayCell.style.fontSize = `${fontSize * 0.875}px`;
@@ -485,9 +492,106 @@
             daysGrid.appendChild(dayCell);
           }
 
+          // Tambahkan sel kosong untuk melengkapi grid agar rapi
+          const totalCells = firstDay + daysInMonth;
+          const remainingCells = 7 - (totalCells % 7);
+          if (remainingCells < 7) {
+            for (let i = 0; i < remainingCells; i++) {
+              const emptyCell = document.createElement("div");
+              emptyCell.className = "text-center py-2";
+              emptyCell.style.height = "32px";
+              daysGrid.appendChild(emptyCell);
+            }
+          }
+
+          // Tambahkan keterangan di bawah kalender
+          const legendContainer = document.createElement("div");
+          legendContainer.className = "mt-auto pt-3 border-t";
+          legendContainer.style.borderColor = "#e5e7eb";
+
+          // Kumpulkan semua event untuk bulan ini
+          const monthEvents = [];
+
+          // Cek hari libur dan cuti
+          if (holidays[month]) {
+            Object.keys(holidays[month]).forEach((day) => {
+              const event = holidays[month][day];
+              monthEvents.push({
+                day: parseInt(day),
+                text: event.text,
+                type: event.type,
+              });
+            });
+          }
+
+          // Cek tanggal hijriah
+          if (hijriDates[month]) {
+            Object.keys(hijriDates[month]).forEach((day) => {
+              const event = hijriDates[month][day];
+              const existingEvent = monthEvents.find(
+                (e) => e.day === parseInt(day)
+              );
+              if (existingEvent) {
+                // Gabungkan dengan event yang sudah ada
+                existingEvent.text =
+                  event.text + " - Puasa Ayyamul Bidh / " + existingEvent.text;
+                existingEvent.hasHijri = true;
+              } else {
+                monthEvents.push({
+                  day: parseInt(day),
+                  text: event.text + " - Puasa Ayyamul Bidh",
+                  type: "hijri",
+                });
+              }
+            });
+          }
+
+          // Sort events by day
+          monthEvents.sort((a, b) => a.day - b.day);
+
+          if (monthEvents.length > 0) {
+            monthEvents.forEach((event) => {
+              const eventItem = document.createElement("div");
+              eventItem.className = "text-xs mb-1";
+              eventItem.style.fontFamily = `${customFont}, system-ui, sans-serif`;
+              eventItem.style.fontSize = `${fontSize * 0.75}px`;
+
+              const daySpan = document.createElement("span");
+              daySpan.style.fontWeight = "bold";
+              daySpan.style.marginRight = "4px";
+              daySpan.textContent = event.day + ":";
+
+              const textSpan = document.createElement("span");
+              textSpan.textContent = event.text;
+
+              if (event.type === "libur" || event.hasHijri) {
+                daySpan.style.color = "#dc2626";
+                textSpan.style.color = "#dc2626";
+              } else if (event.type === "cuti") {
+                daySpan.style.color = "#d97706";
+                textSpan.style.color = "#d97706";
+              } else if (event.type === "hijri") {
+                daySpan.style.color = "#10b981";
+                textSpan.style.color = "#10b981";
+              }
+
+              eventItem.appendChild(daySpan);
+              eventItem.appendChild(textSpan);
+              legendContainer.appendChild(eventItem);
+            });
+          } else {
+            const noEvents = document.createElement("div");
+            noEvents.className = "text-xs text-gray-400 italic";
+            noEvents.style.fontFamily = `${customFont}, system-ui, sans-serif`;
+            noEvents.style.fontSize = `${fontSize * 0.75}px`;
+            noEvents.textContent = "Tidak ada hari khusus";
+            legendContainer.appendChild(noEvents);
+          }
+
           cardInner.appendChild(monthHeader);
           cardInner.appendChild(daysHeader);
           cardInner.appendChild(daysGrid);
+          cardInner.appendChild(legendContainer);
 
           monthCard.appendChild(cardInner);
           calendarGrid.appendChild(monthCard);
@@ -581,7 +685,7 @@
           if (b) {
             var d = b.createElement("script");
             d.innerHTML =
-              "window.__CF$cv$params={r:'9aed150b9407fdaa',t:'MTc2NTg3NjU4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+              "window.__CF$cv$params={r:'9b269bb5511dfd7d',t:'MTc2NjQ3OTc5My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
             b.getElementsByTagName("head")[0].appendChild(d);
           }
         }
