@@ -319,3 +319,35 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 });
+
+
+
+/* =================================================================
+     1.5 Fungsionalitas Pop-up Gambar Kustom
+     ================================================================= */
+const customPopup = document.getElementById("customPopup");
+
+// Menampilkan pop-up secara otomatis setelah 1 detik (1000 milidetik) halaman dimuat
+setTimeout(() => {
+  if (customPopup) {
+    customPopup.classList.remove("hidden");
+  }
+}, 1000);
+
+// Menutup pop-up saat area luar gambar (background gelap) diklik
+if (customPopup) {
+  customPopup.addEventListener("click", function (e) {
+    if (e.target === this) {
+      window.closeCustomPopup();
+    }
+  });
+}
+
+
+// Fungsi global untuk menutup pop-up kustom
+window.closeCustomPopup = function () {
+  const customPopup = document.getElementById("customPopup");
+  if (customPopup) {
+    customPopup.classList.add("hidden");
+  }
+};

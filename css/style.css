@@ -22,36 +22,43 @@ body {
   from {
     width: 0;
   }
+
   to {
     width: 100%;
   }
 }
 
 @keyframes blink-caret {
+
   from,
   to {
     border-color: transparent;
   }
+
   50% {
     border-color: #667eea;
   }
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-20px);
   }
 }
 
 @keyframes pulse {
+
   0%,
   100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.05);
   }
@@ -61,6 +68,7 @@ body {
   from {
     transform: scale(0);
   }
+
   to {
     transform: scale(1);
   }
@@ -70,15 +78,19 @@ body {
   0% {
     transform: rotateY(0deg);
   }
+
   25% {
     transform: rotateY(10deg);
   }
+
   50% {
     transform: rotateY(20deg);
   }
+
   75% {
     transform: rotateY(10deg);
   }
+
   100% {
     transform: rotateY(0deg);
   }
@@ -88,6 +100,7 @@ body {
   from {
     width: 0;
   }
+
   to {
     width: 3rem;
   }
@@ -99,6 +112,7 @@ body {
     opacity: 0;
     transform: scale(0.9) translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
@@ -329,11 +343,9 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.8) 0%,
-    rgba(0, 0, 0, 0) 50%
-  );
+  background: linear-gradient(to top,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(0, 0, 0, 0) 50%);
   z-index: 1;
 }
 
@@ -393,7 +405,8 @@ body {
 
   /* Bayangan ke dalam (inset) untuk ilusi kedalaman */
   box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.4),
-    /* Sorotan cahaya di dalam */ 0 8px 25px rgba(0, 0, 0, 0.4);
+    /* Sorotan cahaya di dalam */
+    0 8px 25px rgba(0, 0, 0, 0.4);
   /* Bayangan luar yang lebih lembut */
 
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -415,7 +428,8 @@ body {
   /* Efek glow yang lebih dramatis */
   box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.6),
     0 0 30px rgba(0, 150, 255, 0.8),
-    /* Cahaya biru utama */ 0 0 50px rgba(0, 150, 255, 0.5);
+    /* Cahaya biru utama */
+    0 0 50px rgba(0, 150, 255, 0.5);
   /* Cahaya biru menyebar */
 }
 
@@ -472,19 +486,40 @@ body {
   background-color: #8b5cf6;
   /* Ungu */
 }
+
 .dropdown-item:hover:nth-child(7) {
   background-color: #ec4899;
   /* Merah Muda */
 }
+
 .dropdown-item:hover:nth-child(8) {
   background-color: #64748b;
   /* Abu-abu */
 }
+
 .dropdown-item {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 /* =================================================================
    7. AKHIR STYLE.CSS
    ================================================================= */
 
 /* Akhir dari file style.css */
+
+
+/* =================================================================
+   8. STYLE POP-UP GAMBAR KUSTOM
+   ================================================================= */
+#customPopup {
+  backdrop-filter: blur(5px);
+}
+
+.animate-scaleUp {
+  animation: scaleUp 0.5s ease-out forwards;
+}
+
+#customPopup img {
+  border: 4px solid white;
+  /* Opsional: memberikan bingkai putih pada gambar */
+}
