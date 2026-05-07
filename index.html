@@ -158,44 +158,31 @@
 
   <button id="btnPopUp" class="tombol-tampil">Lihat Gambar</button>
 
-  <section id="home" class="relative w-full h-screen bg-gray-900">
-    <div class="swiper mySwiper w-full h-full">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" style="background-image: url(Image/image1.jpg)">
-          <div class="slide-content">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
-              Membangun Masa Depan Digital
-            </h1>
-            <p class="text-lg md:text-xl">
-              Inovasi, Kreativitas, dan Teknologi dalam Satu Solusi.
-            </p>
-          </div>
-        </div>
-        <div class="swiper-slide" style="background-image: url(Image/Slide2.jpg)">
-          <div class="slide-content">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
-              Kolaborasi Adalah Kunci
-            </h1>
-            <p class="text-lg md:text-xl">
-              Bersama, kita ciptakan karya yang berdampak.
-            </p>
-          </div>
-        </div>
-        <div class="swiper-slide" style="background-image: url(Image/Slide3.jpg)">
-          <div class="slide-content">
-            <h1 class="text-4xl md:text-5xl font-extrabold mb-4">
-              TechCorp by Moh Rofiqi
-            </h1>
-            <p class="text-lg md:text-xl">
-              Solusi IT dan Desain Profesional Anda.
-            </p>
-          </div>
-        </div>
+  <section id="home" class="relative overflow-hidden bg-gray-100">
+    <div id="slider" class="flex transition-transform duration-700 ease-in-out h-full">
+
+      <div class="min-w-full h-full">
+        <img src="Image/image1.jpg" class="banner-img" alt="Banner 1">
       </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+
+      <div class="min-w-full h-full">
+        <img src="Image/Slide2.jpg" class="banner-img" alt="Banner 2">
+      </div>
+
+      <div class="min-w-full h-full">
+        <img src="Image/Slide3.jpg" class="banner-img" alt="Banner 3">
+      </div>
+
     </div>
+
+    <button id="prevSlide"
+      class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/50 p-3 rounded-full text-white z-10">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="nextSlide"
+      class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/50 p-3 rounded-full text-white z-10">
+      <i class="fas fa-chevron-right"></i>
+    </button>
   </section>
 
   <section id="profile" class="py-20 bg-white relative">

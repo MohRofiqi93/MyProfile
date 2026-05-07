@@ -351,3 +351,26 @@ window.closeCustomPopup = function () {
     customPopup.classList.add("hidden");
   }
 };
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.getElementById("slider");
+  const slides = document.querySelectorAll(".min-w-full");
+  let index = 0;
+
+  function showSlide(n) {
+    if (n >= slides.length) index = 0;
+    else if (n < 0) index = slides.length - 1;
+    else index = n;
+
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  // Geser otomatis 5 detik
+  setInterval(() => {
+    showSlide(index + 1);
+  }, 5000);
+
+  document.getElementById("nextSlide").addEventListener("click", () => showSlide(index + 1));
+  document.getElementById("prevSlide").addEventListener("click", () => showSlide(index - 1));
+});

@@ -523,3 +523,59 @@ body {
   border: 4px solid white;
   /* Opsional: memberikan bingkai putih pada gambar */
 }
+
+
+
+/* Perbaikan Banner Desktop */
+#home {
+  width: 100%;
+  max-width: 100%;
+  /* Pastikan tidak meluap */
+  margin: 0 auto;
+}
+
+#home img {
+  /* Mencegah gambar menjadi gepeng (distorsi) */
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Pastikan slider berjalan horizontal dengan benar */
+#slider {
+  display: flex;
+  width: 100%;
+}
+
+
+/* PERBAIKAN BANNER AGAR TIDAK TERPOTONG */
+#home {
+  width: 100%;
+  /* Gunakan aspect-ratio agar tinggi otomatis mengikuti proporsi banner desktop */
+  aspect-ratio: 16 / 7;
+  background-color: #000;
+  /* Latar hitam jika gambar tidak menutup semua area */
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  /* 'contain' memastikan seluruh gambar terlihat (tidak terpotong) */
+  /* 'cover' akan memotong gambar tapi memenuhi layar */
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Penyesuaian khusus untuk mode HP (lebar layar kecil) */
+@media (max-width: 768px) {
+  #home {
+    aspect-ratio: 4 / 5;
+    /* Rasio lebih tegak untuk HP agar slide 1 tetap bagus */
+  }
+
+  .banner-img {
+    object-fit: cover;
+    /* Di HP biasanya lebih bagus cover agar penuh */
+  }
+}
