@@ -261,8 +261,8 @@
         <header class="w-full">
             <div class="shell flex items-start justify-between gap-5 pb-5">
                 <div>
-                    <div class="flex items-center gap-2 text-sm font-semibold" style="color:var(--emerald)">
-                        <i data-lucide="moon-star" style="width:19px;height:19px"></i> <span
+                    <div class="flex items-center gap-2 text-sm font-semibold" style="color:var(--emerald)"><i
+                            data-lucide="moon-star" style="width:19px;height:19px"></i> <span
                             data-template-id="header-kicker" class="canva-text"
                             style="color: rgb(8, 122, 90); font-weight: 700; font-style: normal; font-size: 14px;">Waktu
                             ibadah, lebih dekat</span>
@@ -287,8 +287,7 @@
                 aria-labelledby="location-title" style="background: rgb(255, 255, 255);">
                 <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                     <div>
-                        <div class="flex flex-wrap items-center gap-2">
-                            <span data-template-id="active-location-label"
+                        <div class="flex flex-wrap items-center gap-2"><span data-template-id="active-location-label"
                                 class="canva-tag text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full"
                                 style="background: rgb(223, 244, 233); color: rgb(7, 84, 67); font-weight: 700; font-style: normal; font-size: 12px;">Lokasi
                                 aktif</span> <span id="today-ribbon" class="today-ribbon"></span>
@@ -315,12 +314,11 @@
                     </div>
                 </div>
                 <div class="grid md:grid-cols-[1fr_auto_auto] gap-3 mt-6">
-                    <div class="relative">
-                        <label for="city-search" data-template-id="search-label" class="canva-text sr-only"
+                    <div class="relative"><label for="city-search" data-template-id="search-label"
+                            class="canva-text sr-only"
                             style="font-weight: 400; font-style: normal; font-size: 16px;">Cari kota atau
                             kabupaten</label>
-                        <div class="relative">
-                            <i data-lucide="search" class="absolute left-3 top-3.5"
+                        <div class="relative"><i data-lucide="search" class="absolute left-3 top-3.5"
                                 style="width:18px;height:18px;color:var(--muted)"></i> <input id="city-search"
                                 class="field pl-10" type="search" autocomplete="off">
                         </div>
@@ -342,14 +340,12 @@
                             ke hari ini</span> </button>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4">
-                    <div>
-                        <label for="date-picker" data-template-id="date-label"
+                    <div><label for="date-picker" data-template-id="date-label"
                             class="canva-text block text-sm font-semibold mb-2"
                             style="color: rgb(21, 51, 45); font-weight: 600; font-style: normal; font-size: 14px;">Pilih
                             tanggal</label> <input id="date-picker" class="field" type="date">
                     </div>
-                    <div>
-                        <label for="method-picker" data-template-id="method-label"
+                    <div><label for="method-picker" data-template-id="method-label"
                             class="canva-text block text-sm font-semibold mb-2"
                             style="color: rgb(21, 51, 45); font-weight: 600; font-style: normal; font-size: 14px;">Metode
                             perhitungan</label> <select id="method-picker" class="field">
@@ -366,8 +362,8 @@
                         <div id="popular-cities" class="flex flex-wrap gap-2"></div>
                     </div>
                 </div>
-                <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm" style="color:var(--muted)">
-                    <label class="flex items-center gap-2 cursor-pointer"> <input id="save-preferences" type="checkbox"
+                <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm" style="color:var(--muted)"><label
+                        class="flex items-center gap-2 cursor-pointer"> <input id="save-preferences" type="checkbox"
                             class="accent-emerald-700"> <span data-template-id="save-label" class="canva-text"
                             style="color: rgb(96, 117, 110); font-weight: 400; font-style: normal; font-size: 14px;">Simpan
                             pilihan saya di perangkat ini</span> </label> <label
@@ -406,6 +402,13 @@
                                 Terakhir diperbarui</p>
                             <p id="updated-at" class="font-semibold mt-1">—</p>
                         </div>
+                        <div>
+                            <p data-template-id="source-label"
+                                class="canva-text text-xs font-bold uppercase tracking-wider"
+                                style="color: rgb(96, 117, 110); font-weight: 700; font-style: normal; font-size: 12px;">
+                                Sumber sinkronisasi</p>
+                            <p id="source-value" class="font-semibold mt-1">—</p>
+                        </div>
                     </div>
                 </article>
                 <aside id="qibla-panel" data-template-id="qibla-panel"
@@ -414,8 +417,8 @@
                     <p data-template-id="qibla-label" class="canva-text text-sm font-bold uppercase tracking-wider"
                         style="color: rgb(8, 122, 90); font-weight: 700; font-style: normal; font-size: 14px;">Arah
                         kiblat</p>
-                    <div class="compass mt-3" aria-label="Kompas arah kiblat">
-                        <span class="absolute top-1 left-1/2 -translate-x-1/2 text-xs font-bold">U</span> <span
+                    <div class="compass mt-3" aria-label="Kompas arah kiblat"><span
+                            class="absolute top-1 left-1/2 -translate-x-1/2 text-xs font-bold">U</span> <span
                             class="absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-bold">S</span> <span
                             class="absolute left-2 top-1/2 -translate-y-1/2 text-xs font-bold">B</span> <span
                             class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold">T</span>
@@ -438,41 +441,47 @@
                 <div id="loading-state" data-template-id="loading-panel" class="canva-banner glass-card p-7 text-center"
                     style="background: rgb(255, 255, 255);">
                     <div class="inline-flex items-center justify-center w-11 h-11 rounded-full animate-pulse"
-                        style="background:#dff4e9;color:var(--emerald)"><i data-lucide="loader-circle"
-                            style="width:22px;height:22px"></i>
+                        style="background:#dff4e9;color:var(--emerald)">
+                        <i data-lucide="loader-circle" style="width:22px;height:22px"></i>
                     </div>
                     <p data-template-id="loading-text" class="canva-text font-semibold mt-3"
                         style="color: rgb(21, 51, 45); font-weight: 600; font-style: normal; font-size: 16px;">Mengambil
                         jadwal shalat terbaru untuk lokasi dan tanggal pilihan…</p>
                 </div>
-                <div id="error-state" class="hidden-state glass-card p-7 text-center">
-                    <i data-lucide="cloud-off" style="width:31px;height:31px;color:#bd6b45"></i>
+                <div id="error-state" class="hidden-state glass-card p-7 text-center"><i data-lucide="cloud-off"
+                        style="width:31px;height:31px;color:#bd6b45"></i>
                     <p data-template-id="error-text" class="canva-text font-semibold mt-3"
                         style="color: rgb(21, 51, 45); font-weight: 600; font-style: normal; font-size: 16px;">Jadwal
-                        belum berhasil diambil. Tidak ada waktu shalat yang ditampilkan sampai data tersedia.</p><button
+                        belum berhasil diambil. Tidak ada waktu shalat yang ditampilkan sampai data tersedia.</p>
+                    <p id="error-diagnosis" class="text-sm mt-2" style="color:var(--muted)"></p><button
                         id="retry-button" data-template-id="retry-button" class="canva-button btn-main mt-4"
                         type="button"
                         style="background: rgb(8, 122, 90); color: rgb(255, 255, 255); font-weight: 700; font-style: normal; font-size: 16px;">Coba
                         lagi</button>
                 </div>
                 <div id="prayer-grid" class="hidden-state grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                    <article class="prayer-card" data-prayer="Subuh"><span class="status-chip"></span>
+                    <article class="prayer-card" data-prayer="Subuh">
+                        <span class="status-chip"></span>
                         <p class="font-semibold">Subuh</p>
                         <p class="prayer-time font-display text-2xl font-bold mt-3">—</p>
                     </article>
-                    <article class="prayer-card" data-prayer="Dzuhur"><span class="status-chip"></span>
+                    <article class="prayer-card" data-prayer="Dzuhur">
+                        <span class="status-chip"></span>
                         <p class="font-semibold">Dzuhur</p>
                         <p class="prayer-time font-display text-2xl font-bold mt-3">—</p>
                     </article>
-                    <article class="prayer-card" data-prayer="Ashar"><span class="status-chip"></span>
+                    <article class="prayer-card" data-prayer="Ashar">
+                        <span class="status-chip"></span>
                         <p class="font-semibold">Ashar</p>
                         <p class="prayer-time font-display text-2xl font-bold mt-3">—</p>
                     </article>
-                    <article class="prayer-card" data-prayer="Maghrib"><span class="status-chip"></span>
+                    <article class="prayer-card" data-prayer="Maghrib">
+                        <span class="status-chip"></span>
                         <p class="font-semibold">Maghrib</p>
                         <p class="prayer-time font-display text-2xl font-bold mt-3">—</p>
                     </article>
-                    <article class="prayer-card" data-prayer="Isya"><span class="status-chip"></span>
+                    <article class="prayer-card" data-prayer="Isya">
+                        <span class="status-chip"></span>
                         <p class="font-semibold">Isya</p>
                         <p class="prayer-time font-display text-2xl font-bold mt-3">—</p>
                     </article>
@@ -578,37 +587,50 @@
             $("qibla-value").textContent = `${Math.round(bearing)}° dari utara`;
         }
 
-        async function fetchSchedule() {
-            schedule = null;
-            $("loading-state").classList.remove("hidden-state");
-            $("error-state").classList.add("hidden-state");
-            $("prayer-grid").classList.add("hidden-state");
-            const apiDate = `${pad(selectedDate.getDate())}-${pad(selectedDate.getMonth() + 1)}-${selectedDate.getFullYear()}`;
-            const method = $("method-picker").value;
-            try {
-                const url = `https://api.aladhan.com/v1/timings/${apiDate}?latitude=${activeLocation.lat}&longitude=${activeLocation.lon}&method=${method}`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error("API tidak tersedia");
-                const payload = await response.json();
-                if (payload.code !== 200 || !payload.data || !payload.data.timings) throw new Error("Data jadwal tidak valid");
-                schedule = {};
-                prayers.forEach(prayer => {
-                    const value = payload.data.timings[prayer];
-                    if (!value) throw new Error("Jadwal belum lengkap");
-                    schedule[prayer] = value.replace(/\s*\(.+\)/, "").slice(0, 5);
-                    document.querySelector(`[data-prayer="${prayer}"] .prayer-time`).textContent = schedule[prayer];
-                });
-                $("updated-at").textContent = new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: timezone }).format(new Date());
-                $("loading-state").classList.add("hidden-state");
-                $("prayer-grid").classList.remove("hidden-state");
-                updatePrayerStatus();
-            } catch (_) {
-                $("loading-state").classList.add("hidden-state");
-                $("error-state").classList.remove("hidden-state");
-                $("next-prayer-name").textContent = "Data belum tersedia";
-                $("next-prayer-time").textContent = "Periksa koneksi lalu coba lagi.";
-                $("countdown").textContent = "--:--:--";
+        let requestController = null;
+        let refreshTimer = null;
+        function localDateParts() {
+            const parts = new Intl.DateTimeFormat("en-CA", { timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit" }).formatToParts(selectedDate);
+            return Object.fromEntries(parts.filter(p => p.type !== "literal").map(p => [p.type, p.value]));
+        }
+        function parseSchedule(payload) {
+            const raw = payload?.data?.timings || payload?.data?.[0] || payload?.timings || payload;
+            const keys = { Subuh: ["Fajr", "fajr"], Dzuhur: ["Dhuhr", "dhuhr"], Ashar: ["Asr", "asr"], Maghrib: ["Maghrib", "maghrib"], Isya: ["Isha", "isha"] };
+            const result = {};
+            for (const prayer of prayers) {
+                const value = keys[prayer].map(k => raw?.[k]).find(Boolean);
+                const match = String(value || "").match(/\\b([01]?\\d|2[0-3]):[0-5]\\d\\b/);
+                if (!match) throw new Error("format");
+                result[prayer] = match[0].padStart(5, "0");
             }
+            return result;
+        }
+        async function fetchWithTimeout(url, controller) {
+            const timer = setTimeout(() => controller.abort(), 10000);
+            try { const response = await fetch(url, { signal: controller.signal, headers: { Accept: "application/json" } }); if (!response.ok) throw new Error(`http:${response.status}`); return await response.json(); }
+            finally { clearTimeout(timer); }
+        }
+        async function fetchSchedule() {
+            if (requestController) requestController.abort();
+            requestController = new AbortController();
+            schedule = null;
+            $("loading-state").classList.remove("hidden-state"); $("error-state").classList.add("hidden-state"); $("prayer-grid").classList.add("hidden-state");
+            const d = localDateParts(); const date = `${d.day}-${d.month}-${d.year}`; const method = $("method-picker").value;
+            const sources = [
+                { name: "Kemenag RI/SIHAT", url: `https://bimasislam.kemenag.go.id/jadwalshalat?city=${encodeURIComponent(activeLocation.name)}&country=Indonesia&date=${date}` },
+                { name: "API jadwal shalat", url: `https://api.aladhan.com/v1/timings/${date}?latitude=${activeLocation.lat}&longitude=${activeLocation.lon}&method=${method}` }
+            ];
+            let lastError = "offline";
+            for (const source of sources) try {
+                const payload = await fetchWithTimeout(source.url, requestController); const parsed = parseSchedule(payload); schedule = parsed;
+                prayers.forEach(p => { document.querySelector(`[data-prayer="${p}"] .prayer-time`).textContent = parsed[p]; });
+                $("source-value").textContent = source.name; $("updated-at").textContent = new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: timezone }).format(new Date());
+                $("loading-state").classList.add("hidden-state"); $("error-state").classList.add("hidden-state"); $("prayer-grid").classList.remove("hidden-state"); updatePrayerStatus();
+                clearTimeout(refreshTimer); refreshTimer = setTimeout(fetchSchedule, 30 * 60 * 1000); return;
+            } catch (error) { lastError = error.name === "AbortError" ? "timeout" : String(error.message || "format"); }
+            if (requestController.signal.aborted) return;
+            $("loading-state").classList.add("hidden-state"); $("prayer-grid").classList.add("hidden-state"); $("error-state").classList.remove("hidden-state"); $("error-diagnosis").textContent = lastError.startsWith("http:") ? `Diagnosis: status HTTP ${lastError.slice(5)}.` : `Diagnosis: ${lastError === "offline" ? "offline" : lastError === "timeout" ? "timeout" : "CORS atau respons tidak dikenali"}. Sumber jadwal tidak dapat diakses dari halaman online ini karena pembatasan koneksi browser. Coba lagi atau hubungkan endpoint melalui proxy server.`;
+            $("next-prayer-name").textContent = "Data belum tersedia"; $("next-prayer-time").textContent = "Periksa koneksi lalu coba lagi."; $("countdown").textContent = "--:--:--";
         }
 
         function scheduleDateForTime(time) {
@@ -737,6 +759,7 @@
         renderLocation();
         fetchSchedule();
         setInterval(updateClock, 1000);
+        document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") fetchSchedule(); });
         lucide.createIcons();
     </script>
 
