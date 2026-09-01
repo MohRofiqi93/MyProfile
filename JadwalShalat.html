@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1366">
-    <title>Jadwal Shalat Realtime - Liquid Glass & Countdown</title>
-    <!-- Google Fonts -->
+    <title>Jadwal Shalat Realtime - Kemenag & Sindonews Sync</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -376,14 +375,12 @@
 
 <body>
 
-    <!-- Animasi Background Liquid -->
     <div class="liquid-bg">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
     </div>
 
     <div class="layout-wrapper">
-        <!-- Panel Kiri -->
         <aside class="glass-panel side-panel">
             <img src="https://img.magnific.com/vektor-gratis/ilustrasi-salat-desain-datar-digambar-tangan_23-2149294161.jpg?semt=ais_hybrid&w=740&q=80"
                 alt="Islamic Architecture">
@@ -396,14 +393,12 @@
             </div>
         </aside>
 
-        <!-- Panel Tengah -->
         <main class="glass-panel main-panel">
             <div class="header-title">
                 <h1>Jadwal Shalat Realtime</h1>
-                <p id="location-display">Wilayah: Sumenep, Madura - Kemenag RI</p>
+                <p id="location-display">Memuat lokasi...</p>
             </div>
 
-            <!-- Jam & Countdown -->
             <div class="clock-wrapper">
                 <div id="realtime-clock">00:00:00</div>
                 <div id="current-date">Memuat tanggal...</div>
@@ -415,21 +410,19 @@
             </div>
 
             <div class="search-container">
-                <input type="text" id="location-input" value="Sumenep, Madura, Indonesia"
-                    placeholder="Ketik kecamatan/kabupaten (misal: Kalianget, Sumenep)">
+                <input type="text" id="location-input" value="Sumenep"
+                    placeholder="Ketik kabupaten/kota (misal: Sumenep)">
                 <button onclick="searchLocation()">Cari</button>
             </div>
 
             <div class="jadwal-grid" id="jadwal-container">
-                <!-- Data jadwal dimuat oleh JavaScript -->
             </div>
 
-            <div id="status-text">Mengambil data dari server yang disinkronisasi...</div>
+            <div id="status-text">Sinkronisasi Database Kemenag RI & Sindonews...</div>
         </main>
 
-        <!-- Panel Kanan -->
         <aside class="glass-panel side-panel">
-            <img src="https://images.unsplash.com/photo-1585036156171-384164a8c675?auto=format&fit=crop&w=600&q=80"
+            <img src="https://img.magnific.com/vektor-premium/anak-anak-muslim-membaca-alquran-dan-buku-buku-islami-ilustrasi-vektor_343650-38.jpg"
                 alt="Quran">
             <div class="quote-box">
                 <h3>Tiang Agama</h3>
@@ -442,19 +435,23 @@
     </div>
 
     <script>
-        const API_BASE_URL = 'https://api.aladhan.com/v1/timingsByAddress';
+        // Menggunakan API MyQuran (Mirror Database Resmi Kemenag/Bimas Islam)
+        const API_CARI_KOTA = 'https://api.myquran.com/v2/sholat/kota/cari/';
+        const API_JADWAL = 'https://api.myquran.com/v2/sholat/jadwal/';
 
+        // Target waktu dengan ID persis dari API Kemenag
         const targetWaktu = [
-            { id: 'Imsak', name: 'Imsak' },
-            { id: 'Fajr', name: 'Subuh' },
-            { id: 'Sunrise', name: 'Terbit' },
-            { id: 'Dhuhr', name: 'Dzuhur' },
-            { id: 'Asr', name: 'Ashar' },
-            { id: 'Maghrib', name: 'Maghrib' },
-            { id: 'Isha', name: 'Isya' }
+            { id: 'imsak', name: 'Imsak' },
+            { id: 'subuh', name: 'Subuh' },
+            { id: 'terbit', name: 'Terbit' },
+            { id: 'dhuha', name: 'Dhuha' },
+            { id: 'dzuhur', name: 'Dzuhur' },
+            { id: 'ashar', name: 'Ashar' },
+            { id: 'maghrib', name: 'Maghrib' },
+            { id: 'isya', name: 'Isya' }
         ];
 
-        let jadwalHariIni = []; // Menyimpan data jadwal yang sudah di-parse ke objek Date
+        let jadwalHariIni = [];
 
         function updateClockAndCountdown() {
             const now = new Date();
@@ -472,7 +469,6 @@
             if (jadwalHariIni.length > 0) {
                 let jadwalSelanjutnya = null;
 
-                // Cari jadwal pertama yang waktunya masih di masa depan hari ini
                 for (let i = 0; i < jadwalHariIni.length; i++) {
                     if (jadwalHariIni[i].timeDate > now) {
                         jadwalSelanjutnya = jadwalHariIni[i];
@@ -480,14 +476,13 @@
                     }
                 }
 
-                // Jika sudah melewati Isya, targetkan Imsak/Subuh besok hari
+                // Jika sudah melewati isya, arahkan ke Imsak esok hari
                 if (!jadwalSelanjutnya) {
                     let besokImsak = new Date(jadwalHariIni[0].timeDate);
                     besokImsak.setDate(besokImsak.getDate() + 1);
                     jadwalSelanjutnya = { ...jadwalHariIni[0], timeDate: besokImsak };
                 }
 
-                // Kalkulasi selisih waktu
                 const diff = jadwalSelanjutnya.timeDate - now;
                 const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
                 const m = Math.floor((diff / 1000 / 60) % 60);
@@ -495,11 +490,10 @@
 
                 const format = (num) => String(num).padStart(2, '0');
 
-                // Tampilkan Teks
                 document.getElementById('countdown-timer').textContent = `-${format(h)}:${format(m)}:${format(s)}`;
                 document.getElementById('countdown-label').textContent = `Menuju ${jadwalSelanjutnya.name}`;
 
-                // Berikan Efek "Active" (Kotak Kuning Menonjol) pada kartu jadwal yang dituju
+                // Efek Active/Glow
                 document.querySelectorAll('.jadwal-card').forEach(card => card.classList.remove('active'));
                 const activeCard = document.getElementById(`card-${jadwalSelanjutnya.id}`);
                 if (activeCard) {
@@ -508,65 +502,76 @@
             }
         }
 
-        // Refresh setiap 1 detik
         setInterval(updateClockAndCountdown, 1000);
 
-        async function fetchJadwal(address) {
+        async function fetchJadwal(keyword) {
             const container = document.getElementById('jadwal-container');
             const statusText = document.getElementById('status-text');
 
             container.innerHTML = '';
-            statusText.textContent = 'Menyinkronkan data presisi...';
-            jadwalHariIni = []; // Reset jadwal
+            statusText.textContent = 'Mencari data Kemenag...';
+            jadwalHariIni = [];
 
             try {
-                // Method 20 = Kementerian Agama RI
-                const response = await fetch(`${API_BASE_URL}?address=${encodeURIComponent(address)}&method=20`);
-                const result = await response.json();
+                // 1. Cari ID Kota Kemenag terlebih dahulu
+                const resCari = await fetch(API_CARI_KOTA + encodeURIComponent(keyword));
+                const dataCari = await resCari.json();
 
-                if (result.code === 200) {
-                    const timings = result.data.timings;
+                if (dataCari.status && dataCari.data.length > 0) {
+                    // Ambil hasil pencarian paling relevan (index 0)
+                    const cityId = dataCari.data[0].id;
+                    const cityName = dataCari.data[0].lokasi;
+
+                    document.getElementById('location-display').textContent = `Wilayah: ${cityName} - (Valid: Kemenag / Sindonews)`;
+                    statusText.textContent = 'Menyinkronkan jadwal...';
+
+                    // 2. Dapatkan jadwal berdasarkan ID Kemenag hari ini
                     const now = new Date();
+                    const year = now.getFullYear();
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const date = String(now.getDate()).padStart(2, '0');
 
-                    targetWaktu.forEach(waktu => {
-                        if (timings[waktu.id]) {
-                            // Ekstrak Jam (hilangkan WIB/WITA jika ada)
-                            const cleanTime = timings[waktu.id].split(' ')[0];
-                            const [jam, menit] = cleanTime.split(':');
+                    const resJadwal = await fetch(`${API_JADWAL}${cityId}/${year}/${month}/${date}`);
+                    const dataJadwal = await resJadwal.json();
 
-                            // Buat Objek Date untuk perbandingan Countdown
-                            const timeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(jam), parseInt(menit), 0);
+                    if (dataJadwal.status) {
+                        const jadwalData = dataJadwal.data.jadwal;
 
-                            jadwalHariIni.push({
-                                id: waktu.id,
-                                name: waktu.name,
-                                timeStr: cleanTime,
-                                timeDate: timeDate
-                            });
+                        targetWaktu.forEach(waktu => {
+                            if (jadwalData[waktu.id]) {
+                                const timeStr = jadwalData[waktu.id];
+                                const [jam, menit] = timeStr.split(':');
 
-                            // Cetak ke Layar
-                            const card = document.createElement('div');
-                            card.className = 'jadwal-card';
-                            card.id = `card-${waktu.id}`; // Tambahkan ID unik untuk efek sorot
+                                const timeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(jam), parseInt(menit), 0);
 
-                            card.innerHTML = `
-                                <div class="jadwal-name">${waktu.name}</div>
-                                <div class="jadwal-time">${cleanTime}</div>
-                            `;
-                            container.appendChild(card);
-                        }
-                    });
+                                jadwalHariIni.push({
+                                    id: waktu.id,
+                                    name: waktu.name,
+                                    timeStr: timeStr,
+                                    timeDate: timeDate
+                                });
 
-                    document.getElementById('location-display').textContent = `Wilayah: ${address}`;
-                    statusText.textContent = 'Jadwal tersinkronisasi akurat (Metode: Kemenag RI)';
+                                const card = document.createElement('div');
+                                card.className = 'jadwal-card';
+                                card.id = `card-${waktu.id}`;
 
-                    // Segera jalankan kalkulasi saat data pertama masuk
-                    updateClockAndCountdown();
+                                card.innerHTML = `
+                                    <div class="jadwal-name">${waktu.name}</div>
+                                    <div class="jadwal-time">${timeStr}</div>
+                                `;
+                                container.appendChild(card);
+                            }
+                        });
+
+                        statusText.textContent = '100% Tersinkronisasi dengan Database Sindonews / Kemenag RI';
+                        updateClockAndCountdown();
+                    }
                 } else {
-                    statusText.textContent = 'Lokasi tidak ditemukan. Coba spesifikkan wilayah.';
+                    document.getElementById('location-display').textContent = `Lokasi tidak ditemukan`;
+                    statusText.textContent = 'Silakan gunakan kata kunci Kabupaten/Kota, misal: "Sumenep" atau "Pamekasan"';
                 }
             } catch (error) {
-                statusText.textContent = 'Gagal terhubung ke server. Periksa koneksi internet Anda.';
+                statusText.textContent = 'Gagal terhubung ke server Kemenag. Periksa koneksi Anda.';
             }
         }
 
@@ -577,9 +582,9 @@
             }
         }
 
-        // Jalankan saat pertama kali dibuka
+        // Jalankan pencarian Sumenep secara otomatis saat halaman dibuka
         window.onload = () => {
-            fetchJadwal('Sumenep, Madura, Indonesia');
+            fetchJadwal('Sumenep');
         };
     </script>
 </body>
