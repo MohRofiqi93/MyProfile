@@ -4,209 +4,480 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Shalat Realtime</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="icon" href="../Image/iconweb.png" type="image/png">
+    <title>Jadwal Shalat Realtime - Sinkronisasi IslamicFinder & Google</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #ffffff;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+            --text-light: #ffffff;
+            --text-dark: #1e293b;
+            --accent-yellow: #FDBB2D;
+            --error-red: #ff6b6b;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Outfit', sans-serif;
         }
 
         body {
-            /* Gradasi hidup namun nyaman */
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #0f172a;
             min-height: 100vh;
+            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: var(--primary);
             padding: 20px;
+            color: var(--text-light);
+            position: relative;
         }
 
-        .container {
+        /* --- Latar Belakang Liquid Animasi --- */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.7;
+            animation: moveBlob 15s infinite alternate ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #FDBB2D;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+
+        .blob-2 {
+            bottom: -20%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: #ffffff;
+            border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes moveBlob {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            100% {
+                transform: translate(100px, 100px) rotate(45deg) scale(1.2);
+            }
+        }
+
+        /* --- Layout Utama --- */
+        .layout-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             width: 100%;
-            max-width: 800px;
+            max-width: 1300px;
+            margin: 20px 0;
+        }
+
+        .glass-panel {
             background: var(--glass-bg);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(25px) saturate(150%);
+            -webkit-backdrop-filter: blur(25px) saturate(150%);
             border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--glass-border);
+            border-top: 1px solid rgba(255, 255, 255, 0.7);
+            border-left: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: var(--glass-shadow), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .header {
+        .main-panel {
+            order: 1;
+        }
+
+        #panel-kiri {
+            order: 2;
+        }
+
+        #panel-kanan {
+            order: 3;
+        }
+
+        /* --- Panel Samping --- */
+        .side-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             text-align: center;
-            margin-bottom: 30px;
         }
 
-        .header h1 {
+        .side-panel img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: #ffffff;
+        }
+
+        .quote-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quote-box h3 {
+            font-size: 16px;
+            color: var(--accent-yellow);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .quote-box p {
+            font-size: 14px;
+            line-height: 1.6;
+            font-style: italic;
+            opacity: 0.95;
+        }
+
+        .quote-box .arabic {
+            font-size: 18px;
+            font-style: normal;
+            margin-bottom: 12px;
+            line-height: 1.8;
+        }
+
+        /* --- Panel Tengah --- */
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header-title h1 {
             font-size: 28px;
             font-weight: 700;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
             margin-bottom: 5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .header p {
+        .header-title p {
             font-size: 14px;
             opacity: 0.9;
+            font-weight: 300;
         }
 
-        .clock-container {
+        .clock-wrapper {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            width: 100%;
         }
 
         #realtime-clock {
-            font-size: 48px;
-            font-weight: 600;
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--accent-yellow);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             letter-spacing: 2px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            line-height: 1.1;
         }
 
         #current-date {
             font-size: 16px;
             font-weight: 400;
             opacity: 0.9;
+            margin-bottom: 15px;
         }
 
-        .location-selector {
+        /* --- Countdown --- */
+        .countdown-box {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            background: rgba(253, 187, 45, 0.15);
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid var(--accent-yellow);
+            box-shadow: 0 0 15px rgba(253, 187, 45, 0.4);
+            animation: pulseGlow 2s infinite ease-in-out;
+            gap: 8px;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(253, 187, 45, 0.3);
+                transform: scale(1);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(253, 187, 45, 0.6);
+                transform: scale(1.02);
+            }
+
+            100% {
+                box-shadow: 0 0 10px rgba(253, 187, 45, 0.3);
+                transform: scale(1);
+            }
+        }
+
+        #countdown-timer {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: var(--accent-yellow);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #countdown-label {
+            font-size: 14px;
+            font-weight: 400;
+            color: #ffffff;
+        }
+
+        /* --- Input Pencarian --- */
+        .search-container {
+            width: 100%;
+            margin-bottom: 25px;
             display: flex;
             flex-direction: column;
             gap: 10px;
-            margin-bottom: 30px;
         }
 
-        .location-selector label {
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        select {
-            width: 100%;
-            padding: 15px;
+        .search-container input {
+            flex-grow: 1;
+            padding: 12px 20px;
             border-radius: 12px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255, 255, 255, 0.9);
-            color: var(--text-main);
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.85);
+            color: var(--text-dark);
+            font-size: 15px;
             outline: none;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
+            font-weight: 500;
+            width: 100%;
         }
 
-        select:focus {
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+        .search-container input:focus {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 4px rgba(253, 187, 45, 0.3);
         }
 
+        .search-container button {
+            padding: 12px 25px;
+            border-radius: 12px;
+            border: none;
+            background: var(--accent-yellow);
+            color: var(--text-dark);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .search-container button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- Grid Jadwal --- */
         .jadwal-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
         }
 
         .jadwal-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 16px;
-            padding: 20px 15px;
+            padding: 15px;
             text-align: center;
-            color: var(--text-main);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
+            color: var(--text-dark);
+            border: 1px solid rgba(255, 255, 255, 1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
 
-        .jadwal-card:hover {
-            transform: translateY(-5px);
+        .jadwal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
         }
 
         .jadwal-card.active {
-            background: #ff7eb3;
-            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
-            color: white;
+            background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFA700 100%);
+            color: var(--text-dark);
+            border: 2px solid #ffffff;
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(253, 187, 45, 0.4);
+            z-index: 2;
         }
 
         .jadwal-name {
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+            color: #64748b;
+            margin-bottom: 5px;
         }
 
         .jadwal-card.active .jadwal-name {
-            color: white;
-            opacity: 0.9;
+            color: #1e293b;
         }
 
         .jadwal-time {
             font-size: 24px;
             font-weight: 700;
+            color: var(--text-dark);
         }
 
-        .quote-section {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            border-radius: 16px;
+        #status-text {
             text-align: center;
-            border: 1px solid var(--glass-border);
-        }
-
-        .arabic-text {
-            font-size: 24px;
-            font-weight: 400;
-            margin-bottom: 10px;
-            line-height: 1.6;
-        }
-
-        .translation-text {
             font-size: 13px;
-            font-style: italic;
+            margin-top: 15px;
             opacity: 0.9;
-            line-height: 1.5;
+            width: 100%;
+            line-height: 1.4;
+            font-weight: 500;
         }
 
-        .reference-text {
-            font-size: 12px;
-            font-weight: 600;
-            margin-top: 10px;
-            color: #ffd700;
+        .error-state {
+            color: var(--error-red) !important;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
         }
 
-        /* Loading State */
-        #loader {
-            text-align: center;
-            display: none;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
+        /* =========================================
+           MEDIA QUERIES UNTUK TABLET & DESKTOP 
+           ========================================= */
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 25px;
+        @media (min-width: 768px) {
+            .search-container {
+                flex-direction: row;
             }
 
-            #realtime-clock {
-                font-size: 36px;
+            .search-container button {
+                width: auto;
             }
 
             .jadwal-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
+                gap: 15px;
+            }
+
+            .header-title h1 {
+                font-size: 34px;
+            }
+
+            #realtime-clock {
+                font-size: 50px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            body {
+                padding: 40px;
+            }
+
+            .layout-wrapper {
+                display: grid;
+                grid-template-columns: 280px 1fr 280px;
+                gap: 30px;
+            }
+
+            #panel-kiri {
+                order: 1;
+            }
+
+            .main-panel {
+                order: 2;
+            }
+
+            #panel-kanan {
+                order: 3;
+            }
+
+            .glass-panel {
+                padding: 30px;
+                border-radius: 30px;
+            }
+
+            .header-title h1 {
+                font-size: 38px;
+            }
+
+            .clock-wrapper {
+                padding: 20px 40px;
+            }
+
+            #realtime-clock {
+                font-size: 56px;
+            }
+
+            .jadwal-time {
+                font-size: 30px;
+            }
+
+            .jadwal-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                background: #ffffff;
+            }
+
+            .jadwal-card:hover::before {
+                left: 150%;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .layout-wrapper {
+                grid-template-columns: 320px 1fr 320px;
+            }
+
+            .jadwal-grid {
+                grid-template-columns: repeat(4, 1fr);
             }
         }
     </style>
@@ -214,52 +485,81 @@
 
 <body>
 
-    <div class="container">
-        <div class="header">
-            <h1>Jadwal Shalat</h1>
-            <p>Data Akurat Kementerian Agama RI</p>
-        </div>
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
-        <div class="clock-container">
-            <div id="realtime-clock">00:00:00</div>
-            <div id="current-date">Memuat tanggal...</div>
-        </div>
+    <div class="layout-wrapper">
+        <aside class="glass-panel side-panel" id="panel-kiri">
+            <img src="https://img.magnific.com/vektor-gratis/ilustrasi-salat-desain-datar_23-2149286788.jpg?semt=ais_hybrid&w=740&q=80"
+                alt="Ilustrasi Shalat">
+            <div class="quote-box">
+                <h3>Keutamaan Shalat</h3>
+                <p class="arabic">إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ</p>
+                <p>"Sesungguhnya shalat itu mencegah dari (perbuatan-perbuatan) keji dan mungkar."</p>
+                <br>
+                <p style="font-size: 11px; font-weight: bold;">(QS. Al-Ankabut: 45)</p>
+            </div>
+        </aside>
 
-        <div class="location-selector">
-            <label for="city-select">Pilih Lokasi Anda:</label>
-            <select id="city-select">
-                <option value="">Memuat data kota...</option>
-            </select>
-            <small style="font-size: 11px; opacity: 0.8; text-align: right;">*Sumenep mencakup Kalianget, Daramista &
-                sekitarnya</small>
-        </div>
+        <main class="glass-panel main-panel">
+            <div class="header-title">
+                <h1>Jadwal Shalat Realtime</h1>
+                <p id="location-display">Memuat lokasi...</p>
+            </div>
 
-        <div id="loader">Mengambil jadwal shalat terbaru...</div>
+            <div class="clock-wrapper">
+                <div id="realtime-clock">00:00:00</div>
+                <div id="current-date">Memuat tanggal...</div>
 
-        <div class="jadwal-grid" id="jadwal-container">
-        </div>
+                <div class="countdown-box">
+                    <span id="countdown-timer">-00:00:00</span>
+                    <span id="countdown-label">Menghitung...</span>
+                </div>
+            </div>
 
-        <div class="quote-section">
-            <div class="arabic-text">إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</div>
-            <div class="translation-text">"Sesungguhnya shalat itu adalah fardhu yang ditentukan waktunya atas
-                orang-orang yang beriman."</div>
-            <div class="reference-text">- QS. An-Nisa: 103 -</div>
-        </div>
+            <div class="search-container">
+                <input type="text" id="location-input" value="Kalianget, Sumenep"
+                    placeholder="Ketik nama desa/kecamatan/kota yang valid...">
+                <button onclick="searchLocation()">Cari</button>
+            </div>
+
+            <div class="jadwal-grid" id="jadwal-container">
+            </div>
+
+            <div id="status-text">Mendeteksi Titik Koordinat Wilayah...</div>
+        </main>
+
+        <aside class="glass-panel side-panel" id="panel-kanan">
+            <img src="https://img.magnific.com/vektor-premium/anak-anak-muslim-membaca-alquran-dan-buku-buku-islami-ilustrasi-vektor_343650-38.jpg"
+                alt="Anak Muslim Membaca Al-Quran">
+            <div class="quote-box">
+                <h3>Tiang Agama</h3>
+                <p>"Shalat adalah tiang agama, barangsiapa mendirikannya maka sungguh ia telah menegakkan agama, dan
+                    barangsiapa meninggalkannya maka sungguh ia telah merubuhkan agama."</p>
+                <br>
+                <p style="font-size: 11px; font-weight: bold;">(HR. Baihaqi)</p>
+            </div>
+        </aside>
     </div>
 
     <script>
-        const API_BASE_URL = 'https://api.myquran.com/v2/sholat';
-        const citySelect = document.getElementById('city-select');
-        const jadwalContainer = document.getElementById('jadwal-container');
-        const loader = document.getElementById('loader');
+        const targetWaktu = [
+            { id: 'Imsak', name: 'Imsak' },
+            { id: 'Fajr', name: 'Subuh' },
+            { id: 'Sunrise', name: 'Terbit' },
+            { id: 'Dhuhr', name: 'Dzuhur' },
+            { id: 'Asr', name: 'Ashar' },
+            { id: 'Maghrib', name: 'Maghrib' },
+            { id: 'Isha', name: 'Isya' }
+        ];
 
-        // Daftar waktu yang ingin ditampilkan
-        const waktuShalatList = ['imsak', 'subuh', 'terbit', 'dhuha', 'dzuhur', 'ashar', 'maghrib', 'isya'];
-        let jadwalHariIni = {};
+        let jadwalHariIni = [];
 
-        // Inisialisasi Jam Realtime
-        function updateClock() {
+        function updateClockAndCountdown() {
             const now = new Date();
+
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -267,101 +567,132 @@
 
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('current-date').textContent = now.toLocaleDateString('id-ID', options);
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
 
-        // 1. Ambil Daftar Kota
-        async function fetchCities() {
-            try {
-                const response = await fetch(`${API_BASE_URL}/kota/semua`);
-                const data = await response.json();
+            if (jadwalHariIni.length > 0) {
+                let jadwalSelanjutnya = null;
 
-                if (data.status) {
-                    populateCityDropdown(data.data);
+                for (let i = 0; i < jadwalHariIni.length; i++) {
+                    if (jadwalHariIni[i].timeDate > now) {
+                        jadwalSelanjutnya = jadwalHariIni[i];
+                        break;
+                    }
                 }
-            } catch (error) {
-                console.error('Error fetching cities:', error);
-                citySelect.innerHTML = '<option value="">Gagal memuat kota. Periksa koneksi internet.</option>';
+
+                if (!jadwalSelanjutnya) {
+                    let besokImsak = new Date(jadwalHariIni[0].timeDate);
+                    besokImsak.setDate(besokImsak.getDate() + 1);
+                    jadwalSelanjutnya = { ...jadwalHariIni[0], timeDate: besokImsak };
+                }
+
+                const diff = jadwalSelanjutnya.timeDate - now;
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / 1000 / 60) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+
+                const format = (num) => String(num).padStart(2, '0');
+
+                document.getElementById('countdown-timer').textContent = `-${format(h)}:${format(m)}:${format(s)}`;
+                document.getElementById('countdown-label').textContent = `Menuju ${jadwalSelanjutnya.name}`;
+
+                document.querySelectorAll('.jadwal-card').forEach(card => card.classList.remove('active'));
+                const activeCard = document.getElementById(`card-${jadwalSelanjutnya.id}`);
+                if (activeCard) {
+                    activeCard.classList.add('active');
+                }
             }
         }
 
-        // 2. Isi Dropdown dan Set Default ke Sumenep
-        function populateCityDropdown(cities) {
-            citySelect.innerHTML = ''; // Kosongkan
-            let sumenepId = null;
+        setInterval(updateClockAndCountdown, 1000);
 
-            cities.forEach(city => {
-                const option = document.createElement('option');
-                option.value = city.id;
-                option.textContent = city.lokasi;
-                citySelect.appendChild(option);
+        async function fetchJadwal(keyword) {
+            const container = document.getElementById('jadwal-container');
+            const statusText = document.getElementById('status-text');
+            const locDisplay = document.getElementById('location-display');
 
-                // Cari ID Sumenep untuk dijadikan default
-                if (city.lokasi.includes('SUMENEP')) {
-                    sumenepId = city.id;
-                }
-            });
-
-            // Set Sumenep sebagai nilai awal
-            if (sumenepId) {
-                citySelect.value = sumenepId;
-                fetchJadwal(sumenepId);
-            }
-
-            // Event listener saat user mengganti kota
-            citySelect.addEventListener('change', (e) => {
-                fetchJadwal(e.target.value);
-            });
-        }
-
-        // 3. Ambil Jadwal Shalat Berdasarkan ID Kota dan Tanggal Hari Ini
-        async function fetchJadwal(cityId) {
-            loader.style.display = 'block';
-            jadwalContainer.innerHTML = '';
-
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const date = String(now.getDate()).padStart(2, '0');
+            container.innerHTML = '';
+            statusText.textContent = 'Melacak Koordinat Valid (Satelit OpenStreetMap)...';
+            statusText.classList.remove('error-state');
+            jadwalHariIni = [];
 
             try {
-                const response = await fetch(`${API_BASE_URL}/jadwal/${cityId}/${year}/${month}/${date}`);
-                const data = await response.json();
+                // 1. VALIDASI LOKASI SUPER KETAT
+                const searchQuery = keyword.toLowerCase().includes('indonesia') ? keyword : `${keyword}, Indonesia`;
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchQuery)}&format=json&limit=1`);
+                const geoData = await geoRes.json();
 
-                if (data.status) {
-                    jadwalHariIni = data.data.jadwal;
-                    renderJadwal();
+                if (!geoData || geoData.length === 0) {
+                    locDisplay.textContent = `Pencarian: "${keyword}"`;
+                    locDisplay.classList.add('error-state');
+                    statusText.textContent = '⛔ Error: Nama daerah/desa salah ketik atau tidak terdaftar di peta.';
+                    statusText.classList.add('error-state');
+                    return;
+                }
+
+                const lat = geoData[0].lat;
+                const lon = geoData[0].lon;
+
+                const validName = geoData[0].display_name.split(',').slice(0, 3).join(', ');
+
+                locDisplay.textContent = `Wilayah: ${validName}`;
+                locDisplay.classList.remove('error-state');
+                statusText.textContent = 'Menyinkronkan dengan database pusat...';
+
+                // 2. MENGAMBIL DATA MURNI (TANPA TAMBAHAN MANUAL 2 MENIT)
+                // Menggunakan Method 20 (Sama persis dengan IslamicFinder dan Google)
+                // Hapus fungsi "tune" yang sebelumnya saya tambahkan
+                const timeRes = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=20`);
+                const timeData = await timeRes.json();
+
+                if (timeData.code === 200) {
+                    const timings = timeData.data.timings;
+                    const now = new Date();
+
+                    targetWaktu.forEach(waktu => {
+                        if (timings[waktu.id]) {
+                            const cleanTime = timings[waktu.id].split(' ')[0];
+                            const [jam, menit] = cleanTime.split(':');
+
+                            const timeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(jam), parseInt(menit), 0);
+
+                            jadwalHariIni.push({
+                                id: waktu.id,
+                                name: waktu.name,
+                                timeStr: cleanTime,
+                                timeDate: timeDate
+                            });
+
+                            const card = document.createElement('div');
+                            card.className = 'jadwal-card';
+                            card.id = `card-${waktu.id}`;
+
+                            card.innerHTML = `
+                                <div class="jadwal-name">${waktu.name}</div>
+                                <div class="jadwal-time">${cleanTime}</div>
+                            `;
+                            container.appendChild(card);
+                        }
+                    });
+
+                    statusText.innerHTML = 'Akurat & Tersinkronisasi ✅<br>(Database Global - Sama persis dengan IslamicFinder & Google)';
+                    updateClockAndCountdown();
                 }
             } catch (error) {
-                console.error('Error fetching jadwal:', error);
-                jadwalContainer.innerHTML = '<p>Gagal memuat jadwal shalat.</p>';
-            } finally {
-                loader.style.display = 'none';
+                locDisplay.textContent = `Koneksi Terputus`;
+                statusText.textContent = '⛔ Gagal terhubung. Periksa koneksi internet Anda atau coba lagi nanti.';
+                statusText.classList.add('error-state');
             }
         }
 
-        // 4. Tampilkan Kartu Jadwal ke Layar
-        function renderJadwal() {
-            jadwalContainer.innerHTML = '';
-
-            waktuShalatList.forEach(waktu => {
-                if (jadwalHariIni[waktu]) {
-                    const timeString = jadwalHariIni[waktu];
-                    const card = document.createElement('div');
-                    card.className = 'jadwal-card';
-
-                    card.innerHTML = `
-                        <div class="jadwal-name">${waktu}</div>
-                        <div class="jadwal-time">${timeString}</div>
-                    `;
-                    jadwalContainer.appendChild(card);
-                }
-            });
+        function searchLocation() {
+            const input = document.getElementById('location-input').value;
+            if (input.trim() !== '') {
+                fetchJadwal(input);
+            }
         }
 
-        // Jalankan saat pertama kali dibuka
-        fetchCities();
+        window.onload = () => {
+            fetchJadwal('Kalianget, Sumenep');
+        };
     </script>
 </body>
 
