@@ -3,10 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1366">
-    <title>Jadwal Shalat</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+
+    
+    <title>Jadwal Shalat Realtime</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="../Image/iconweb.png" type="image/png">
     <style>
         :root {
@@ -32,7 +35,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 40px;
+            padding: 20px;
+            /* Padding dikurangi untuk HP */
             color: var(--text-light);
             position: relative;
         }
@@ -86,49 +90,64 @@
             }
         }
 
-        /* --- Layout Utama --- */
+        /* --- Layout Utama (Dibuat Responsif) --- */
         .layout-wrapper {
-            display: grid;
-            grid-template-columns: 320px 1fr 320px;
-            gap: 30px;
+            display: flex;
+            flex-direction: column;
+            /* Default ke bawah untuk HP */
+            gap: 20px;
             width: 100%;
             max-width: 1300px;
+            margin: 20px 0;
         }
 
         .glass-panel {
             background: var(--glass-bg);
             backdrop-filter: blur(25px) saturate(150%);
             -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border-radius: 30px;
+            border-radius: 24px;
             border: 1px solid var(--glass-border);
             border-top: 1px solid rgba(255, 255, 255, 0.7);
             border-left: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: var(--glass-shadow), inset 0 0 20px rgba(255, 255, 255, 0.1);
-            padding: 30px;
+            padding: 25px;
             position: relative;
             overflow: hidden;
+        }
+
+        /* Urutan elemen di HP: Panel Utama di atas, panel samping di bawah */
+        .main-panel {
+            order: 1;
+        }
+
+        #panel-kiri {
+            order: 2;
+        }
+
+        #panel-kanan {
+            order: 3;
         }
 
         /* --- Panel Samping --- */
         .side-panel {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 15px;
             text-align: center;
         }
 
         .side-panel img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
-            border-radius: 20px;
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .quote-box {
             background: rgba(0, 0, 0, 0.2);
             padding: 20px;
-            border-radius: 20px;
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             flex-grow: 1;
             display: flex;
@@ -151,9 +170,9 @@
         }
 
         .quote-box .arabic {
-            font-size: 20px;
+            font-size: 18px;
             font-style: normal;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1.8;
         }
 
@@ -170,7 +189,7 @@
         }
 
         .header-title h1 {
-            font-size: 38px;
+            font-size: 28px;
             font-weight: 700;
             text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             letter-spacing: 1px;
@@ -178,32 +197,32 @@
         }
 
         .header-title p {
-            font-size: 16px;
+            font-size: 14px;
             opacity: 0.9;
             font-weight: 300;
         }
 
         .clock-wrapper {
             background: rgba(255, 255, 255, 0.1);
-            padding: 20px 40px;
+            padding: 20px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             width: 100%;
         }
 
         #realtime-clock {
-            font-size: 56px;
+            font-size: 42px;
             font-weight: 700;
             color: var(--accent-yellow);
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             line-height: 1.1;
         }
 
         #current-date {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 400;
             opacity: 0.9;
             margin-bottom: 15px;
@@ -211,66 +230,72 @@
 
         /* --- Countdown Keren --- */
         .countdown-box {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
             background: rgba(253, 187, 45, 0.15);
-            padding: 10px 25px;
+            padding: 8px 20px;
             border-radius: 50px;
             border: 1px solid var(--accent-yellow);
             box-shadow: 0 0 15px rgba(253, 187, 45, 0.4);
             animation: pulseGlow 2s infinite ease-in-out;
+            gap: 8px;
         }
 
         @keyframes pulseGlow {
             0% {
-                box-shadow: 0 0 15px rgba(253, 187, 45, 0.3);
+                box-shadow: 0 0 10px rgba(253, 187, 45, 0.3);
                 transform: scale(1);
             }
 
             50% {
-                box-shadow: 0 0 30px rgba(253, 187, 45, 0.6);
+                box-shadow: 0 0 25px rgba(253, 187, 45, 0.6);
                 transform: scale(1.02);
             }
 
             100% {
-                box-shadow: 0 0 15px rgba(253, 187, 45, 0.3);
+                box-shadow: 0 0 10px rgba(253, 187, 45, 0.3);
                 transform: scale(1);
             }
         }
 
         #countdown-timer {
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 700;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             color: var(--accent-yellow);
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         #countdown-label {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 400;
             color: #ffffff;
-            margin-left: 8px;
         }
 
         /* --- Input Pencarian --- */
         .search-container {
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: flex;
+            flex-direction: column;
+            /* Numupuk di HP */
             gap: 10px;
         }
 
         .search-container input {
             flex-grow: 1;
-            padding: 15px 25px;
-            border-radius: 15px;
+            padding: 12px 20px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.4);
             background: rgba(255, 255, 255, 0.85);
             color: var(--text-dark);
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
             transition: all 0.3s ease;
             font-weight: 500;
+            width: 100%;
         }
 
         .search-container input:focus {
@@ -279,15 +304,16 @@
         }
 
         .search-container button {
-            padding: 0 25px;
-            border-radius: 15px;
+            padding: 12px 25px;
+            border-radius: 12px;
             border: none;
             background: var(--accent-yellow);
             color: var(--text-dark);
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            width: 100%;
         }
 
         .search-container button:hover {
@@ -298,15 +324,16 @@
         /* --- Grid Jadwal --- */
         .jadwal-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            /* 2 Kolom di HP agar tidak terlalu kecil */
+            gap: 12px;
             width: 100%;
         }
 
         .jadwal-card {
             background: rgba(255, 255, 255, 0.85);
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 15px;
             text-align: center;
             color: var(--text-dark);
             border: 1px solid rgba(255, 255, 255, 1);
@@ -327,16 +354,6 @@
             transition: 0.5s;
         }
 
-        .jadwal-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            background: #ffffff;
-        }
-
-        .jadwal-card:hover::before {
-            left: 150%;
-        }
-
         .jadwal-card.active {
             background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFA700 100%);
             color: var(--text-dark);
@@ -347,10 +364,10 @@
         }
 
         .jadwal-name {
-            font-size: 15px;
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1px;
             color: #64748b;
             margin-bottom: 5px;
         }
@@ -360,17 +377,118 @@
         }
 
         .jadwal-time {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--text-dark);
         }
 
         #status-text {
             text-align: center;
-            font-size: 14px;
+            font-size: 12px;
             margin-top: 15px;
             opacity: 0.8;
             width: 100%;
+            line-height: 1.4;
+        }
+
+        /* =========================================
+           MEDIA QUERIES UNTUK TABLET & DESKTOP 
+           ========================================= */
+
+        /* Untuk Tablet (Mulai dari 768px ke atas) */
+        @media (min-width: 768px) {
+            .search-container {
+                flex-direction: row;
+                /* Input dan tombol bersebelahan */
+            }
+
+            .search-container button {
+                width: auto;
+            }
+
+            .jadwal-grid {
+                grid-template-columns: repeat(3, 1fr);
+                /* 3 Kolom */
+                gap: 15px;
+            }
+
+            .header-title h1 {
+                font-size: 34px;
+            }
+
+            #realtime-clock {
+                font-size: 50px;
+            }
+        }
+
+        /* Untuk Desktop/Laptop (Mulai dari 1024px ke atas) */
+        @media (min-width: 1024px) {
+            body {
+                padding: 40px;
+            }
+
+            .layout-wrapper {
+                display: grid;
+                grid-template-columns: 280px 1fr 280px;
+                /* Layout 3 Kolom */
+                gap: 30px;
+            }
+
+            /* Mengembalikan urutan asli untuk desktop */
+            #panel-kiri {
+                order: 1;
+            }
+
+            .main-panel {
+                order: 2;
+            }
+
+            #panel-kanan {
+                order: 3;
+            }
+
+            .glass-panel {
+                padding: 30px;
+                border-radius: 30px;
+            }
+
+            .header-title h1 {
+                font-size: 38px;
+            }
+
+            .clock-wrapper {
+                padding: 20px 40px;
+            }
+
+            #realtime-clock {
+                font-size: 56px;
+            }
+
+            .jadwal-time {
+                font-size: 30px;
+            }
+
+            .jadwal-card:hover {
+                transform: translateY(-8px) scale(1.02);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+                background: #ffffff;
+            }
+
+            .jadwal-card:hover::before {
+                left: 150%;
+            }
+        }
+
+        /* Desktop Layar Lebar */
+        @media (min-width: 1280px) {
+            .layout-wrapper {
+                grid-template-columns: 320px 1fr 320px;
+            }
+
+            .jadwal-grid {
+                grid-template-columns: repeat(4, 1fr);
+                /* 4 Kolom di layar besar agar estetik */
+            }
         }
     </style>
 </head>
@@ -383,15 +501,15 @@
     </div>
 
     <div class="layout-wrapper">
-        <aside class="glass-panel side-panel">
-            <img src="https://img.magnific.com/vektor-gratis/ilustrasi-salat-desain-datar-digambar-tangan_23-2149294161.jpg?semt=ais_hybrid&w=740&q=80"
+        <aside class="glass-panel side-panel" id="panel-kiri">
+            <img src="https://img.magnific.com/vektor-gratis/ilustrasi-salat-desain-datar_23-2149286788.jpg?semt=ais_hybrid&w=740&q=80"
                 alt="Islamic Architecture">
             <div class="quote-box">
                 <h3>Keutamaan Shalat</h3>
                 <p class="arabic">إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ</p>
                 <p>"Sesungguhnya shalat itu mencegah dari (perbuatan-perbuatan) keji dan mungkar."</p>
                 <br>
-                <p style="font-size: 12px; font-weight: bold;">(QS. Al-Ankabut: 45)</p>
+                <p style="font-size: 11px; font-weight: bold;">(QS. Al-Ankabut: 45)</p>
             </div>
         </aside>
 
@@ -412,8 +530,7 @@
             </div>
 
             <div class="search-container">
-                <input type="text" id="location-input" value="Sumenep"
-                    placeholder="Ketik kabupaten/kota (misal: Sumenep)">
+                <input type="text" id="location-input" value="Sumenep" placeholder="Ketik kabupaten/kota...">
                 <button onclick="searchLocation()">Cari</button>
             </div>
 
@@ -423,25 +540,23 @@
             <div id="status-text">Sinkronisasi Database Kemenag RI & Sindonews...</div>
         </main>
 
-        <aside class="glass-panel side-panel">
-            <img src="https://img.magnific.com/vektor-premium/anak-anak-muslim-membaca-alquran-dan-buku-buku-islami-ilustrasi-vektor_343650-38.jpggit"
+        <aside class="glass-panel side-panel" id="panel-kanan">
+            <img src="https://img.magnific.com/vektor-premium/anak-anak-muslim-membaca-alquran-dan-buku-buku-islami-ilustrasi-vektor_343650-38.jpg"
                 alt="Quran">
             <div class="quote-box">
                 <h3>Tiang Agama</h3>
                 <p>"Shalat adalah tiang agama, barangsiapa mendirikannya maka sungguh ia telah menegakkan agama, dan
                     barangsiapa meninggalkannya maka sungguh ia telah merubuhkan agama."</p>
                 <br>
-                <p style="font-size: 12px; font-weight: bold;">(HR. Baihaqi)</p>
+                <p style="font-size: 11px; font-weight: bold;">(HR. Baihaqi)</p>
             </div>
         </aside>
     </div>
 
     <script>
-        // Menggunakan API MyQuran (Mirror Database Resmi Kemenag/Bimas Islam)
         const API_CARI_KOTA = 'https://api.myquran.com/v2/sholat/kota/cari/';
         const API_JADWAL = 'https://api.myquran.com/v2/sholat/jadwal/';
 
-        // Target waktu dengan ID persis dari API Kemenag
         const targetWaktu = [
             { id: 'imsak', name: 'Imsak' },
             { id: 'subuh', name: 'Subuh' },
@@ -458,7 +573,7 @@
         function updateClockAndCountdown() {
             const now = new Date();
 
-            // 1. Update Jam Utama
+            // Jam Utama
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -467,7 +582,7 @@
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('current-date').textContent = now.toLocaleDateString('id-ID', options);
 
-            // 2. Update Hitung Mundur (Countdown)
+            // Hitung Mundur
             if (jadwalHariIni.length > 0) {
                 let jadwalSelanjutnya = null;
 
@@ -478,7 +593,6 @@
                     }
                 }
 
-                // Jika sudah melewati isya, arahkan ke Imsak esok hari
                 if (!jadwalSelanjutnya) {
                     let besokImsak = new Date(jadwalHariIni[0].timeDate);
                     besokImsak.setDate(besokImsak.getDate() + 1);
@@ -495,7 +609,6 @@
                 document.getElementById('countdown-timer').textContent = `-${format(h)}:${format(m)}:${format(s)}`;
                 document.getElementById('countdown-label').textContent = `Menuju ${jadwalSelanjutnya.name}`;
 
-                // Efek Active/Glow
                 document.querySelectorAll('.jadwal-card').forEach(card => card.classList.remove('active'));
                 const activeCard = document.getElementById(`card-${jadwalSelanjutnya.id}`);
                 if (activeCard) {
@@ -515,19 +628,16 @@
             jadwalHariIni = [];
 
             try {
-                // 1. Cari ID Kota Kemenag terlebih dahulu
                 const resCari = await fetch(API_CARI_KOTA + encodeURIComponent(keyword));
                 const dataCari = await resCari.json();
 
                 if (dataCari.status && dataCari.data.length > 0) {
-                    // Ambil hasil pencarian paling relevan (index 0)
                     const cityId = dataCari.data[0].id;
                     const cityName = dataCari.data[0].lokasi;
 
-                    document.getElementById('location-display').textContent = `Wilayah: ${cityName} - (Valid: Kemenag / Sindonews)`;
+                    document.getElementById('location-display').textContent = `Wilayah: ${cityName}`;
                     statusText.textContent = 'Menyinkronkan jadwal...';
 
-                    // 2. Dapatkan jadwal berdasarkan ID Kemenag hari ini
                     const now = new Date();
                     const year = now.getFullYear();
                     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -565,12 +675,12 @@
                             }
                         });
 
-                        statusText.textContent = '100% Tersinkronisasi dengan Database Sindonews / Kemenag RI';
+                        statusText.textContent = '100% Tersinkronisasi dengan Kemenag RI';
                         updateClockAndCountdown();
                     }
                 } else {
                     document.getElementById('location-display').textContent = `Lokasi tidak ditemukan`;
-                    statusText.textContent = 'Silakan gunakan kata kunci Kabupaten/Kota, misal: "Sumenep" atau "Pamekasan"';
+                    statusText.textContent = 'Silakan gunakan kata kunci Kabupaten/Kota, misal: "Sumenep"';
                 }
             } catch (error) {
                 statusText.textContent = 'Gagal terhubung ke server Kemenag. Periksa koneksi Anda.';
