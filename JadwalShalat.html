@@ -4,490 +4,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-    
     <title>Jadwal Shalat Realtime</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="icon" href="../Image/iconweb.png" type="image/png">
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.15);
+            --primary: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --glass-bg: rgba(255, 255, 255, 0.2);
             --glass-border: rgba(255, 255, 255, 0.4);
-            --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
-            --text-light: #ffffff;
-            --text-dark: #1e293b;
-            --accent-yellow: #FDBB2D;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: #0f172a;
+            /* Gradasi hidup namun nyaman */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
+            color: var(--primary);
             padding: 20px;
-            /* Padding dikurangi untuk HP */
-            color: var(--text-light);
-            position: relative;
         }
 
-        /* --- Latar Belakang Liquid Animasi --- */
-        .liquid-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1;
-            background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
-            overflow: hidden;
-        }
-
-        .blob {
-            position: absolute;
-            filter: blur(80px);
-            z-index: -1;
-            opacity: 0.7;
-            animation: moveBlob 15s infinite alternate ease-in-out;
-        }
-
-        .blob-1 {
-            top: -10%;
-            left: -10%;
-            width: 50vw;
-            height: 50vw;
-            background: #FDBB2D;
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-        }
-
-        .blob-2 {
-            bottom: -20%;
-            right: -10%;
-            width: 60vw;
-            height: 60vw;
-            background: #ffffff;
-            border-radius: 60% 40% 30% 70% / 50% 60% 40% 50%;
-            animation-delay: -5s;
-        }
-
-        @keyframes moveBlob {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-
-            100% {
-                transform: translate(100px, 100px) rotate(45deg) scale(1.2);
-            }
-        }
-
-        /* --- Layout Utama (Dibuat Responsif) --- */
-        .layout-wrapper {
-            display: flex;
-            flex-direction: column;
-            /* Default ke bawah untuk HP */
-            gap: 20px;
+        .container {
             width: 100%;
-            max-width: 1300px;
-            margin: 20px 0;
-        }
-
-        .glass-panel {
+            max-width: 800px;
             background: var(--glass-bg);
-            backdrop-filter: blur(25px) saturate(150%);
-            -webkit-backdrop-filter: blur(25px) saturate(150%);
-            border-radius: 24px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border: 1px solid var(--glass-border);
-            border-top: 1px solid rgba(255, 255, 255, 0.7);
-            border-left: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: var(--glass-shadow), inset 0 0 20px rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            position: relative;
-            overflow: hidden;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
-        /* Urutan elemen di HP: Panel Utama di atas, panel samping di bawah */
-        .main-panel {
-            order: 1;
-        }
-
-        #panel-kiri {
-            order: 2;
-        }
-
-        #panel-kanan {
-            order: 3;
-        }
-
-        /* --- Panel Samping --- */
-        .side-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .header {
             text-align: center;
+            margin-bottom: 30px;
         }
 
-        .side-panel img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .quote-box {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .quote-box h3 {
-            font-size: 16px;
-            color: var(--accent-yellow);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .quote-box p {
-            font-size: 14px;
-            line-height: 1.6;
-            font-style: italic;
-            opacity: 0.95;
-        }
-
-        .quote-box .arabic {
-            font-size: 18px;
-            font-style: normal;
-            margin-bottom: 12px;
-            line-height: 1.8;
-        }
-
-        /* --- Panel Tengah --- */
-        .main-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .header-title {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header-title h1 {
+        .header h1 {
             font-size: 28px;
             font-weight: 700;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            letter-spacing: 1px;
             margin-bottom: 5px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .header-title p {
+        .header p {
             font-size: 14px;
             opacity: 0.9;
-            font-weight: 300;
         }
 
-        .clock-wrapper {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .clock-container {
             text-align: center;
-            margin-bottom: 25px;
-            width: 100%;
+            margin-bottom: 30px;
         }
 
         #realtime-clock {
-            font-size: 42px;
-            font-weight: 700;
-            color: var(--accent-yellow);
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            font-size: 48px;
+            font-weight: 600;
             letter-spacing: 2px;
-            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
         }
 
         #current-date {
             font-size: 16px;
             font-weight: 400;
             opacity: 0.9;
-            margin-bottom: 15px;
         }
 
-        /* --- Countdown Keren --- */
-        .countdown-box {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            background: rgba(253, 187, 45, 0.15);
-            padding: 8px 20px;
-            border-radius: 50px;
-            border: 1px solid var(--accent-yellow);
-            box-shadow: 0 0 15px rgba(253, 187, 45, 0.4);
-            animation: pulseGlow 2s infinite ease-in-out;
-            gap: 8px;
-        }
-
-        @keyframes pulseGlow {
-            0% {
-                box-shadow: 0 0 10px rgba(253, 187, 45, 0.3);
-                transform: scale(1);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(253, 187, 45, 0.6);
-                transform: scale(1.02);
-            }
-
-            100% {
-                box-shadow: 0 0 10px rgba(253, 187, 45, 0.3);
-                transform: scale(1);
-            }
-        }
-
-        #countdown-timer {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: var(--accent-yellow);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        #countdown-label {
-            font-size: 14px;
-            font-weight: 400;
-            color: #ffffff;
-        }
-
-        /* --- Input Pencarian --- */
-        .search-container {
-            width: 100%;
-            margin-bottom: 25px;
+        .location-selector {
             display: flex;
             flex-direction: column;
-            /* Numupuk di HP */
             gap: 10px;
+            margin-bottom: 30px;
         }
 
-        .search-container input {
-            flex-grow: 1;
-            padding: 12px 20px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.85);
-            color: var(--text-dark);
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
+        .location-selector label {
+            font-size: 14px;
             font-weight: 500;
+        }
+
+        select {
             width: 100%;
-        }
-
-        .search-container input:focus {
-            background: rgba(255, 255, 255, 1);
-            box-shadow: 0 0 0 4px rgba(253, 187, 45, 0.3);
-        }
-
-        .search-container button {
-            padding: 12px 25px;
+            padding: 15px;
             border-radius: 12px;
-            border: none;
-            background: var(--accent-yellow);
-            color: var(--text-dark);
-            font-size: 15px;
-            font-weight: 600;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-main);
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            outline: none;
             cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
-            width: 100%;
         }
 
-        .search-container button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        select:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
         }
 
-        /* --- Grid Jadwal --- */
         .jadwal-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            /* 2 Kolom di HP agar tidak terlalu kecil */
-            gap: 12px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
         .jadwal-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 16px;
-            padding: 15px;
+            padding: 20px 15px;
             text-align: center;
-            color: var(--text-dark);
-            border: 1px solid rgba(255, 255, 255, 1);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
+            color: var(--text-main);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
         }
 
-        .jadwal-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
-            transform: skewX(-25deg);
-            transition: 0.5s;
+        .jadwal-card:hover {
+            transform: translateY(-5px);
         }
 
         .jadwal-card.active {
-            background: linear-gradient(135deg, var(--accent-yellow) 0%, #FFA700 100%);
-            color: var(--text-dark);
-            border: 2px solid #ffffff;
-            transform: scale(1.05);
-            box-shadow: 0 15px 30px rgba(253, 187, 45, 0.4);
-            z-index: 2;
+            background: #ff7eb3;
+            background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+            color: white;
         }
 
         .jadwal-name {
-            font-size: 13px;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #64748b;
-            margin-bottom: 5px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
         }
 
         .jadwal-card.active .jadwal-name {
-            color: #1e293b;
+            color: white;
+            opacity: 0.9;
         }
 
         .jadwal-time {
             font-size: 24px;
             font-weight: 700;
-            color: var(--text-dark);
         }
 
-        #status-text {
+        .quote-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 16px;
             text-align: center;
+            border: 1px solid var(--glass-border);
+        }
+
+        .arabic-text {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .translation-text {
+            font-size: 13px;
+            font-style: italic;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .reference-text {
             font-size: 12px;
-            margin-top: 15px;
-            opacity: 0.8;
-            width: 100%;
-            line-height: 1.4;
+            font-weight: 600;
+            margin-top: 10px;
+            color: #ffd700;
         }
 
-        /* =========================================
-           MEDIA QUERIES UNTUK TABLET & DESKTOP 
-           ========================================= */
+        /* Loading State */
+        #loader {
+            text-align: center;
+            display: none;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
 
-        /* Untuk Tablet (Mulai dari 768px ke atas) */
-        @media (min-width: 768px) {
-            .search-container {
-                flex-direction: row;
-                /* Input dan tombol bersebelahan */
-            }
-
-            .search-container button {
-                width: auto;
-            }
-
-            .jadwal-grid {
-                grid-template-columns: repeat(3, 1fr);
-                /* 3 Kolom */
-                gap: 15px;
-            }
-
-            .header-title h1 {
-                font-size: 34px;
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
             }
 
             #realtime-clock {
-                font-size: 50px;
-            }
-        }
-
-        /* Untuk Desktop/Laptop (Mulai dari 1024px ke atas) */
-        @media (min-width: 1024px) {
-            body {
-                padding: 40px;
-            }
-
-            .layout-wrapper {
-                display: grid;
-                grid-template-columns: 280px 1fr 280px;
-                /* Layout 3 Kolom */
-                gap: 30px;
-            }
-
-            /* Mengembalikan urutan asli untuk desktop */
-            #panel-kiri {
-                order: 1;
-            }
-
-            .main-panel {
-                order: 2;
-            }
-
-            #panel-kanan {
-                order: 3;
-            }
-
-            .glass-panel {
-                padding: 30px;
-                border-radius: 30px;
-            }
-
-            .header-title h1 {
-                font-size: 38px;
-            }
-
-            .clock-wrapper {
-                padding: 20px 40px;
-            }
-
-            #realtime-clock {
-                font-size: 56px;
-            }
-
-            .jadwal-time {
-                font-size: 30px;
-            }
-
-            .jadwal-card:hover {
-                transform: translateY(-8px) scale(1.02);
-                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-                background: #ffffff;
-            }
-
-            .jadwal-card:hover::before {
-                left: 150%;
-            }
-        }
-
-        /* Desktop Layar Lebar */
-        @media (min-width: 1280px) {
-            .layout-wrapper {
-                grid-template-columns: 320px 1fr 320px;
+                font-size: 36px;
             }
 
             .jadwal-grid {
-                grid-template-columns: repeat(4, 1fr);
-                /* 4 Kolom di layar besar agar estetik */
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
@@ -495,85 +214,52 @@
 
 <body>
 
-    <div class="liquid-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-    </div>
+    <div class="container">
+        <div class="header">
+            <h1>Jadwal Shalat</h1>
+            <p>Data Akurat Kementerian Agama RI</p>
+        </div>
 
-    <div class="layout-wrapper">
-        <aside class="glass-panel side-panel" id="panel-kiri">
-            <img src="https://img.magnific.com/vektor-gratis/ilustrasi-salat-desain-datar_23-2149286788.jpg?semt=ais_hybrid&w=740&q=80"
-                alt="Islamic Architecture">
-            <div class="quote-box">
-                <h3>Keutamaan Shalat</h3>
-                <p class="arabic">إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ</p>
-                <p>"Sesungguhnya shalat itu mencegah dari (perbuatan-perbuatan) keji dan mungkar."</p>
-                <br>
-                <p style="font-size: 11px; font-weight: bold;">(QS. Al-Ankabut: 45)</p>
-            </div>
-        </aside>
+        <div class="clock-container">
+            <div id="realtime-clock">00:00:00</div>
+            <div id="current-date">Memuat tanggal...</div>
+        </div>
 
-        <main class="glass-panel main-panel">
-            <div class="header-title">
-                <h1>Jadwal Shalat Realtime</h1>
-                <p id="location-display">Memuat lokasi...</p>
-            </div>
+        <div class="location-selector">
+            <label for="city-select">Pilih Lokasi Anda:</label>
+            <select id="city-select">
+                <option value="">Memuat data kota...</option>
+            </select>
+            <small style="font-size: 11px; opacity: 0.8; text-align: right;">*Sumenep mencakup Kalianget, Daramista &
+                sekitarnya</small>
+        </div>
 
-            <div class="clock-wrapper">
-                <div id="realtime-clock">00:00:00</div>
-                <div id="current-date">Memuat tanggal...</div>
+        <div id="loader">Mengambil jadwal shalat terbaru...</div>
 
-                <div class="countdown-box">
-                    <span id="countdown-timer">-00:00:00</span>
-                    <span id="countdown-label">Menghitung...</span>
-                </div>
-            </div>
+        <div class="jadwal-grid" id="jadwal-container">
+        </div>
 
-            <div class="search-container">
-                <input type="text" id="location-input" value="Sumenep" placeholder="Ketik kabupaten/kota...">
-                <button onclick="searchLocation()">Cari</button>
-            </div>
-
-            <div class="jadwal-grid" id="jadwal-container">
-            </div>
-
-            <div id="status-text">Sinkronisasi Database Kemenag RI & Sindonews...</div>
-        </main>
-
-        <aside class="glass-panel side-panel" id="panel-kanan">
-            <img src="https://img.magnific.com/vektor-premium/anak-anak-muslim-membaca-alquran-dan-buku-buku-islami-ilustrasi-vektor_343650-38.jpg"
-                alt="Quran">
-            <div class="quote-box">
-                <h3>Tiang Agama</h3>
-                <p>"Shalat adalah tiang agama, barangsiapa mendirikannya maka sungguh ia telah menegakkan agama, dan
-                    barangsiapa meninggalkannya maka sungguh ia telah merubuhkan agama."</p>
-                <br>
-                <p style="font-size: 11px; font-weight: bold;">(HR. Baihaqi)</p>
-            </div>
-        </aside>
+        <div class="quote-section">
+            <div class="arabic-text">إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</div>
+            <div class="translation-text">"Sesungguhnya shalat itu adalah fardhu yang ditentukan waktunya atas
+                orang-orang yang beriman."</div>
+            <div class="reference-text">- QS. An-Nisa: 103 -</div>
+        </div>
     </div>
 
     <script>
-        const API_CARI_KOTA = 'https://api.myquran.com/v2/sholat/kota/cari/';
-        const API_JADWAL = 'https://api.myquran.com/v2/sholat/jadwal/';
+        const API_BASE_URL = 'https://api.myquran.com/v2/sholat';
+        const citySelect = document.getElementById('city-select');
+        const jadwalContainer = document.getElementById('jadwal-container');
+        const loader = document.getElementById('loader');
 
-        const targetWaktu = [
-            { id: 'imsak', name: 'Imsak' },
-            { id: 'subuh', name: 'Subuh' },
-            { id: 'terbit', name: 'Terbit' },
-            { id: 'dhuha', name: 'Dhuha' },
-            { id: 'dzuhur', name: 'Dzuhur' },
-            { id: 'ashar', name: 'Ashar' },
-            { id: 'maghrib', name: 'Maghrib' },
-            { id: 'isya', name: 'Isya' }
-        ];
+        // Daftar waktu yang ingin ditampilkan
+        const waktuShalatList = ['imsak', 'subuh', 'terbit', 'dhuha', 'dzuhur', 'ashar', 'maghrib', 'isya'];
+        let jadwalHariIni = {};
 
-        let jadwalHariIni = [];
-
-        function updateClockAndCountdown() {
+        // Inisialisasi Jam Realtime
+        function updateClock() {
             const now = new Date();
-
-            // Jam Utama
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -581,123 +267,101 @@
 
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('current-date').textContent = now.toLocaleDateString('id-ID', options);
-
-            // Hitung Mundur
-            if (jadwalHariIni.length > 0) {
-                let jadwalSelanjutnya = null;
-
-                for (let i = 0; i < jadwalHariIni.length; i++) {
-                    if (jadwalHariIni[i].timeDate > now) {
-                        jadwalSelanjutnya = jadwalHariIni[i];
-                        break;
-                    }
-                }
-
-                if (!jadwalSelanjutnya) {
-                    let besokImsak = new Date(jadwalHariIni[0].timeDate);
-                    besokImsak.setDate(besokImsak.getDate() + 1);
-                    jadwalSelanjutnya = { ...jadwalHariIni[0], timeDate: besokImsak };
-                }
-
-                const diff = jadwalSelanjutnya.timeDate - now;
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / 1000 / 60) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-
-                const format = (num) => String(num).padStart(2, '0');
-
-                document.getElementById('countdown-timer').textContent = `-${format(h)}:${format(m)}:${format(s)}`;
-                document.getElementById('countdown-label').textContent = `Menuju ${jadwalSelanjutnya.name}`;
-
-                document.querySelectorAll('.jadwal-card').forEach(card => card.classList.remove('active'));
-                const activeCard = document.getElementById(`card-${jadwalSelanjutnya.id}`);
-                if (activeCard) {
-                    activeCard.classList.add('active');
-                }
-            }
         }
+        setInterval(updateClock, 1000);
+        updateClock();
 
-        setInterval(updateClockAndCountdown, 1000);
-
-        async function fetchJadwal(keyword) {
-            const container = document.getElementById('jadwal-container');
-            const statusText = document.getElementById('status-text');
-
-            container.innerHTML = '';
-            statusText.textContent = 'Mencari data Kemenag...';
-            jadwalHariIni = [];
-
+        // 1. Ambil Daftar Kota
+        async function fetchCities() {
             try {
-                const resCari = await fetch(API_CARI_KOTA + encodeURIComponent(keyword));
-                const dataCari = await resCari.json();
+                const response = await fetch(`${API_BASE_URL}/kota/semua`);
+                const data = await response.json();
 
-                if (dataCari.status && dataCari.data.length > 0) {
-                    const cityId = dataCari.data[0].id;
-                    const cityName = dataCari.data[0].lokasi;
-
-                    document.getElementById('location-display').textContent = `Wilayah: ${cityName}`;
-                    statusText.textContent = 'Menyinkronkan jadwal...';
-
-                    const now = new Date();
-                    const year = now.getFullYear();
-                    const month = String(now.getMonth() + 1).padStart(2, '0');
-                    const date = String(now.getDate()).padStart(2, '0');
-
-                    const resJadwal = await fetch(`${API_JADWAL}${cityId}/${year}/${month}/${date}`);
-                    const dataJadwal = await resJadwal.json();
-
-                    if (dataJadwal.status) {
-                        const jadwalData = dataJadwal.data.jadwal;
-
-                        targetWaktu.forEach(waktu => {
-                            if (jadwalData[waktu.id]) {
-                                const timeStr = jadwalData[waktu.id];
-                                const [jam, menit] = timeStr.split(':');
-
-                                const timeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(jam), parseInt(menit), 0);
-
-                                jadwalHariIni.push({
-                                    id: waktu.id,
-                                    name: waktu.name,
-                                    timeStr: timeStr,
-                                    timeDate: timeDate
-                                });
-
-                                const card = document.createElement('div');
-                                card.className = 'jadwal-card';
-                                card.id = `card-${waktu.id}`;
-
-                                card.innerHTML = `
-                                    <div class="jadwal-name">${waktu.name}</div>
-                                    <div class="jadwal-time">${timeStr}</div>
-                                `;
-                                container.appendChild(card);
-                            }
-                        });
-
-                        statusText.textContent = '100% Tersinkronisasi dengan Kemenag RI';
-                        updateClockAndCountdown();
-                    }
-                } else {
-                    document.getElementById('location-display').textContent = `Lokasi tidak ditemukan`;
-                    statusText.textContent = 'Silakan gunakan kata kunci Kabupaten/Kota, misal: "Sumenep"';
+                if (data.status) {
+                    populateCityDropdown(data.data);
                 }
             } catch (error) {
-                statusText.textContent = 'Gagal terhubung ke server Kemenag. Periksa koneksi Anda.';
+                console.error('Error fetching cities:', error);
+                citySelect.innerHTML = '<option value="">Gagal memuat kota. Periksa koneksi internet.</option>';
             }
         }
 
-        function searchLocation() {
-            const input = document.getElementById('location-input').value;
-            if (input.trim() !== '') {
-                fetchJadwal(input);
+        // 2. Isi Dropdown dan Set Default ke Sumenep
+        function populateCityDropdown(cities) {
+            citySelect.innerHTML = ''; // Kosongkan
+            let sumenepId = null;
+
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city.id;
+                option.textContent = city.lokasi;
+                citySelect.appendChild(option);
+
+                // Cari ID Sumenep untuk dijadikan default
+                if (city.lokasi.includes('SUMENEP')) {
+                    sumenepId = city.id;
+                }
+            });
+
+            // Set Sumenep sebagai nilai awal
+            if (sumenepId) {
+                citySelect.value = sumenepId;
+                fetchJadwal(sumenepId);
+            }
+
+            // Event listener saat user mengganti kota
+            citySelect.addEventListener('change', (e) => {
+                fetchJadwal(e.target.value);
+            });
+        }
+
+        // 3. Ambil Jadwal Shalat Berdasarkan ID Kota dan Tanggal Hari Ini
+        async function fetchJadwal(cityId) {
+            loader.style.display = 'block';
+            jadwalContainer.innerHTML = '';
+
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/jadwal/${cityId}/${year}/${month}/${date}`);
+                const data = await response.json();
+
+                if (data.status) {
+                    jadwalHariIni = data.data.jadwal;
+                    renderJadwal();
+                }
+            } catch (error) {
+                console.error('Error fetching jadwal:', error);
+                jadwalContainer.innerHTML = '<p>Gagal memuat jadwal shalat.</p>';
+            } finally {
+                loader.style.display = 'none';
             }
         }
 
-        // Jalankan pencarian Sumenep secara otomatis saat halaman dibuka
-        window.onload = () => {
-            fetchJadwal('Sumenep');
-        };
+        // 4. Tampilkan Kartu Jadwal ke Layar
+        function renderJadwal() {
+            jadwalContainer.innerHTML = '';
+
+            waktuShalatList.forEach(waktu => {
+                if (jadwalHariIni[waktu]) {
+                    const timeString = jadwalHariIni[waktu];
+                    const card = document.createElement('div');
+                    card.className = 'jadwal-card';
+
+                    card.innerHTML = `
+                        <div class="jadwal-name">${waktu}</div>
+                        <div class="jadwal-time">${timeString}</div>
+                    `;
+                    jadwalContainer.appendChild(card);
+                }
+            });
+        }
+
+        // Jalankan saat pertama kali dibuka
+        fetchCities();
     </script>
 </body>
 
