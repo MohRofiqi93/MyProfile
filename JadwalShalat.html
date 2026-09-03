@@ -406,10 +406,11 @@
             }
 
             .jadwal-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
             }
 
+            /* Diubah jadi 4 agar 8 kotak sejajar rapi */
             .header-title h1 {
                 font-size: 34px;
             }
@@ -509,7 +510,7 @@
         <main class="glass-panel main-panel">
             <div class="header-title">
                 <h1>Jadwal Shalat Realtime</h1>
-                <p id="location-display">Memuat lokasi...</p>
+                <p id="location-display">Memeriksa lokasi Anda...</p>
             </div>
 
             <div class="clock-wrapper">
@@ -523,15 +524,15 @@
             </div>
 
             <div class="search-container">
-                <input type="text" id="location-input" value="Kalianget, Sumenep"
-                    placeholder="Ketik nama desa/kecamatan/kota yang valid...">
+                <input type="text" id="location-input" placeholder="Ketik nama desa/kecamatan/kota lain...">
                 <button onclick="searchLocation()">Cari</button>
             </div>
 
             <div class="jadwal-grid" id="jadwal-container">
+                <!-- Data jadwal dimuat oleh JavaScript -->
             </div>
 
-            <div id="status-text">Mendeteksi Titik Koordinat Wilayah...</div>
+            <div id="status-text">Meminta Izin Akses GPS/Lokasi Anda...</div>
         </main>
 
         <aside class="glass-panel side-panel" id="panel-kanan">
@@ -548,10 +549,12 @@
     </div>
 
     <script>
+        // Target waktu dengan penambahan waktu Dhuha
         const targetWaktu = [
             { id: 'Imsak', name: 'Imsak' },
             { id: 'Fajr', name: 'Subuh' },
             { id: 'Sunrise', name: 'Terbit' },
+            { id: 'Dhuha', name: 'Dhuha' },  // Ditambahkan
             { id: 'Dhuhr', name: 'Dzuhur' },
             { id: 'Asr', name: 'Ashar' },
             { id: 'Maghrib', name: 'Maghrib' },
@@ -607,18 +610,15 @@
 
         setInterval(updateClockAndCountdown, 1000);
 
-        async function fetchJadwal(keyword) {
-            const container = document.getElementById('jadwal-container');
+        // FUNGSI 1: Pencarian Berdasarkan Kata Kunci yang Diketik
+        async function fetchJadwalByKeyword(keyword) {
             const statusText = document.getElementById('status-text');
             const locDisplay = document.getElementById('location-display');
 
-            container.innerHTML = '';
-            statusText.textContent = 'Melacak Koordinat Valid (Satelit OpenStreetMap)...';
+            statusText.textContent = 'Mencari Koordinat Lokasi Peta...';
             statusText.classList.remove('error-state');
-            jadwalHariIni = [];
 
             try {
-                // 1. VALIDASI LOKASI SUPER KETAT
                 const searchQuery = keyword.toLowerCase().includes('indonesia') ? keyword : `${keyword}, Indonesia`;
                 const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(searchQuery)}&format=json&limit=1`);
                 const geoData = await geoRes.json();
@@ -626,23 +626,49 @@
                 if (!geoData || geoData.length === 0) {
                     locDisplay.textContent = `Pencarian: "${keyword}"`;
                     locDisplay.classList.add('error-state');
-                    statusText.textContent = '⛔ Error: Nama daerah/desa salah ketik atau tidak terdaftar di peta.';
+                    statusText.textContent = '⛔ Error: Nama daerah/desa tidak ditemukan di peta.';
                     statusText.classList.add('error-state');
                     return;
                 }
 
                 const lat = geoData[0].lat;
                 const lon = geoData[0].lon;
-
                 const validName = geoData[0].display_name.split(',').slice(0, 3).join(', ');
 
-                locDisplay.textContent = `Wilayah: ${validName}`;
-                locDisplay.classList.remove('error-state');
-                statusText.textContent = 'Menyinkronkan dengan database pusat...';
+                await fetchJadwalByCoords(lat, lon, validName);
+            } catch (error) {
+                locDisplay.textContent = `Koneksi Terputus`;
+                statusText.textContent = '⛔ Gagal terhubung ke Server Peta.';
+                statusText.classList.add('error-state');
+            }
+        }
 
-                // 2. MENGAMBIL DATA MURNI (TANPA TAMBAHAN MANUAL 2 MENIT)
-                // Menggunakan Method 20 (Sama persis dengan IslamicFinder dan Google)
-                // Hapus fungsi "tune" yang sebelumnya saya tambahkan
+        // FUNGSI 2: Fetch API Jadwal Berdasarkan Koordinat GPS (Device/Pencarian)
+        async function fetchJadwalByCoords(lat, lon, locationName = null) {
+            const container = document.getElementById('jadwal-container');
+            const statusText = document.getElementById('status-text');
+            const locDisplay = document.getElementById('location-display');
+
+            statusText.textContent = 'Menyinkronkan Jadwal...';
+            jadwalHariIni = [];
+            container.innerHTML = '';
+
+            try {
+                // Jika koordinat didapat dari GPS otomatis, ubah latitude & longitude jadi teks nama wilayah (Reverse Geocoding)
+                if (!locationName) {
+                    const revRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                    const revData = await revRes.json();
+                    if (revData && revData.display_name) {
+                        locationName = revData.display_name.split(',').slice(0, 3).join(', ');
+                    } else {
+                        locationName = "Lokasi Saat Ini";
+                    }
+                }
+
+                locDisplay.textContent = `Wilayah: ${locationName}`;
+                locDisplay.classList.remove('error-state');
+
+                // Menggunakan Method 20
                 const timeRes = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=20`);
                 const timeData = await timeRes.json();
 
@@ -650,12 +676,21 @@
                     const timings = timeData.data.timings;
                     const now = new Date();
 
+                    // RUMUS MENGHITUNG DHUHA (+20 Menit dari waktu Terbit/Sunrise)
+                    const sunriseTime = timings['Sunrise'].split(' ')[0];
+                    const [sJam, sMenit] = sunriseTime.split(':').map(Number);
+                    const dhuhaDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), sJam, sMenit + 20, 0);
+
+                    const dJam = String(dhuhaDate.getHours()).padStart(2, '0');
+                    const dMenit = String(dhuhaDate.getMinutes()).padStart(2, '0');
+                    timings['Dhuha'] = `${dJam}:${dMenit}`; // Suntikkan Dhuha ke objek API
+
                     targetWaktu.forEach(waktu => {
                         if (timings[waktu.id]) {
                             const cleanTime = timings[waktu.id].split(' ')[0];
-                            const [jam, menit] = cleanTime.split(':');
+                            const [jam, menit] = cleanTime.split(':').map(Number);
 
-                            const timeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), parseInt(jam), parseInt(menit), 0);
+                            const timeDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), jam, menit, 0);
 
                             jadwalHariIni.push({
                                 id: waktu.id,
@@ -676,25 +711,42 @@
                         }
                     });
 
-                    statusText.innerHTML = 'Akurat & Tersinkronisasi ✅<br>(Database Global - Sama persis dengan IslamicFinder & Google)';
+                    statusText.innerHTML = 'Akurat & Tersinkronisasi ✅<br>Jangan Pernah Tinggalkan Shalat, Barakallahu Fikum.';
                     updateClockAndCountdown();
                 }
             } catch (error) {
-                locDisplay.textContent = `Koneksi Terputus`;
-                statusText.textContent = '⛔ Gagal terhubung. Periksa koneksi internet Anda atau coba lagi nanti.';
+                statusText.textContent = '⛔ Gagal mengambil jadwal. Periksa koneksi internet Anda.';
                 statusText.classList.add('error-state');
             }
         }
 
+        // Trigger Tombol Cari
         function searchLocation() {
             const input = document.getElementById('location-input').value;
             if (input.trim() !== '') {
-                fetchJadwal(input);
+                fetchJadwalByKeyword(input);
             }
         }
 
+        // INIT: Saat Halaman Dimuat, Mintalah Izin GPS
         window.onload = () => {
-            fetchJadwal('Kalianget, Sumenep');
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        // Jika Izin Lokasi/GPS Diberikan
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        fetchJadwalByCoords(lat, lon); // Ambil dari titik kordinat user berdiri
+                    },
+                    (error) => {
+                        // Jika Izin Ditolak/Block, arahkan otomatis ke Kalianget, Sumenep
+                        fetchJadwalByKeyword('Kalianget, Sumenep');
+                    }
+                );
+            } else {
+                // Browser Lama
+                fetchJadwalByKeyword('Kalianget, Sumenep');
+            }
         };
     </script>
 </body>
